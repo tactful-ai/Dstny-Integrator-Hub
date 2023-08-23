@@ -2,6 +2,7 @@ import defineApp from '../../helpers/define-app';
 import auth from './auth';
 import addAuthHeader from './common/add-auth-headers';
 import triggers from './triggers'
+import actions from './actions'
 
 export default defineApp({
   name: 'Dstny Engage',
@@ -14,5 +15,6 @@ export default defineApp({
   primaryColor: '000000',
   beforeRequest: [addAuthHeader],
   auth,
-  triggers
+  triggers,
+  actions
 });
