@@ -3,8 +3,11 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
+import * as URLS from 'config/urls';
 
 function IntegrationForm() {
+  const navigate = useNavigate();
   const [integrationData, setIntegrationData] = useState({
     name: '',
     description: '',
@@ -34,13 +37,13 @@ function IntegrationForm() {
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     console.log('Integration Data:', integrationData);
-    // TODO: Handle form submission and integration creation here
+    navigate(URLS.OVERVIEW_PAGE);
   };
   return (
     <Paper sx={{ p: 3 }}>
       <Typography variant="h6" sx={{ mb: 2 }}>Create Integration </Typography>
       <form onSubmit={handleSubmit}>
-        <div>
+      <div style={{ marginBottom: '15px' }}>
           <label htmlFor="name">Name:</label>
           <TextField
             name="name"
@@ -48,10 +51,11 @@ function IntegrationForm() {
             required
             value={integrationData.name}
             onChange={handleInputChange}
-            margin="normal"
+            margin="dense"
+            size ="small"
           />
         </div>
-        <div>
+        <div style={{ marginBottom: '15px' }}>
           <label htmlFor="description">Description:</label>
           <TextField
             name="description"
@@ -60,10 +64,11 @@ function IntegrationForm() {
             required
             value={integrationData.description}
             onChange={handleInputChange}
-            margin="normal"
+            margin="dense"
+            size ="small"
           />
         </div>
-        <div>
+        <div style={{ marginBottom: '15px' }}>
           <label htmlFor="logo">Logo:</label>
           <div style={{ marginTop: '8px' , marginBottom: '8px'}}>
             <input
@@ -76,7 +81,7 @@ function IntegrationForm() {
             />
           </div>
         </div>
-        <div>
+        <div style={{ marginBottom: '15px' }}>
           <label htmlFor="homePageUrl">Home Page URL:</label>
           <TextField
             name="homePageUrl"
@@ -84,10 +89,11 @@ function IntegrationForm() {
             required
             value={integrationData.homePageUrl}
             onChange={handleInputChange}
-            margin="normal"
+            margin="dense"
+            size ="small"
           />
         </div>
-        <div>
+        <div style={{ marginBottom: '8px' }}>
           <label htmlFor="BaseUrl">Base URL:</label>
           <TextField
             name="BaseUrl"
@@ -95,7 +101,8 @@ function IntegrationForm() {
             required
             value={integrationData.BaseUrl}
             onChange={handleInputChange}
-            margin="normal"
+            margin="dense"
+            size ="small"
           />
         </div>
         
