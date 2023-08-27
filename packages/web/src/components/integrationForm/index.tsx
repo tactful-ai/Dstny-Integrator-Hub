@@ -38,7 +38,7 @@ function IntegrationForm() {
   };
   return (
     <Paper sx={{ p: 3 }}>
-      <Typography variant="h6">Create Integration</Typography>
+      <Typography variant="h6" sx={{ mb: 2 }}>Create Integration </Typography>
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="name">Name:</label>
