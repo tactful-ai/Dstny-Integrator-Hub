@@ -102,3 +102,6 @@ export const DASHBOARD = FLOWS;
 // External links
 export const WEBHOOK_DOCS =
   'https://automatisch.io/docs/apps/webhooks/connection';
+
+// New integration
+export const NEW_INTEGRATION_AUTH = '/new-integration/auth';

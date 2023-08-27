@@ -17,6 +17,7 @@ import * as URLS from 'config/urls';
 import settingsRoutes from './settingsRoutes';
 import adminSettingsRoutes from './adminSettingsRoutes';
 import Notifications from 'pages/Notifications';
+import NewIntegrationAuthentication from 'pages/NewIntegrationAuth';
 
 export default (
   <Routes>
@@ -46,6 +47,7 @@ export default (
         </Layout>
       }
     />
+    
 
     <Route
       path={URLS.FLOW_PATTERN}
@@ -55,6 +57,9 @@ export default (
         </Layout>
       }
     />
+
+        <Route element={<Layout><NewIntegrationAuthentication /></Layout>} path={URLS.NEW_INTEGRATION_AUTH}/>
+
 
     <Route
       path={`${URLS.APPS}/*`}
@@ -139,5 +144,7 @@ export default (
         </Layout>
       }
     />
+
+    
   </Routes>
 );
