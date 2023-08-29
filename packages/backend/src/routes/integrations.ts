@@ -1,4 +1,4 @@
-import express, { Response, Router } from 'express';
+import express, { Router } from 'express';
 
 import { IRequest } from '@automatisch/types';
 import appConfig from '../config/app';
