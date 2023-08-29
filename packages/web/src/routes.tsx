@@ -17,7 +17,7 @@ import * as URLS from 'config/urls';
 import settingsRoutes from './settingsRoutes';
 import adminSettingsRoutes from './adminSettingsRoutes';
 import Notifications from 'pages/Notifications';
-import NewIntegrationAuthentication from 'pages/NewIntegrationAuth';
+import NewIntegrationAuthType from 'pages/NewIntegrationAuthType';
 
 export default (
   <Routes>
@@ -58,7 +58,7 @@ export default (
       }
     />
 
-        <Route element={<Layout><NewIntegrationAuthentication /></Layout>} path={URLS.NEW_INTEGRATION_AUTH}/>
+        <Route element={<Layout><NewIntegrationAuthType /></Layout>} path={URLS.NEW_INTEGRATION_AUTH_TYPE}/>
 
 
     <Route
