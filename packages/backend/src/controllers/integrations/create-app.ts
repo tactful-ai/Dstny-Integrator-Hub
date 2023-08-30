@@ -24,12 +24,17 @@ import defineApp from '../../helpers/define-app';
 const appConfig = {
   name: ${JSON.stringify(config.name || '')},
   key: ${JSON.stringify(config.key || '')},
-  iconUrl: ${JSON.stringify(config.iconUrl || '')},
-  authDocUrl: ${JSON.stringify(config.authDocUrl || '')},
+  iconUrl: ${JSON.stringify(
+    config.iconUrl || `{BASE_URL}/apps/dstny-engage/assets/favicon.svg`
+  )},
+  authDocUrl: ${JSON.stringify(
+    config.authDocUrl ||
+      `https://automatisch.io/docs/apps/${config.key}/connection`
+  )},
   supportsConnections: ${config.supportsConnections || false},
   baseUrl: ${JSON.stringify(config.baseUrl || '')},
   apiBaseUrl: ${JSON.stringify(config.apiBaseUrl || '')},
-  primaryColor: ${JSON.stringify(config.primaryColor || '')},
+  primaryColor: ${JSON.stringify(config.primaryColor || '000000')},
 };
 
 export default defineApp(appConfig);
