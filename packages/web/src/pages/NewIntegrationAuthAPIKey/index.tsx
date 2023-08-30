@@ -5,8 +5,15 @@ import CustomAccordion from "components/CustomAccordion"
 import PageTitle from "components/PageTitle"
 import TagNumber from "components/TagNumber"
 import WrappingBox from "components/WrappingBox"
+import { useNavigate } from "react-router-dom"
 
 function NewIntegrationAuthAPIKey() {
+
+    const navigate = useNavigate();
+
+    function addNewFieldHandler() {
+        navigate('new-field')
+    }
   return (
     <Box sx={{ py: 3 }}>
             <Container>
@@ -49,7 +56,7 @@ function NewIntegrationAuthAPIKey() {
                     <AuthTableFields rows={[]}/>
 
                     <Box sx={{mt: '1rem', display: 'flex', gap: '1rem'}}>
-                        <Button type="button" size="small" variant="outlined">Add Fields</Button>
+                        <Button type="button" size="small" variant="outlined" onClick={addNewFieldHandler}>Add Fields</Button>
                         <Button type="button" size="small" variant="contained">Continue</Button>
                     </Box>
 
