@@ -5,6 +5,7 @@ import type { IField } from '@automatisch/types';
 
 import appendImportToFile from './add-import';
 import appendModuleToExport from './add-export';
+import getExistingAppKeys from './get-apps';
 
 import logger from '../../helpers/logger';
 
@@ -12,6 +13,15 @@ export default async (req: IRequest, res: Response) => {
   const appKey = req.params.appkey;
 
   try {
+    const existingAppKeys = await getExistingAppKeys();
+
+    if (!existingAppKeys.includes(appKey)) {
+      res.status(404).send({
+        success: false,
+        message: `App with key ${appKey} does not exist.`,
+      });
+      return;
+    }
     const authConfig: AuthConfig = req.body;
     const verifyCredentialsFileContent = generateVerifyCredentialsFile(
       authConfig,
