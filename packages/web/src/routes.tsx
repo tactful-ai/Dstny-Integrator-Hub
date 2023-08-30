@@ -19,7 +19,7 @@ import adminSettingsRoutes from './adminSettingsRoutes';
 import Notifications from 'pages/Notifications';
 import IntegrationPage from 'pages/integrationPage';
 import OverviewPage from 'pages/overviewPage';
-
+import TriggerPage from 'pages/TriggerPage'
 export default (
   <Routes>
     <Route
@@ -44,6 +44,14 @@ export default (
       element={
         <Layout>
           <IntegrationPage />
+        </Layout>
+      }
+    />
+    <Route
+      path={URLS.TRIGGER_PAGE}  
+      element={
+        <Layout>
+          <TriggerPage />
         </Layout>
       }
     />
