@@ -8,6 +8,10 @@ export const EXECUTION = (executionId: string) =>
 
 export const LOGIN = '/login';
 export const LOGIN_CALLBACK = `${LOGIN}/callback`;
+export const OVERVIEW_PAGE = '/overview';
+export const INTEGRATION_PAGE = '/integration';
+export const INTEGRATION_PAGE_CALLBACK = `${INTEGRATION_PAGE}/callback`;
+export const TRIGGER_PAGE ='/trigger'
 export const SSO_LOGIN = (issuer: string) => `${appConfig.apiUrl}/login/saml/${issuer}`;
 export const SIGNUP = '/sign-up';
 export const FORGOT_PASSWORD = '/forgot-password';

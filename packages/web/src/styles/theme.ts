@@ -107,7 +107,7 @@ const extendedTheme = createTheme({
       [referenceTheme.breakpoints.down('sm')]: {
         fontSize: referenceTheme.typography.pxToRem(16),
       },
-    },
+    },    
     h6: {
       fontSize: referenceTheme.typography.pxToRem(20),
       lineHeight: 1.2,
@@ -115,7 +115,7 @@ const extendedTheme = createTheme({
       [referenceTheme.breakpoints.down('sm')]: {
         fontSize: referenceTheme.typography.pxToRem(20),
       },
-    },
+    },  
     subtitle1: {
       fontSize: referenceTheme.typography.pxToRem(14),
       lineHeight: 1.71,

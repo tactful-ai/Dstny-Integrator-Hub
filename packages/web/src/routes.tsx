@@ -17,7 +17,9 @@ import * as URLS from 'config/urls';
 import settingsRoutes from './settingsRoutes';
 import adminSettingsRoutes from './adminSettingsRoutes';
 import Notifications from 'pages/Notifications';
-
+import IntegrationPage from 'pages/integrationPage';
+import OverviewPage from 'pages/overviewPage';
+import TriggerPage from 'pages/TriggerPage'
 export default (
   <Routes>
     <Route
@@ -37,7 +39,30 @@ export default (
         </Layout>
       }
     />
-
+    <Route
+      path={URLS.INTEGRATION_PAGE}  
+      element={
+        <Layout>
+          <IntegrationPage />
+        </Layout>
+      }
+    />
+    <Route
+      path={URLS.TRIGGER_PAGE}  
+      element={
+        <Layout>
+          <TriggerPage />
+        </Layout>
+      }
+    />
+   <Route
+      path={URLS.OVERVIEW_PAGE}
+      element={
+        <Layout>
+          <OverviewPage />
+        </Layout>
+      }
+    />
     <Route
       path={URLS.FLOWS}
       element={
