@@ -105,3 +105,4 @@ export const WEBHOOK_DOCS =
 
 // New integration
 export const NEW_INTEGRATION_AUTH_TYPE = '/new-integration/auth-type';
+export const NEW_INTEGRATION_AUTH_API_KEY = '/new-integration/auth/api-key'
