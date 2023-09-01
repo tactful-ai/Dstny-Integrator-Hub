@@ -1,6 +1,8 @@
 import { Response } from 'express';
 import { IRequest } from '@automatisch/types';
 import type { IApp } from '@automatisch/types';
+import { addAppDirectory } from '../../helpers/get-app';
+import App from '../../models/app';
 import * as fs from 'fs-extra';
 
 import logger from '../../helpers/logger';
@@ -10,6 +12,9 @@ export default async (request: IRequest, response: Response) => {
     `Handling incoming app creation request at ${request.originalUrl}.`
   );
   generateAppConfigFile(request.body as IApp);
+
+  await addAppDirectory(request.body.key);
+  App.updateApps(request.body.key);
 
   response.status(200).send({
     success: true,
