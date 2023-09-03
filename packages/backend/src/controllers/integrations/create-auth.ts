@@ -6,6 +6,7 @@ import type { IField } from '@automatisch/types';
 import appendImportToFile from './add-import';
 import appendModuleToExport from './add-export';
 import getExistingAppKeys from './get-apps';
+import generateAddAuthHeaders from './add-auth-headers';
 
 import logger from '../../helpers/logger';
 
@@ -48,6 +49,14 @@ export default async (req: IRequest, res: Response) => {
 
     await appendImportToFile(`./src/apps/${appKey}/index.ts`, newImport);
     await appendModuleToExport(`./src/apps/${appKey}/index.ts`, 'auth');
+    await generateAddAuthHeaders(req.body.headers, appKey);
+
+    const commonImport = `import addAuthHeaders from './common/add-headers';`;
+    await appendImportToFile(`./src/apps/${appKey}/index.ts`, commonImport);
+    await appendModuleToExport(
+      `./src/apps/${appKey}/index.ts`,
+      'beforeRequest: [addAuthHeaders]'
+    );
 
     res.sendStatus(200);
   } catch (error) {
