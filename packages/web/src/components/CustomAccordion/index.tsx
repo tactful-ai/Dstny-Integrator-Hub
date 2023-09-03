@@ -23,7 +23,7 @@ function CustomAccordion({children, heading, tag=<></>} : CustomAccordionProps) 
     };
 
   return (
-    <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+    <Accordion sx={{my: '1rem'}} expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1bh-content"

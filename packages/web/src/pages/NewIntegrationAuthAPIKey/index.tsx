@@ -1,19 +1,27 @@
-import { Box, Divider, FormHelperText, Grid, Typography, Button } from "@mui/material"
-import AuthTableFields from "components/AuthFieldsTable"
+import { Box, Divider, FormHelperText, Grid } from "@mui/material"
+import AuthFirstStep from "components/AuthFirstStep"
 import Container from "components/Container"
 import CustomAccordion from "components/CustomAccordion"
 import PageTitle from "components/PageTitle"
 import TagNumber from "components/TagNumber"
 import WrappingBox from "components/WrappingBox"
-import { useNavigate } from "react-router-dom"
+import { useState } from "react"
+
+export type field = {
+  key: string;
+  label: string;
+  type: string;
+  description?:string;
+  readOnly:boolean;
+  required: boolean;
+  canCopy: boolean;
+}
 
 function NewIntegrationAuthAPIKey() {
 
-    const navigate = useNavigate();
+    const [fields, setFields] = useState<field[]>([]);
 
-    function addNewFieldHandler() {
-        navigate('new-field')
-    }
+
   return (
     <Box sx={{ py: 3 }}>
             <Container>
@@ -38,30 +46,14 @@ function NewIntegrationAuthAPIKey() {
                     </FormHelperText>
                 </WrappingBox>
 
-                <CustomAccordion tag={<TagNumber text="Step 1"/>} heading="Configure your fields">
+                <AuthFirstStep fields={fields} setFields={setFields}/>
+
+                <CustomAccordion tag={<TagNumber text="Step 2"/>} heading="Configure a Test Request">
+
                     <WrappingBox>
-                        <Typography sx={{fontSize: '1rem', display: 'inline-block'}} >Authentication Fields <Typography sx={{fontSize: '10px', color: 'red', fontWeight: '600', display: 'inline-block'}}>{'(required)'}</Typography></Typography>
-
-                        <FormHelperText focused>
-                            <Typography sx={{fontSize: '0.8rem'}}>
-                                Build a form with fields for each item your API requires for authentication, including a field for your API key and additional field for any other data needed. Zapier does not include any fields by default. 
-                            </Typography> <br /> 
-
-                            <Typography sx={{fontWeight: '600', fontSize: '0.9rem'}}>
-                                You must define at least one field where your users can enter API credentials. Your authentication configuration is not complete
-                            </Typography>
-                        </FormHelperText>
+                        Add a simple API endpoint to test user credentials. Also provide the required headers for this endpoint.
                     </WrappingBox>
-
-                    <AuthTableFields rows={[]}/>
-
-                    <Box sx={{mt: '1rem', display: 'flex', gap: '1rem'}}>
-                        <Button type="button" size="small" variant="outlined" onClick={addNewFieldHandler}>Add Fields</Button>
-                        <Button type="button" size="small" variant="contained">Continue</Button>
-                    </Box>
-
                 </CustomAccordion>
-
             </Container>
         </Box>
   )

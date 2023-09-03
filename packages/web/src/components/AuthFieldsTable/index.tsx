@@ -7,6 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import type { field } from 'pages/NewIntegrationAuthAPIKey';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -29,19 +30,15 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 
-type row = {
-  key: string;
-  label: string;
-  type: string;
-  required: string | React.ReactNode;
-}
-
 
 type AuthTableFieldsProps = {
-  rows: row[];
+  rows: field[];
 }
 
 function AuthTableFields({rows} : AuthTableFieldsProps) {
+    
+
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -61,7 +58,7 @@ function AuthTableFields({rows} : AuthTableFieldsProps) {
               </StyledTableCell>
               <StyledTableCell align="left">{row.key}</StyledTableCell>
               <StyledTableCell align="left">{row.type}</StyledTableCell>
-              <StyledTableCell align="left">{row.required}</StyledTableCell>
+              <StyledTableCell align="left">{row.required ? <span>&#x2705;</span> : <span>&#x1f6ab;</span>}</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

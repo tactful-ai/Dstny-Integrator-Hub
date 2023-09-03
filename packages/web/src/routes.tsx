@@ -19,7 +19,6 @@ import adminSettingsRoutes from './adminSettingsRoutes';
 import Notifications from 'pages/Notifications';
 import NewIntegrationAuthType from 'pages/NewIntegrationAuthType';
 import NewIntegrationAuthAPIKey from 'pages/NewIntegrationAuthAPIKey';
-import NewAuthField from 'pages/NewAuthField';
 
 export default (
   <Routes>
@@ -64,7 +63,7 @@ export default (
 
     <Route element={<Layout><NewIntegrationAuthAPIKey /></Layout>} path={URLS.NEW_INTEGRATION_AUTH_API_KEY}/>
 
-    <Route element={<Layout><NewAuthField /></Layout>} path={URLS.NEW_INTEGRATION_AUTH_API_KEY_NEW_FIELD}/>
+
 
 
     <Route
