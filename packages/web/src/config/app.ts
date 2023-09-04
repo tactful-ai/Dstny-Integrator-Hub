@@ -22,5 +22,6 @@ if (!config.apiUrl && !config.graphqlUrl) {
 } else if (!config.apiUrl) {
   config.apiUrl = (new URL(config.graphqlUrl)).origin;
 }
+export const base_url = "http://localhost:3000";
 
 export default config;
