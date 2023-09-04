@@ -7,8 +7,9 @@ import { useNavigate } from 'react-router-dom';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-
 import * as URLS from 'config/urls';
+import config from 'config/app';
+
 
 function IntegrationForm() {
   const navigate = useNavigate();
@@ -24,6 +25,7 @@ function IntegrationForm() {
     homePageUrl: false,
     BaseUrl: false,
   });
+
 
   
 
@@ -95,32 +97,32 @@ function IntegrationForm() {
       baseUrl: integrationData.BaseUrl,
       apiBaseUrl: integrationData.homePageUrl,
     };
-    console.log(JSON.stringify(formattedIntegrationData))
-    navigate(URLS.OVERVIEW_PAGE);
+    // console.log(JSON.stringify(formattedIntegrationData))
+    // navigate(URLS.OVERVIEW_PAGE);
   
-  //   try {
-  //     const response = await fetch('backend_api_url_here', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(formattedIntegrationData),
-  //     });
+    try {
+      const response = await fetch(`${config.apiUrl}/integrations/create`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formattedIntegrationData),
+      });
   
-  //     if (response.ok) {
-  //       console.log('Integration data sent successfully!');
-  //       navigate(URLS.SUCCESS_PAGE);
-  //     } else {
-  //       console.error('Failed to send integration data to the backend.');
+      if (response.ok) {
+        console.log('Integration data sent successfully!');
+        navigate(URLS.OVERVIEW_PAGE);
+      } else {
+        console.error('Failed to send integration data to the backend.');
 
-  //     }
-  //   } catch (error) {
-  //     console.error('An error occurred:', error);
+      }
+    } catch (error) {
+      console.error('An error occurred:', error);
 
-  //   }
-  // };
-  
+    }
   };
+  
+  
   return (
     <Paper sx={{ p: 3 }}>
       <Typography variant="h6" sx={{ mb: 2 }}>Create Integration </Typography>
