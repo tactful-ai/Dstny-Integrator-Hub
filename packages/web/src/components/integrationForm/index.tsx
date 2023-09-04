@@ -7,9 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { base_url } from 'config/app'
 import * as URLS from 'config/urls';
-
+import config from 'config/app';
 
 
 function IntegrationForm() {
@@ -102,7 +101,7 @@ function IntegrationForm() {
     // navigate(URLS.OVERVIEW_PAGE);
   
     try {
-      const response = await fetch(`${base_url}/integrations/create`, {
+      const response = await fetch(`${config.apiUrl}/integrations/create`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
