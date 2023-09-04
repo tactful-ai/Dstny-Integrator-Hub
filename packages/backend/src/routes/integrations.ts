@@ -6,6 +6,7 @@ import createApp from '../controllers/integrations/create-app';
 import createAuth from '../controllers/integrations/create-auth';
 import uniqueApp from '../controllers/integrations/unique-app';
 import createTrigger from '../controllers/integrations/create-polling-trigger';
+import createAction from '../controllers/integrations/create-action';
 const router = Router();
 
 router.use(
@@ -239,5 +240,88 @@ router.post('/auth/apikey/:appkey', createAuth);
  *
  */
 router.post('/trigger/polling/:appkey', createTrigger);
+
+/**
+ * @openapi
+ * info:
+ *   title: Create Action API
+ *   version: 1.0.0
+ *   description: Endpoint to create an action for an app.
+ * paths:
+ *   /integrations/actions/{appkey}:
+ *     post:
+ *       summary: Create an action for an app
+ *       description: Create an action for an app using the provided configuration.
+ *       parameters:
+ *         - in: path
+ *           name: appkey
+ *           schema:
+ *             type: string
+ *           required: true
+ *           description: The key of the app for which the action is created.
+ *       requestBody:
+ *         required: true
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 name:
+ *                   type: string
+ *                   description: The name of the action. (Required)
+ *                 key:
+ *                   type: string
+ *                   description: The key of the action. (Required)
+ *                 description:
+ *                   type: string
+ *                   description: Description of the action. (Optional)
+ *                 arguments:
+ *                   type: array
+ *                   description: List of arguments for the action. (Optional)
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       label:
+ *                         type: string
+ *                         description: The argument label.
+ *                       key:
+ *                         type: string
+ *                         description: The argument key.
+ *                       type:
+ *                         type: string
+ *                         description: The argument type.
+ *                       required:
+ *                         type: boolean
+ *                         description: Indicates if the argument is required. (Optional)
+ *                       description:
+ *                         type: string
+ *                         description: Description of the argument. (Optional)
+ *                       variables:
+ *                         type: boolean
+ *                         description: Indicates if the argument can be a variable. (Optional)
+ *                 run:
+ *                   type: string
+ *                   description: JavaScript code defining the action logic. (Required)
+ *
+ *       responses:
+ *         '200':
+ *           description: Action created successfully.
+ *         '400':
+ *           description: Bad request. Invalid input data.
+ *         '500':
+ *           description: Internal server error.
+ *
+ * components:
+ *   schemas:
+ *     ErrorResponse:
+ *       type: object
+ *       properties:
+ *         message:
+ *           type: string
+ *         code:
+ *           type: integer
+ *
+ */
+router.post('/actions/:appkey', createAction);
 
 export default router;
