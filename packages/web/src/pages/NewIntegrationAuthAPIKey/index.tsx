@@ -1,9 +1,8 @@
 import { Box, Divider, FormHelperText, Grid } from "@mui/material"
 import AuthFirstStep from "components/AuthFirstStep"
+import AuthSecondStep from "components/AuthSecondStep"
 import Container from "components/Container"
-import CustomAccordion from "components/CustomAccordion"
 import PageTitle from "components/PageTitle"
-import TagNumber from "components/TagNumber"
 import WrappingBox from "components/WrappingBox"
 import { useState } from "react"
 
@@ -17,10 +16,16 @@ export type field = {
   canCopy: boolean;
 }
 
+export type header = {
+    key:string; 
+    value: string;
+}
+
 function NewIntegrationAuthAPIKey() {
 
     const [fields, setFields] = useState<field[]>([]);
-
+    const [endpoint, setEndpoint] = useState<string>('');
+    const [headers, setHeaders] = useState<header[]>([]);
 
   return (
     <Box sx={{ py: 3 }}>
@@ -48,12 +53,12 @@ function NewIntegrationAuthAPIKey() {
 
                 <AuthFirstStep fields={fields} setFields={setFields}/>
 
-                <CustomAccordion tag={<TagNumber text="Step 2"/>} heading="Configure a Test Request">
-
-                    <WrappingBox>
-                        Add a simple API endpoint to test user credentials. Also provide the required headers for this endpoint.
-                    </WrappingBox>
-                </CustomAccordion>
+                <AuthSecondStep 
+                    headers={headers}
+                    setHeaders={setHeaders}
+                    endpoint={endpoint}
+                    setEndpoint={setEndpoint} 
+                />
             </Container>
         </Box>
   )
