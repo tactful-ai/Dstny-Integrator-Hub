@@ -128,3 +128,6 @@ dist
 
 # MacOS finder preferences
 .DS_store
+
+# devcontainer
+.devcontainer/devcontainer.json
