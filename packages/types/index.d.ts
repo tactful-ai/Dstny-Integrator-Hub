@@ -465,3 +465,62 @@ export interface IRequest extends Request {
   rawBody?: Buffer;
   currentUser?: IUser;
 }
+
+
+// New Integration Authentication types
+
+export type AuthNewFormProps = {
+    fieldsState:AuthFirstStepProps;
+    handleClose:() => void;
+}
+
+export type NewAuthFieldProps = {
+    openModal: boolean;
+    handleClose: () => void;
+    fieldsState: AuthFirstStepProps;
+}
+
+export type field = {
+  key: string;
+  label: string;
+  type: string;
+  description?:string;
+  readOnly:boolean;
+  required: boolean;
+  canCopy: boolean;
+}
+
+export type header = {
+    key:string; 
+    value: string;
+}
+
+export type AuthSecondStepProps = {
+    headers: header[];
+    endpoint: string;
+    setEndpoint: (value: string) => void;
+    setHeaders: (value: header[] | ((prevValue: header[]) => header[])) => void;
+};
+
+export type AuthTestRequesFormProps = {
+    setEndPoint: (value: string) => void;
+    setHeaders: (value: header[] | ((prevValue: header[]) => header[])) => void;
+}
+
+export type AuthTestRequesFormValues = {
+    endpoint: string;
+    headers: {
+        key: string;
+        value: string;
+    }[]
+}
+
+export type AuthNewFormProps = {
+    fieldsState:AuthFirstStepProps;
+    handleClose:() => void;
+}
+
+export type AuthFirstStepProps = {
+    fields: field[];
+    setFields: (value: field[] | ((prevValue: field[]) => field[])) => void;
+}

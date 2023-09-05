@@ -5,12 +5,8 @@ import CustomAccordion from 'components/CustomAccordion'
 import TagNumber from 'components/TagNumber'
 import WrappingBox from 'components/WrappingBox'
 import { useState } from 'react'
-import type {field} from 'pages/NewIntegrationAuthAPIKey';
+import type { AuthFirstStepProps } from '@automatisch/types'
 
-export type AuthFirstStepProps = {
-    fields: field[];
-    setFields: (value: field[] | ((prevValue: field[]) => field[])) => void;
-}
 
 function AuthFirstStep({fields, setFields}:AuthFirstStepProps) {
     const [open, setOpen] = useState(false);

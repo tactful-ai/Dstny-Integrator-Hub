@@ -2,13 +2,9 @@ import { Box, Button, Checkbox, Divider, FormControlLabel, FormGroup, MenuItem, 
 import Container from 'components/Container'
 import Form from 'components/Form'
 import { FieldValues, useForm } from 'react-hook-form'
-import type { field } from 'pages/NewIntegrationAuthAPIKey'
-import type { AuthFirstStepProps } from 'components/AuthFirstStep'
+import { AuthNewFormProps, field } from '@automatisch/types';
 
-type AuthNewFormProps = {
-    fieldsState:AuthFirstStepProps;
-    handleClose:() => void;
-}
+
 
 function AuthNewForm({ fieldsState, handleClose  }: AuthNewFormProps) {
 

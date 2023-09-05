@@ -1,22 +1,10 @@
 
+import { AuthTestRequesFormProps, AuthTestRequesFormValues } from "@automatisch/types";
 import { Button, Grid, TextField, Typography } from "@mui/material";
 import WrappingBox from "components/WrappingBox";
-import { remove } from "lodash";
-import type { header } from "pages/NewIntegrationAuthAPIKey"
 import { useFieldArray, useForm } from "react-hook-form";
 
-type AuthTestRequesFormProps = {
-    setEndPoint: (value: string) => void;
-    setHeaders: (value: header[] | ((prevValue: header[]) => header[])) => void;
-}
 
-type AuthTestRequesFormValues = {
-    endpoint: string;
-    headers: {
-        key: string;
-        value: string;
-    }[]
-}
 
 function AuthTestRequesForm({ setEndPoint, setHeaders }: AuthTestRequesFormProps) {
 

@@ -5,16 +5,7 @@ import Container from "components/Container"
 import PageTitle from "components/PageTitle"
 import WrappingBox from "components/WrappingBox"
 import { useState } from "react"
-
-export type field = {
-  key: string;
-  label: string;
-  type: string;
-  description?:string;
-  readOnly:boolean;
-  required: boolean;
-  canCopy: boolean;
-}
+import type {field} from '@automatisch/types'
 
 export type header = {
     key:string; 

@@ -1,21 +1,11 @@
-import Box  from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-import { FieldValues } from 'react-hook-form'
 import AuthNewForm from 'components/AuthNewForm';
-import type { AuthFirstStepProps } from 'components/AuthFirstStep';
+import { NewAuthFieldProps } from '@automatisch/types';
 
-
-type NewAuthFieldProps = {
-    openModal: boolean;
-    handleClose: () => void;
-    fieldsState: AuthFirstStepProps;
-}
 
 
 
@@ -32,9 +22,7 @@ export default function AuthNewField({handleClose, openModal, fieldsState}:NewAu
                     </DialogContentText>
                     <AuthNewForm handleClose={handleClose} fieldsState={fieldsState} />
                 </DialogContent>
-                {/* <DialogActions>
 
-                </DialogActions> */}
             </Dialog>
     );
 }

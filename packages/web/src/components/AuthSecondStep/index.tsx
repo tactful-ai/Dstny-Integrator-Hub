@@ -1,15 +1,10 @@
+import { AuthSecondStepProps } from "@automatisch/types";
 import AuthTestRequesForm from "components/AuthTestRequestForm";
 import CustomAccordion from "components/CustomAccordion"
 import TagNumber from "components/TagNumber"
 import WrappingBox from "components/WrappingBox"
-import type { header } from "pages/NewIntegrationAuthAPIKey"
 
-type AuthSecondStepProps = {
-    headers: header[];
-    endpoint: string;
-    setEndpoint: (value: string) => void;
-    setHeaders: (value: header[] | ((prevValue: header[]) => header[])) => void;
-};
+
 
 
 
