@@ -6,8 +6,8 @@ import Button from '@mui/material/Button';
 import config from 'config/app';
 import * as URLS from 'config/urls';
 
-function TriggerForm() {
-  const [triggerData, setTriggerData] = useState({
+function ActionForm() {
+  const [ActionData, setActionData] = useState({
     name: '',
     Key: '',
     Description: '',
@@ -16,7 +16,7 @@ function TriggerForm() {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
 
-    setTriggerData((prevData) => ({
+    setActionData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
@@ -25,15 +25,15 @@ function TriggerForm() {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    const formattedTriggerData = {
-      name: triggerData.name,
-      key: triggerData.Key,
-      description: triggerData.Description,
+    const formattedActionData = {
+      name: ActionData.name,
+      key: ActionData.Key,
+      description: ActionData.Description,
     };
 
-    window.location.href = `${URLS.TRIGGER_PAGE2}?name=${formattedTriggerData.name}&key=${formattedTriggerData.key}&description=${formattedTriggerData.description}`;
+    window.location.href = `${URLS.ACTION_PAGE2}?name=${formattedActionData.name}&key=${formattedActionData.key}&description=${formattedActionData.description}`;
 
-
+ 
   };
 
   const paperStyle = {
@@ -43,7 +43,7 @@ function TriggerForm() {
 
   return (
     <Paper sx={paperStyle}>
-      <Typography variant="h6" sx={{ mb: 2 }}>Triggers</Typography>
+      <Typography variant="h6" sx={{ mb: 2 }}>Actions</Typography>
       <form onSubmit={handleSubmit}>
         <div style={{ marginBottom: '15px' }}>
           <label htmlFor="name">Name:</label>
@@ -51,7 +51,7 @@ function TriggerForm() {
             name="name"
             fullWidth
             required
-            value={triggerData.name}
+            value={ActionData.name}
             onChange={handleInputChange}
             margin="dense"
             size ="small"
@@ -64,7 +64,7 @@ function TriggerForm() {
             fullWidth
             multiline
             required
-            value={triggerData.Key}
+            value={ActionData.Key}
             onChange={handleInputChange}
             margin="dense"
             size ="small"
@@ -77,7 +77,7 @@ function TriggerForm() {
             fullWidth
             multiline
             required
-            value={triggerData.Description}
+            value={ActionData.Description}
             onChange={handleInputChange}
             margin="dense"
             size ="small"
@@ -91,4 +91,4 @@ function TriggerForm() {
   );
 }
 
-export default TriggerForm;
+export default ActionForm;
