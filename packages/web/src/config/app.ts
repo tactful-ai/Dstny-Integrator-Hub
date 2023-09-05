@@ -23,4 +23,6 @@ if (!config.apiUrl && !config.graphqlUrl) {
   config.apiUrl = (new URL(config.graphqlUrl)).origin;
 }
 
+
 export default config;
+

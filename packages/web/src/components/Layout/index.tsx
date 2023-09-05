@@ -7,6 +7,7 @@ import AppsIcon from '@mui/icons-material/Apps';
 import SwapCallsIcon from '@mui/icons-material/SwapCalls';
 import HistoryIcon from '@mui/icons-material/History';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import IntegrationInstructionsIcon from '@mui/icons-material/IntegrationInstructions';
 
 import * as URLS from 'config/urls';
 import useVersion from 'hooks/useVersion';
@@ -35,6 +36,12 @@ const drawerLinks = [
     primary: 'drawer.executions',
     to: URLS.EXECUTIONS,
     dataTest: 'executions-page-drawer-link',
+  },
+  {
+    Icon: IntegrationInstructionsIcon,
+    primary: 'Create Integration',
+    to: URLS.INTEGRATION_PAGE,
+    dataTest: 'integration-page-drawer-link',
   },
 ];
 
