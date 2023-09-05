@@ -8,7 +8,7 @@ import WrappingBox from "components/WrappingBox"
 
 
 
-function AuthSecondStep({headers, setHeaders, endpoint, setEndpoint}:AuthSecondStepProps) {
+function AuthSecondStep({setHeaders, setEndpoint}:AuthSecondStepProps) {
     return (
         <CustomAccordion tag={<TagNumber text="Step 2" />} heading="Configure a Test Request">
 
