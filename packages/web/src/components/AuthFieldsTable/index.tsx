@@ -31,12 +31,12 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 
 type AuthTableFieldsProps = {
-  rows: field[];
+  rows: FieldArrayWithId<NewIntegrationAuthAPIKeyFormValues, "headers" | "fields", "id">[]
 }
 
 function AuthTableFields({rows} : AuthTableFieldsProps) {
     
-
+  console.log(rows[0]);
 
   return (
     <TableContainer component={Paper}>
@@ -50,8 +50,8 @@ function AuthTableFields({rows} : AuthTableFieldsProps) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.label}>
+          {rows.map((row:any) => (
+            <StyledTableRow key={row.id}>
               <StyledTableCell component="th" scope="row">
                 {row.label}
               </StyledTableCell>

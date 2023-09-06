@@ -1,32 +1,25 @@
 import { Box, Button, Checkbox, Divider, FormControlLabel, FormGroup, MenuItem, TextField } from '@mui/material'
 import Container from 'components/Container'
-import Form from 'components/Form'
-import { FieldValues, useForm } from 'react-hook-form'
-import { AuthNewFormProps, field } from '@automatisch/types';
+import { AuthNewFormProps } from '@automatisch/types';
 
 
 
-function AuthNewForm({ fieldsState, handleClose  }: AuthNewFormProps) {
+function AuthNewForm({  handleClose, removeField,  formUtilities }: AuthNewFormProps) {
 
-    const form = useForm<field>();
-    const { register, getValues } = form;
-
-
-    function handleSubmit(values: FieldValues) {
-        fieldsState.setFields(prevValues => [...prevValues, getValues()]);
-        handleClose();
-    }
+    const currIndex = formUtilities.authFields.length - 1;
+    console.log(formUtilities.authFields);
+    
     return (
         <Box sx={{ py: 4 }}>
             <Container>
                 <Divider sx={{ mt: [2, 0], mb: 2 }} />
-                <Form onSubmit={handleSubmit}>
                     <TextField
                         fullWidth
                         label={<span>Label <span style={{ color: 'red' }}>*</span></span>}
                         helperText="Enter the field's friendly name for users."
                         sx={{ my: '0.5rem' }}
-                        {...register('label', { required: 'The label is required' })}
+                        
+                        {...formUtilities.register('label', { required: 'The label is required' })}
                     />
 
                     <TextField
@@ -34,7 +27,7 @@ function AuthNewForm({ fieldsState, handleClose  }: AuthNewFormProps) {
                         fullWidth
                         label={<span>Key <span style={{ color: 'red' }}>*</span></span>}
                         helperText={<span>Add the field key, for example: <code style={{ border: '1px solid #eee', padding: '2px' }}>api_key</code></span>}
-                        {...register('key', { required: 'The key is required' })}
+                        {...formUtilities.register('key', { required: 'The key is required' })}
                     />
 
                     <TextField
@@ -43,7 +36,7 @@ function AuthNewForm({ fieldsState, handleClose  }: AuthNewFormProps) {
                         fullWidth
                         defaultValue="string"
                         helperText="Select the field type. Use String (default) for most text input, or Password to obscure text for secret values."
-                        {...register('type')}
+                        {...formUtilities.register('type')}
 
                     >
                         {['string', 'password'].map((option) => <MenuItem key={option} value={option}>{option}</MenuItem>)}
@@ -56,34 +49,33 @@ function AuthNewForm({ fieldsState, handleClose  }: AuthNewFormProps) {
                         fullWidth
                         maxRows={6}
                         multiline
-                        {...register('description')}
+                        {...formUtilities.register('description')}
 
                     />
 
                     <FormGroup>
                         <FormControlLabel
                             sx={{ my: '0.5rem' }}
-                            control={<Checkbox {...register('required')} />}
+                            control={<Checkbox {...formUtilities.register('required')} />}
                             label="Is this field required? check if yes"
                         />
 
                         <FormControlLabel
                             sx={{ my: '0.5rem' }}
-                            control={<Checkbox {...register('canCopy')} />}
+                            control={<Checkbox {...formUtilities.register('canCopy')} />}
                             label="Do you allow to copy this field? check if yes"
                         />
 
                         <FormControlLabel
                             sx={{ my: '0.5rem' }}
-                            control={<Checkbox {...register('readOnly')} />}
+                            control={<Checkbox {...formUtilities.register('readOnly')} />}
                             label="Is this field read-only? check if yes"
                         />
                     </FormGroup>
                     <Box sx={{ mt: '1rem', display: 'flex', gap: '1rem' }}>
-                        <Button type="submit" size="small" variant="contained" >Add</Button>
-                        <Button onClick={handleClose} type="button" size="small" variant="outlined">Cancel</Button>
+                        <Button onClick={handleClose} type="submit" size="small" variant="contained" >Add</Button>
+                        <Button onClick={() => {removeField(currIndex); handleClose()}} type="button" size="small" variant="outlined">Cancel</Button>
                     </Box>
-                </Form>
             </Container>
         </Box>
     )

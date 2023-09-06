@@ -1,58 +1,73 @@
+import { field } from "@automatisch/types"
 import { Box, Divider, FormHelperText, Grid } from "@mui/material"
 import AuthFirstStep from "components/AuthFirstStep"
 import AuthSecondStep from "components/AuthSecondStep"
 import Container from "components/Container"
 import PageTitle from "components/PageTitle"
 import WrappingBox from "components/WrappingBox"
-import { useState } from "react"
-import type {field} from '@automatisch/types'
+import { useForm } from "react-hook-form"
 
 export type header = {
-    key:string; 
+    key: string;
     value: string;
+}
+
+export type NewIntegrationAuthAPIKeyFormValues = {
+    endpoint: string;
+    headers: header[];
+    fields: field[];
 }
 
 function NewIntegrationAuthAPIKey() {
 
-    const [fields, setFields] = useState<field[]>([]);
-    const [endpoint, setEndpoint] = useState<string>('');
-    const [headers, setHeaders] = useState<header[]>([]);
+    const form = useForm<NewIntegrationAuthAPIKeyFormValues>({defaultValues: {
+        endpoint: '',
+        headers: [],
+        fields: []
+    }});
 
-  return (
-    <Box sx={{ py: 3 }}>
+    
+    
+    const {register, control, handleSubmit, watch} = form;
+    
+
+    return (
+        <Box sx={{ py: 3 }}>
             <Container>
-                <Grid container sx={{ mb: [0, 3] }} columnSpacing={1.5} rowSpacing={3}>
-                    <Grid
-                        container
-                        item
-                        xs
-                        sm
-                        alignItems="center"
-                        order={{ xs: 0, height: 80 }}
-                    >
-                        <PageTitle>API Key</PageTitle>
+                <form noValidate>
+                    <Grid container sx={{ mb: [0, 3] }} columnSpacing={1.5} rowSpacing={3}>
+                        <Grid
+                            container
+                            item
+                            xs
+                            sm
+                            alignItems="center"
+                            order={{ xs: 0, height: 80 }}
+                        >
+                            <PageTitle>API Key</PageTitle>
+                        </Grid>
                     </Grid>
-                </Grid>
-                <Divider sx={{ mt: [2, 0], mb: 2 }} />
+                    <Divider sx={{ mt: [2, 0], mb: 2 }} />
 
-                <WrappingBox>
-                    <PageTitle marginBottom="1rem" fontSize="1.3rem">What is API key?</PageTitle>
-                    <FormHelperText>
-                        API Key Auth lets you build a form to request an API key, along with any additional fields your API requires for authentication. Zapier then passes the data users enter in those fields with every API call.
-                    </FormHelperText>
-                </WrappingBox>
+                    <WrappingBox>
+                        <PageTitle marginBottom="1rem" fontSize="1.3rem">What is API key?</PageTitle>
+                        <FormHelperText>
+                            API Key Auth lets you build a form to request an API key, along with any additional fields your API requires for authentication. Zapier then passes the data users enter in those fields with every API call.
+                        </FormHelperText>
+                    </WrappingBox>
 
-                <AuthFirstStep fields={fields} setFields={setFields}/>
+                    <AuthFirstStep watch={watch} control={control} register={register} />
 
-                <AuthSecondStep 
-                    headers={headers}
-                    setHeaders={setHeaders}
-                    endpoint={endpoint}
-                    setEndpoint={setEndpoint} 
-                />
+                    {/* <AuthSecondStep
+                        headers={headers}
+                        setHeaders={setHeaders}
+                        endpoint={endpoint}
+                        setEndpoint={setEndpoint}
+                    /> */}
+                </form>
             </Container>
         </Box>
-  )
+    )
 }
 
 export default NewIntegrationAuthAPIKey
