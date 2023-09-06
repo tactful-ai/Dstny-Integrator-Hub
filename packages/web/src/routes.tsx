@@ -23,6 +23,7 @@ import TriggerPage from 'pages/TriggerPage'
 import TriggerPage2 from 'pages/TriggerPage2'
 import ActionPage from 'pages/ActionPage'
 import ActionPage2 from 'pages/ActionPage2'
+import InputActionPage from 'pages/InputActionPage'
 export default (
   <Routes>
     <Route
@@ -79,6 +80,14 @@ export default (
       element={
         <Layout>
           <ActionPage2 />
+        </Layout>
+      }
+    />
+            <Route
+      path={URLS.INPUTACTION_PAGE}  
+      element={
+        <Layout>
+          <InputActionPage />
         </Layout>
       }
     />

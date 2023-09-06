@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { useLocation, useNavigate } from 'react-router-dom';
 import WrappingBox from "components/WrappingBox";
-import CustomAccordin from "components/CustomAccordin"; 
+import CustomAccordion from "components/CustomAccordion"; 
 import TagNumber from "components/TagNumber";
 import CodeEditor from '@uiw/react-textarea-code-editor'; 
 import * as URLS from 'config/urls';
@@ -74,7 +74,7 @@ function TriggerForm2() {
 
   
     try {
-      const response = await fetch(`${config.apiUrl}/integrations/trigger/polling/demo`, {
+      const response = await fetch(`${config.apiUrl}/integrations/trigger/polling/zendesk`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -148,7 +148,7 @@ function TriggerForm2() {
           <div style={{ marginBottom: '15px' }}>
             <Typography variant="h6" sx={{ mb: 2 }}>Triggers</Typography>
           </div>
-          <CustomAccordin tag={<TagNumber text="Step 1" />} heading="Configure your API request">
+          <CustomAccordion tag={<TagNumber text="Step 1" />} heading="Configure your API request">
             <WrappingBox>
               <Typography variant="h6" sx={{ mb: 2 }}>Polling Trigger</Typography>
               <div style={{ marginBottom: '15px' }}>
@@ -177,8 +177,8 @@ function TriggerForm2() {
                 Continue
               </Button>
             </WrappingBox>
-          </CustomAccordin>
-          <CustomAccordin tag={<TagNumber text="Step 2" />} heading="Test your API request">
+          </CustomAccordion>
+          <CustomAccordion tag={<TagNumber text="Step 2" />} heading="Test your API request">
             <WrappingBox>
               <Typography variant="h6" sx={{ mb: 2 }}>Response</Typography>
               <Button
@@ -197,7 +197,7 @@ function TriggerForm2() {
                 </Typography>
               )}
             </WrappingBox>
-          </CustomAccordin>
+          </CustomAccordion>
           <Button type="submit" variant="contained" color="primary" size="small" sx={{ mt: 2 }}>
             Finish
           </Button>
