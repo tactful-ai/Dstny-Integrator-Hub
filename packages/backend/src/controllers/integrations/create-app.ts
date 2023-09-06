@@ -2,6 +2,7 @@ import { Response } from 'express';
 import { IRequest } from '@automatisch/types';
 import type { IApp } from '@automatisch/types';
 import * as fs from 'fs-extra';
+import path from 'path';
 
 import logger from '../../helpers/logger';
 
@@ -9,13 +10,45 @@ export default async (request: IRequest, response: Response) => {
   logger.debug(
     `Handling incoming app creation request at ${request.originalUrl}.`
   );
+  
   generateAppConfigFile(request.body as IApp);
+  handleLogo(request, `./src/apps/${request.body.key}/assets`)
 
   response.status(200).send({
     success: true,
     message: 'App created successfully.',
   });
 };
+
+async function handleLogo(req: IRequest, appDirectory: string) {
+  const logoFile = req.file;
+
+  try {
+    await fs.ensureDir(appDirectory);
+  } catch (err) {
+    console.error('Error creating assets directory:', err);
+    return;
+  }
+
+  const faviconPath = path.join(appDirectory, 'favicon.svg');
+
+  if (logoFile) {
+    try {
+      await fs.writeFile(faviconPath, logoFile.buffer);
+      logger.info('Logo saved as favicon.svg:', faviconPath);
+    } catch (err) {
+      logger.error(err);
+    }
+  } else {
+    const defaultLogoPath = '/workspace/packages/docs/pages/public/example-app/cat.svg'; 
+    try {
+      await fs.copyFile(defaultLogoPath, faviconPath);
+      logger.info('Default logo added as favicon.svg:', faviconPath);
+    } catch (err) {
+      logger.error(err);
+    }
+  }
+}
 
 function generateAppConfigFile(config: IApp): void {
   const content = `
@@ -25,7 +58,7 @@ const appConfig = {
   name: ${JSON.stringify(config.name || '')},
   key: ${JSON.stringify(config.key || '')},
   iconUrl: ${JSON.stringify(
-    config.iconUrl || `{BASE_URL}/apps/dstny-engage/assets/favicon.svg`
+    config.iconUrl || `{BASE_URL}/apps/${config.key}/assets/favicon.svg`
   )},
   authDocUrl: ${JSON.stringify(
     config.authDocUrl ||
