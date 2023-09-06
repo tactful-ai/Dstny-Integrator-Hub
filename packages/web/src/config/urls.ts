@@ -106,3 +106,7 @@ export const DASHBOARD = FLOWS;
 // External links
 export const WEBHOOK_DOCS =
   'https://automatisch.io/docs/apps/webhooks/connection';
+
+
+// list all integrations
+export const MY_INTEGRATIONS = '/my-integrations';

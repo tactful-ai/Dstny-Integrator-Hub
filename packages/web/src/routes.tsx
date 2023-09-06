@@ -20,6 +20,7 @@ import Notifications from 'pages/Notifications';
 import IntegrationPage from 'pages/integrationPage';
 import OverviewPage from 'pages/overviewPage';
 import TriggerPage from 'pages/TriggerPage'
+import MyIntegrations from 'pages/MyIntegrations';
 export default (
   <Routes>
     <Route
@@ -47,6 +48,16 @@ export default (
         </Layout>
       }
     />
+
+    <Route
+      path={URLS.MY_INTEGRATIONS}  
+      element={
+        <Layout>
+          <MyIntegrations />
+        </Layout>
+      }
+    />
+
     <Route
       path={URLS.TRIGGER_PAGE}  
       element={
