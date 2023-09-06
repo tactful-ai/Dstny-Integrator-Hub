@@ -1,6 +1,8 @@
 import type { AxiosInstance, AxiosRequestConfig } from 'axios';
 export type IHttpClient = AxiosInstance;
 import type { Request } from 'express';
+import {UseFormRegister, Control } from 'react-hook-form'
+
 
 // Type definitions for automatisch
 
@@ -469,15 +471,37 @@ export interface IRequest extends Request {
 
 // New Integration Authentication types
 
+export type header = {
+    key: string;
+    value: string;
+}
+
+export type NewIntegrationAuthAPIKeyFormValues = {
+    endpoint: string;
+    headers: header[];
+    fields: field[];
+}
+
+export type AuthFirstStepProps = {
+    register: UseFormRegister<NewIntegrationAuthAPIKeyFormValues>;
+    control: Control<NewIntegrationAuthAPIKeyFormValues, any>;
+    authFields?: field[];
+    watch: UseFormWatch<NewIntegrationAuthAPIKeyFormValues>
+}
+
 export type AuthNewFormProps = {
-    fieldsState:AuthFirstStepProps;
-    handleClose:() => void;
+    formUtilities:AuthFirstStepProps;
+    removeField: (index:number) => void;
+    handleClose: () => void;
+
 }
 
 export type NewAuthFieldProps = {
     openModal: boolean;
+    removeField: (index:number) => void;
     handleClose: () => void;
-    fieldsState: AuthFirstStepProps;
+    formUtilities:AuthFirstStepProps;
+
 }
 
 export type field = {
@@ -520,7 +544,3 @@ export type AuthNewFormProps = {
     handleClose:() => void;
 }
 
-export type AuthFirstStepProps = {
-    fields: field[];
-    setFields: (value: field[] | ((prevValue: field[]) => field[])) => void;
-}
