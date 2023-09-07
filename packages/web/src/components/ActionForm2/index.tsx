@@ -11,6 +11,11 @@ import * as URLS from 'config/urls';
 import config from 'config/app';
 
 interface State {
+  actionFormData: {
+    name: string;
+    Key: string;
+    Description: string;
+  };
   inputActionData: {
     label: string;
     key: string;
@@ -26,8 +31,8 @@ function ActionForm2() {
   const navigate = useNavigate();
   const [ActionData, setActionData] = useState({
     name: '',
-    Keymain: '',
-    Descriptionmain: '',
+    Key: '',
+    Description: '',
     code: '',
   });
 
@@ -37,24 +42,16 @@ function ActionForm2() {
   const [testResult, setTestResult] = useState<string | null>(null);
 
   useEffect(() => {
-    // Extract query parameters from location
-    const searchParams = new URLSearchParams(location.search);
-    const name = searchParams.get('name') || '';
-    const keymain = searchParams.get('Keymain') || ''; // Ensure case matches the URL parameter
-    const descriptionmain = searchParams.get('Descriptionmain') || '';
+    const locationState = location.state as State;
+    const { name, Key, Description } = locationState.actionFormData;
 
-    console.log('Query Parameters:', { name, keymain, descriptionmain });
-
-    setActionData({
-      name,
-      Keymain:keymain ,
-      Descriptionmain: descriptionmain,
-      code: providedCode,
-    });
-  }, [location.search]);
-
-  
-
+    setActionData((prevData) => ({
+      ...prevData,
+      name: name || '',
+      Key: Key || '',
+      Description: Description || '',
+    }));
+  }, [location]);
 
   const [isCodeModified, setIsCodeModified] = useState(false);
   let isTestSuccessful = false;
@@ -71,14 +68,14 @@ function ActionForm2() {
     }
   };
 
-  const locationState = location.state as State; 
+  const locationState = location.state as State;
 
   const handleTest = async () => {
     const formattedActionData = {
       name: ActionData.name,
-      Key: ActionData.Keymain,
-      Description: ActionData.Descriptionmain,
-      code: ActionData.code,
+      Key: ActionData.Key,
+      Description: ActionData.Description,
+      code: isContinuePressed ? ActionData.code : providedCode,
       inputActionData: locationState.inputActionData,
     };
     console.log(formattedActionData);
@@ -144,7 +141,7 @@ function ActionForm2() {
                 <label htmlFor="code">Code:</label>
                 <CodeEditor
                   name="code"
-                  value={ActionData.code}
+                  value={providedCode}
                   language="ts"
                   padding={15}
                   onChange={(evn) => handleInputChange(evn)}

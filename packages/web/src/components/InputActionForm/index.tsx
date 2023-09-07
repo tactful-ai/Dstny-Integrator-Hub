@@ -38,6 +38,7 @@ function InputActionForm() {
       Key: searchParams.get('key') || '',
       Description: searchParams.get('description') || '',
     };
+    console.log(actionFormData)
 
     setCombinedFormData((prevData) => ({
       ...prevData,
@@ -81,7 +82,7 @@ function InputActionForm() {
     navigate(URLS.ACTION_PAGE2, {
       state: combinedFormData,
     });
-    console.log(combinedFormData);
+    console.log(combinedFormData, combinedFormData.inputActionData);
   };
 
   return (

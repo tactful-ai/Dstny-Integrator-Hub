@@ -111,7 +111,8 @@ function IntegrationForm() {
   
       if (response.ok) {
         console.log('Integration data sent successfully!');
-        navigate(URLS.OVERVIEW_PAGE);
+        window.location.href = `${URLS.OVERVIEW_PAGE}?${integrationData.Key}`;
+        console.log(integrationData.Key);
       } else {
         console.error('Failed to send integration data to the backend.');
 
