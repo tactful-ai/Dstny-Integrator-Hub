@@ -172,11 +172,18 @@ type SubstepArgumentAdditionalFieldsArgument {
 type AppConfig {
   id: String
   key: String
+  name: String
+  base_url: String
+  api_base_url: String
+  primary_color: String
+  icon_url: String
+  auth_doc_url: String
   allowCustomConnection: Boolean
-  canConnect: Boolean
-  canCustomConnect: Boolean
   shared: Boolean
   disabled: Boolean
+  user_id: String
+  canConnect: Boolean
+  canCustomConnect: Boolean
 }
 
 type App {
@@ -750,6 +757,13 @@ type Subject {
 
 input CreateAppConfigInput {
   key: String
+  name: String
+  base_url: String
+  api_base_url: String
+  primary_color: String
+  icon_url: String
+  auth_doc_url: String
+  user_id: String
   allowCustomConnection: Boolean
   shared: Boolean
   disabled: Boolean
@@ -760,6 +774,13 @@ input UpdateAppConfigInput {
   allowCustomConnection: Boolean
   shared: Boolean
   disabled: Boolean
+  name: String
+  base_url: String
+  api_base_url: String
+  primary_color: String
+  icon_url: String
+  auth_doc_url: String
+  user_id: String
 }
 
 type AppAuthClient {
