@@ -33,7 +33,7 @@ function ActionForm2() {
     name: '',
     Key: '',
     Description: '',
-    code: '',
+    run: '',
   });
 
   const providedCode =
@@ -62,7 +62,7 @@ function ActionForm2() {
     if (isCodeModified) {
       setActionData((prevData) => ({
         ...prevData,
-        code: prevData.code,
+        run: prevData.run,
       }));
       setIsContinuePressed(true);
     }
@@ -73,15 +73,15 @@ function ActionForm2() {
   const handleTest = async () => {
     const formattedActionData = {
       name: ActionData.name,
-      Key: ActionData.Key,
-      Description: ActionData.Description,
-      code: isContinuePressed ? ActionData.code : providedCode,
-      inputActionData: locationState.inputActionData,
+      key: ActionData.Key,
+      description: ActionData.Description,
+      run: isContinuePressed ? ActionData.run : providedCode,
+      args: locationState.inputActionData,
     };
     console.log(formattedActionData);
 
     try {
-      const response = await fetch(`${config.apiUrl}/integrations/trigger/polling/demo`, {
+      const response = await fetch(`${config.apiUrl}/integrations/actions/aya`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -90,10 +90,10 @@ function ActionForm2() {
       });
 
       if (response.ok) {
-        console.log('Trigger data sent successfully!');
+        console.log('Action data sent successfully!');
         isTestSuccessful = true;
       } else {
-        console.error('Failed to send Trigger data to the backend.');
+        console.error('Failed to send Action data to the backend.');
         isTestSuccessful = false;
       }
     } catch (error) {
@@ -106,10 +106,10 @@ function ActionForm2() {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target;
 
-    if (name === 'code') {
+    if (name === 'run') {
       setActionData((prevData) => ({
         ...prevData,
-        code: value,
+        run: value,
       }));
       setIsCodeModified(true);
     }
@@ -138,9 +138,9 @@ function ActionForm2() {
           <CustomAccordion tag={<TagNumber text="Step 1" />} heading="Configure your API request">
             <WrappingBox>
               <div style={{ marginBottom: '15px' }}>
-                <label htmlFor="code">Code:</label>
+                <label htmlFor="run">Code:</label>
                 <CodeEditor
-                  name="code"
+                  name="run"
                   value={providedCode}
                   language="ts"
                   padding={15}

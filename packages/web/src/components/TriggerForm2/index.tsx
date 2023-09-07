@@ -12,9 +12,9 @@ import config from 'config/app';
 
 interface FormData {
   name: string;
-  Key: string;
-  Description: string;
-  code: string;
+  key: string;
+  description: string;
+  run: string;
   pollInterval: number;
 }
 
@@ -29,9 +29,9 @@ function TriggerForm2() {
 
   const [triggerData, setTriggerData] = useState<FormData>({
     name: '',
-    Key: '',
-    Description: '',
-    code: '', 
+    key: '',
+    description: '',
+    run: '', 
     pollInterval : 15,
   });
 
@@ -47,9 +47,9 @@ function TriggerForm2() {
 
     setTriggerData({
       name,
-      Key: key,
-      Description: description,
-      code: providedCode, 
+      key: key,
+      description: description,
+      run: providedCode, 
       pollInterval: 15,
     });
   }, [location.search]);
@@ -58,23 +58,22 @@ function TriggerForm2() {
 
 
   const handleTest = async () => {
-    const resultMessage = isTestSuccessful ? "Successful" : "Failed";
-    setTestResult(resultMessage);
+
   
-    const codeToUse = isContinuePressed ? triggerData.code : providedCode; 
+    const codeToUse = isContinuePressed ? triggerData.run : providedCode; 
   
     const formattedTriggerData = {
       name: triggerData.name,
-      Key: triggerData.Key,
-      Description: triggerData.Description,
-      code: codeToUse,
+      key: triggerData.key,
+      description: triggerData.description,
+      run: codeToUse,
       pollInterval: triggerData.pollInterval,
     };
     console.log(formattedTriggerData);
 
   
     try {
-      const response = await fetch(`${config.apiUrl}/integrations/trigger/polling/zendesk`, {
+      const response = await fetch(`${config.apiUrl}/integrations/trigger/polling/aya`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -85,9 +84,11 @@ function TriggerForm2() {
       if (response.ok) {
         console.log('Trigger data sent successfully!');
         isTestSuccessful = true;
+        setTestResult("Successful");
       } else {
         console.error('Failed to send Trigger data to the backend.');
         isTestSuccessful = false;
+        setTestResult("Failed");
       }
     } catch (error) {
       console.error('An error occurred:', error);
@@ -107,7 +108,7 @@ function TriggerForm2() {
     if (isCodeModified) {
       setTriggerData((prevData) => ({
         ...prevData,
-        code: prevData.code,
+        run: prevData.run,
       }));
       setIsContinuePressed(true); 
   };
@@ -126,10 +127,10 @@ function TriggerForm2() {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target;
   
-    if (name === 'code') {
+    if (name === 'run') {
       setTriggerData((prevData) => ({
         ...prevData,
-        code: value,
+        run: value,
       }));
       
       setIsCodeModified(true);
@@ -152,10 +153,10 @@ function TriggerForm2() {
             <WrappingBox>
               <Typography variant="h6" sx={{ mb: 2 }}>Polling Trigger</Typography>
               <div style={{ marginBottom: '15px' }}>
-                <label htmlFor="code">Code:</label>
+                <label htmlFor="run">Code:</label>
                 <CodeEditor
-                  name="code"
-                  value={triggerData.code}
+                  name="run"
+                  value={triggerData.run}
                   language="ts"
                   onChange={(evn) => handleInputChange(evn)}
                   padding={15}

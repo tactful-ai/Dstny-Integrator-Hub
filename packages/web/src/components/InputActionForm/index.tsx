@@ -133,18 +133,7 @@ function InputActionForm() {
                 size="small"
               />
             </div>
-            <div style={{ marginBottom: '8px' }}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    name={`required-${index}`}
-                    checked={item.required}
-                    onChange={(event) => handleInputChange(event, index)}
-                  />
-                }
-                label="Required"
-              />
-            </div>
+
             <div style={{ marginBottom: '15px' }}>
               <label htmlFor={`description-${index}`}>Description:</label>
               <TextField
@@ -155,6 +144,18 @@ function InputActionForm() {
                 onChange={(event) => handleInputChange(event, index)}
                 margin="dense"
                 size="small"
+              />
+            </div>
+            <div style={{ marginBottom: '8px' }}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    name={`required-${index}`}
+                    checked={item.required}
+                    onChange={(event) => handleInputChange(event, index)}
+                  />
+                }
+                label="Required"
               />
             </div>
             <div style={{ marginBottom: '8px' }}>

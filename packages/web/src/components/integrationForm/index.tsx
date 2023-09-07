@@ -96,6 +96,7 @@ function IntegrationForm() {
       supportsConnections: integrationData.SupportsConnections,
       baseUrl: integrationData.BaseUrl,
       apiBaseUrl: integrationData.homePageUrl,
+      logo: integrationData.logo,
     };
     // console.log(JSON.stringify(formattedIntegrationData))
     // navigate(URLS.OVERVIEW_PAGE);
