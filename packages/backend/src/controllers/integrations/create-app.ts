@@ -14,7 +14,7 @@ export default async (request: IRequest, response: Response) => {
   );
   
   generateAppConfigFile(request.body as IApp);
-  handleLogo(request, `./src/apps/${request.body.key}/assets`)
+  await handleLogo(request, `./src/apps/${request.body.key}/assets`)
 
   await addAppDirectory(request.body.key);
   App.updateApps(request.body.key);
