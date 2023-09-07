@@ -1,18 +1,17 @@
-// InputActionForm.js
-import React, { useState , useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { useNavigate, useLocation  } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import * as URLS from 'config/urls';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 
 function InputActionForm() {
   const navigate = useNavigate();
   const location = useLocation();
+
   const [combinedFormData, setCombinedFormData] = useState({
     actionFormData: {
       name: '',
@@ -38,7 +37,6 @@ function InputActionForm() {
       Key: searchParams.get('key') || '',
       Description: searchParams.get('description') || '',
     };
-    console.log(actionFormData)
 
     setCombinedFormData((prevData) => ({
       ...prevData,
@@ -46,33 +44,39 @@ function InputActionForm() {
     }));
   }, [location.search]);
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    const fieldName = name.split('-')[0];
-
-    setCombinedFormData((prevData) => ({
-      ...prevData,
-      inputActionData: [
-        {
-          ...prevData.inputActionData[0],
-          [fieldName]: value,
-        },
-      ],
-    }));
-  };
-
-  const handleSelectChange = (index: number, selectedValue: string, fieldName: string) => {
-    setCombinedFormData((prevData) => ({
-      ...prevData,
-      inputActionData: prevData.inputActionData.map((item, i) =>
-        i === index
-          ? {
-              ...item,
-              [fieldName]: selectedValue === 'true',
-            }
-          : item
-      ),
-    }));
+  const handleInputChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    index: number
+  ) => {
+    const { name, value, type } = event.target;
+  
+    if (type === 'checkbox') {
+      const checked = (event.target as HTMLInputElement).checked;
+  
+      setCombinedFormData((prevData) => ({
+        ...prevData,
+        inputActionData: prevData.inputActionData.map((item, i) =>
+          i === index
+            ? {
+                ...item,
+                [name.split('-')[0]]: checked,
+              }
+            : item
+        ),
+      }));
+    } else {
+      setCombinedFormData((prevData) => ({
+        ...prevData,
+        inputActionData: prevData.inputActionData.map((item, i) =>
+          i === index
+            ? {
+                ...item,
+                [name.split('-')[0]]: value,
+              }
+            : item
+        ),
+      }));
+    }
   };
   
 
@@ -100,7 +104,7 @@ function InputActionForm() {
                 fullWidth
                 required
                 value={item.label}
-                onChange={handleInputChange}
+                onChange={(event) => handleInputChange(event, index)}
                 margin="dense"
                 size="small"
               />
@@ -112,7 +116,7 @@ function InputActionForm() {
                 fullWidth
                 required
                 value={item.key}
-                onChange={handleInputChange}
+                onChange={(event) => handleInputChange(event, index)}
                 margin="dense"
                 size="small"
               />
@@ -124,25 +128,22 @@ function InputActionForm() {
                 fullWidth
                 required
                 value={item.type}
-                onChange={handleInputChange}
+                onChange={(event) => handleInputChange(event, index)}
                 margin="dense"
                 size="small"
               />
             </div>
             <div style={{ marginBottom: '8px' }}>
-              <label htmlFor={`required-${index}`}>Required:</label>
-              <FormControl fullWidth>
-                <Select
-                  name={`required-${index}`}
-                  value={item.required.toString()}
-                  onChange={(event) => handleSelectChange(index, event.target.value, 'required')}
-                  margin="dense"
-                  size="small"
-                >
-                  <MenuItem value="false">False</MenuItem>
-                  <MenuItem value="true">True</MenuItem>
-                </Select>
-              </FormControl>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    name={`required-${index}`}
+                    checked={item.required}
+                    onChange={(event) => handleInputChange(event, index)}
+                  />
+                }
+                label="Required"
+              />
             </div>
             <div style={{ marginBottom: '15px' }}>
               <label htmlFor={`description-${index}`}>Description:</label>
@@ -151,25 +152,22 @@ function InputActionForm() {
                 fullWidth
                 required
                 value={item.description}
-                onChange={handleInputChange}
+                onChange={(event) => handleInputChange(event, index)}
                 margin="dense"
                 size="small"
               />
             </div>
             <div style={{ marginBottom: '8px' }}>
-              <label htmlFor={`variables-${index}`}>Variables:</label>
-              <FormControl fullWidth>
-                <Select
-                  name={`variables-${index}`}
-                  value={item.variables.toString()}
-                  onChange={(event) => handleSelectChange(index, event.target.value, 'variables')}
-                  margin="dense"
-                  size="small"
-                >
-                  <MenuItem value="false">False</MenuItem>
-                  <MenuItem value="true">True</MenuItem>
-                </Select>
-              </FormControl>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    name={`variables-${index}`}
+                    checked={item.variables}
+                    onChange={(event) => handleInputChange(event, index)}
+                  />
+                }
+                label="Variables"
+              />
             </div>
           </div>
         ))}
