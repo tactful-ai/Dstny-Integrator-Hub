@@ -3,12 +3,13 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { useNavigate } from 'react-router-dom';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import * as URLS from 'config/urls';
 import config from 'config/app';
+import { useLocation, useNavigate } from 'react-router-dom';
+
 
 
 function IntegrationForm() {
@@ -85,10 +86,11 @@ function IntegrationForm() {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
   
-    // Make sure the BaseUrl and homePageUrl are valid before submitting
-    if (!isUrlValid(integrationData.BaseUrl) || !isUrlValid(integrationData.homePageUrl)) {
+    if ((!isUrlValid(integrationData.BaseUrl) || !isUrlValid(integrationData.homePageUrl))) {
       return;
     }
+ 
+  
   
     const formattedIntegrationData = {
       name: integrationData.name,
@@ -98,9 +100,12 @@ function IntegrationForm() {
       apiBaseUrl: integrationData.homePageUrl,
       logo: integrationData.logo,
     };
+    const mainkey = integrationData.Key;
+    console.log(integrationData.logo);
+    
     // console.log(JSON.stringify(formattedIntegrationData))
     // navigate(URLS.OVERVIEW_PAGE);
-  
+   
     try {
       const response = await fetch(`${config.apiUrl}/integrations/create`, {
         method: 'POST',
@@ -112,8 +117,13 @@ function IntegrationForm() {
   
       if (response.ok) {
         console.log('Integration data sent successfully!');
-        window.location.href = `${URLS.OVERVIEW_PAGE}?${integrationData.Key}`;
-        console.log(integrationData.Key);
+        console.log(mainkey);
+        if (mainkey !== null && mainkey !== undefined) {
+          window.location.href = `${URLS.TRIGGER_PAGE}?mainkey=${mainkey}`;
+        } else {
+          console.error('mainkey is null or undefined');
+        }
+        
       } else {
         console.error('Failed to send integration data to the backend.');
 
@@ -202,7 +212,6 @@ function IntegrationForm() {
             value={integrationData.BaseUrl}
             onChange={handleInputChange}
             onBlur={() => {
-              // Set the field as touched when the input loses focus
               setTouchedFields((prevTouchedFields) => ({
                 ...prevTouchedFields,
                 BaseUrl : true,
@@ -235,7 +244,7 @@ function IntegrationForm() {
         </div>
 
         
-        <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }} disabled={!isUrlValid(integrationData.BaseUrl) && !isUrlValid(integrationData.homePageUrl)} >
+        <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }} disabled={(!isUrlValid(integrationData.BaseUrl)) || (!isUrlValid(integrationData.homePageUrl))|| (integrationData.logo === null)} >
           Create
         </Button>
       </form>

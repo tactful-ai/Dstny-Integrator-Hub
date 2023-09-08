@@ -5,13 +5,18 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import config from 'config/app';
 import * as URLS from 'config/urls';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function TriggerForm() {
+  const location = useLocation(); 
+  const queryParams = new URLSearchParams(location.search);
+  const mainkey = queryParams.get('mainkey');
   const [triggerData, setTriggerData] = useState({
     name: '',
     Key: '',
     Description: '',
   });
+  console.log(mainkey);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -31,7 +36,9 @@ function TriggerForm() {
       description: triggerData.Description,
     };
 
-    window.location.href = `${URLS.TRIGGER_PAGE2}?name=${formattedTriggerData.name}&key=${formattedTriggerData.key}&description=${formattedTriggerData.description}`;
+
+    window.location.href = `${URLS.TRIGGER_PAGE2}?name=${formattedTriggerData.name}&key=${formattedTriggerData.key}&description=${formattedTriggerData.description}&mainkey=${mainkey}`;
+    
 
 
   };

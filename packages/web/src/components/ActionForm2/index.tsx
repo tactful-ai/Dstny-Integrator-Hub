@@ -29,12 +29,14 @@ interface State {
 function ActionForm2() {
   const location = useLocation();
   const navigate = useNavigate();
+  const mainkey = (location.state as { mainkey: string | null })?.mainkey || null;
   const [ActionData, setActionData] = useState({
     name: '',
     Key: '',
     Description: '',
     run: '',
   });
+  console.log(mainkey)
 
   const providedCode =
     "const requestPath = `/customers/${$.step.parameters.id}`;\n\nconst headers = {\n  'X-API-KEY': $.auth.data.authToken as string,\n};\n\nconst response = await $.http.delete(\n  requestPath,\n);\n\n$.setActionItem({ raw: response.data });";
@@ -81,7 +83,7 @@ function ActionForm2() {
     console.log(formattedActionData);
 
     try {
-      const response = await fetch(`${config.apiUrl}/integrations/actions/aya`, {
+      const response = await fetch(`${config.apiUrl}/integrations/actions/${mainkey}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

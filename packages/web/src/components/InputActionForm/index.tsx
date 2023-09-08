@@ -7,10 +7,16 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import * as URLS from 'config/urls';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+
 
 function InputActionForm() {
   const navigate = useNavigate();
   const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const mainkey = queryParams.get('mainkey');
 
   const [combinedFormData, setCombinedFormData] = useState({
     actionFormData: {
@@ -28,6 +34,7 @@ function InputActionForm() {
         variables: false,
       },
     ],
+    mainkey: mainkey,
   });
 
   useEffect(() => {
@@ -45,7 +52,7 @@ function InputActionForm() {
   }, [location.search]);
 
   const handleInputChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement >,
     index: number
   ) => {
     const { name, value, type } = event.target;
@@ -78,6 +85,26 @@ function InputActionForm() {
       }));
     }
   };
+  const handleSelectChange = (
+    event: SelectChangeEvent<string>,
+    index: number
+  ) => {
+    const selectedType = event.target.value;
+  
+    setCombinedFormData((prevData) => ({
+      ...prevData,
+      inputActionData: prevData.inputActionData.map((item, i) =>
+        i === index
+          ? {
+              ...item,
+              type: selectedType,
+            }
+          : item
+      ),
+    }));
+  };
+  
+
   
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -86,6 +113,7 @@ function InputActionForm() {
     navigate(URLS.ACTION_PAGE2, {
       state: combinedFormData,
     });
+    console.log(mainkey);
     console.log(combinedFormData, combinedFormData.inputActionData);
   };
 
@@ -122,17 +150,21 @@ function InputActionForm() {
               />
             </div>
             <div style={{ marginBottom: '8px' }}>
-              <label htmlFor={`type-${index}`}>Type:</label>
-              <TextField
-                name={`type-${index}`}
-                fullWidth
-                required
-                value={item.type}
-                onChange={(event) => handleInputChange(event, index)}
-                margin="dense"
-                size="small"
-              />
-            </div>
+          <label htmlFor={'type-${index}'}>Type:</label>
+          <FormControl fullWidth>
+            <Select
+              name="type"
+              value={item.type} 
+              onChange={(event) => handleSelectChange(event, index)} 
+              margin="dense"
+              size="small"
+            >
+              <MenuItem value="string">String</MenuItem>
+              <MenuItem value="dropdown">Dropdown</MenuItem>
+              <MenuItem value="dynamic">Dynamic</MenuItem>
+            </Select>
+          </FormControl>
+        </div>
 
             <div style={{ marginBottom: '15px' }}>
               <label htmlFor={`description-${index}`}>Description:</label>

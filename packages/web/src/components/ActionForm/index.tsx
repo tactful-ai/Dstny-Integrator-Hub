@@ -4,8 +4,12 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import * as URLS from 'config/urls';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function ActionForm() {
+  const location = useLocation(); 
+  const queryParams = new URLSearchParams(location.search);
+  const mainkey = queryParams.get('mainkey');
   const [actions, setActions] = useState([
     {
       name: '',
@@ -36,7 +40,8 @@ function ActionForm() {
       .map((action) => `name=${action.name}&key=${action.Key}&description=${action.Description}`)
       .join('&');
 
-    window.location.href = `${URLS.INPUTACTION_PAGE}?${queryParameters}`;
+    window.location.href = `${URLS.INPUTACTION_PAGE}?${queryParameters}&mainkey=${mainkey}`;
+    console.log(mainkey);
     console.log(queryParameters);
 
   };

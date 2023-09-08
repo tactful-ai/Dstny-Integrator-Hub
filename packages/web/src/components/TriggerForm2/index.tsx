@@ -20,6 +20,7 @@ interface FormData {
 
 function TriggerForm2() {
   const location = useLocation();
+  const [mainKey, setMainKey] = useState<string | null>(null);
   const navigate = useNavigate();
   
 
@@ -44,6 +45,9 @@ function TriggerForm2() {
     const name = searchParams.get("name") || "";
     const key = searchParams.get("key") || "";
     const description = searchParams.get("description") || "";
+    const mainKeyFromParams = searchParams.get('mainkey') || '';
+
+    setMainKey(mainKeyFromParams);
 
     setTriggerData({
       name,
@@ -52,6 +56,7 @@ function TriggerForm2() {
       run: providedCode, 
       pollInterval: 15,
     });
+
   }, [location.search]);
 
   let isTestSuccessful = false; 
@@ -70,10 +75,11 @@ function TriggerForm2() {
       pollInterval: triggerData.pollInterval,
     };
     console.log(formattedTriggerData);
+    console.log(mainKey);
 
   
     try {
-      const response = await fetch(`${config.apiUrl}/integrations/trigger/polling/aya`, {
+      const response = await fetch(`${config.apiUrl}/integrations/trigger/polling/${mainKey}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -121,7 +127,7 @@ function TriggerForm2() {
   
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    navigate(URLS.ACTION_PAGE);
+    window.location.href = `${URLS.ACTION_PAGE}?mainkey=${mainKey}`;
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
