@@ -6,6 +6,7 @@ type Query {
   ): [App]
   getApp(key: String!): App
   getAppConfig(key: String!): AppConfig
+  getIntegrations(userId: String!): AppConfig
   getAppAuthClient(id: String!): AppAuthClient
   getAppAuthClients(appKey: String!, active: Boolean): [AppAuthClient]
   getConnectedApps(name: String): [App]
@@ -173,15 +174,15 @@ type AppConfig {
   id: String
   key: String
   name: String
-  base_url: String
-  api_base_url: String
-  primary_color: String
-  icon_url: String
-  auth_doc_url: String
+  baseUrl: String
+  apiBaseUrl: String
+  primaryColor: String
+  iconUrl: String
+  authDocUrl: String
   allowCustomConnection: Boolean
   shared: Boolean
   disabled: Boolean
-  user_id: String
+  userId: String
   canConnect: Boolean
   canCustomConnect: Boolean
 }
@@ -758,12 +759,12 @@ type Subject {
 input CreateAppConfigInput {
   key: String
   name: String
-  base_url: String
-  api_base_url: String
-  primary_color: String
-  icon_url: String
-  auth_doc_url: String
-  user_id: String
+  baseUrl: String
+  apiBaseUrl: String
+  primaryColor: String
+  iconUrl: String
+  authDocUrl: String
+  userId: String
   allowCustomConnection: Boolean
   shared: Boolean
   disabled: Boolean
@@ -775,12 +776,12 @@ input UpdateAppConfigInput {
   shared: Boolean
   disabled: Boolean
   name: String
-  base_url: String
-  api_base_url: String
-  primary_color: String
-  icon_url: String
-  auth_doc_url: String
-  user_id: String
+  baseUrl: String
+  apiBaseUrl: String
+  primaryColor: String
+  iconUrl: String
+  authDocUrl: String
+  userId: String
 }
 
 type AppAuthClient {

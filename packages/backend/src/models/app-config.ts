@@ -17,6 +17,7 @@ class AppConfig extends Base {
   disabled: boolean;
   userId: string;
   appAuthClients?: AppAuthClient[];
+  users? : User;
 
 
   static tableName = 'app_configs';
@@ -53,7 +54,7 @@ static relationMappings = () => ({
         to: 'app_auth_clients.app_config_id',
       },
     },
-    user: { 
+    users: { 
       relation: Base.BelongsToOneRelation,
       modelClass: User,
       join: {
