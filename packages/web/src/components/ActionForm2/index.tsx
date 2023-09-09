@@ -127,6 +127,10 @@ function ActionForm2() {
     event.preventDefault();
     navigate(URLS.OVERVIEW_PAGE);
   };
+  const handleAdd = async (event: React.FormEvent) => {
+    event.preventDefault();
+    window.location.href = `${URLS.ACTION_PAGE}?mainkey=${mainkey}`;
+  };
 
   return (
     <div style={{ marginLeft: '-80px' }}>
@@ -189,7 +193,11 @@ function ActionForm2() {
               )}
             </WrappingBox>
           </CustomAccordion>
-          <Button type="submit" variant="contained" color="primary" size="small" sx={{ mt: 2 }}>
+          <Button type="submit" variant="contained" color="primary" size="small" sx={{ mt: 2 }} onClick={handleAdd} >
+            Add Another Action
+          </Button>
+          <br></br>
+          <Button type="submit" variant="contained" color="primary" size="small" sx={{ mt: 2 }} onClick={handleSubmit}>
             Finish
           </Button>
         </form>

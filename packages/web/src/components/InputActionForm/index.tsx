@@ -149,6 +149,18 @@ function InputActionForm() {
                 size="small"
               />
             </div>
+            <div style={{ marginBottom: '15px' }}>
+              <label htmlFor={`description-${index}`}>Description:</label>
+              <TextField
+                name={`description-${index}`}
+                fullWidth
+                required
+                value={item.description}
+                onChange={(event) => handleInputChange(event, index)}
+                margin="dense"
+                size="small"
+              />
+            </div>
             <div style={{ marginBottom: '8px' }}>
           <label htmlFor={'type-${index}'}>Type:</label>
           <FormControl fullWidth>
@@ -165,19 +177,6 @@ function InputActionForm() {
             </Select>
           </FormControl>
         </div>
-
-            <div style={{ marginBottom: '15px' }}>
-              <label htmlFor={`description-${index}`}>Description:</label>
-              <TextField
-                name={`description-${index}`}
-                fullWidth
-                required
-                value={item.description}
-                onChange={(event) => handleInputChange(event, index)}
-                margin="dense"
-                size="small"
-              />
-            </div>
             <div style={{ marginBottom: '8px' }}>
               <FormControlLabel
                 control={

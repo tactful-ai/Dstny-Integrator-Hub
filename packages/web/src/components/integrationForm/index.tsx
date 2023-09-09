@@ -9,6 +9,8 @@ import MenuItem from '@mui/material/MenuItem';
 import * as URLS from 'config/urls';
 import config from 'config/app';
 import { useLocation, useNavigate } from 'react-router-dom';
+import FormData from 'form-data';
+
 
 
 
@@ -86,51 +88,52 @@ function IntegrationForm() {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
   
-    if ((!isUrlValid(integrationData.BaseUrl) || !isUrlValid(integrationData.homePageUrl))) {
+    if (!isUrlValid(integrationData.BaseUrl) || !isUrlValid(integrationData.homePageUrl)) {
       return;
     }
- 
   
+    const mainkey = integrationData.Key;
+  
+    const formData = new FormData();
   
     const formattedIntegrationData = {
       name: integrationData.name,
       key: integrationData.Key,
-      supportsConnections: integrationData.SupportsConnections,
+      supportsConnections: integrationData.SupportsConnections.toString(),
       baseUrl: integrationData.BaseUrl,
       apiBaseUrl: integrationData.homePageUrl,
-      logo: integrationData.logo,
     };
-    const mainkey = integrationData.Key;
-    console.log(integrationData.logo);
-    
-    // console.log(JSON.stringify(formattedIntegrationData))
-    // navigate(URLS.OVERVIEW_PAGE);
-   
+  
+    for (const key of Object.keys(formattedIntegrationData)) {
+      const value = formattedIntegrationData[key as keyof typeof formattedIntegrationData];
+      formData.append(key, value);
+    }
+  
+    if (integrationData.logo) {
+      formData.append('logo', integrationData.logo);
+    }
+  
+    const headers = new Headers();
+  
     try {
       const response = await fetch(`${config.apiUrl}/integrations/create`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formattedIntegrationData),
+        headers: headers,
+        body: formData as unknown as BodyInit,
       });
   
       if (response.ok) {
         console.log('Integration data sent successfully!');
-        console.log(mainkey);
         if (mainkey !== null && mainkey !== undefined) {
           window.location.href = `${URLS.TRIGGER_PAGE}?mainkey=${mainkey}`;
         } else {
           console.error('mainkey is null or undefined');
         }
-        
       } else {
         console.error('Failed to send integration data to the backend.');
-
       }
     } catch (error) {
       console.error('An error occurred:', error);
-
     }
   };
   

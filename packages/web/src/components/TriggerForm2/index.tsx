@@ -129,6 +129,10 @@ function TriggerForm2() {
     event.preventDefault();
     window.location.href = `${URLS.ACTION_PAGE}?mainkey=${mainKey}`;
   };
+  const handleAdd = async (event: React.FormEvent) => {
+    event.preventDefault();
+    window.location.href = `${URLS.TRIGGER_PAGE}?mainkey=${mainKey}`;
+  };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target;
@@ -205,7 +209,11 @@ function TriggerForm2() {
               )}
             </WrappingBox>
           </CustomAccordion>
-          <Button type="submit" variant="contained" color="primary" size="small" sx={{ mt: 2 }}>
+          <Button type="submit" variant="contained" color="primary" size="small" sx={{ mt: 2 }} onClick={handleAdd} >
+            Add Another Trigger
+          </Button>
+          <br></br>
+          <Button type="submit" variant="contained" color="primary" size="small" sx={{ mt: 2 }} onClick={handleSubmit} >
             Finish
           </Button>
         </form>
