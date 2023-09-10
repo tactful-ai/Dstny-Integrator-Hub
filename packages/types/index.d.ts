@@ -476,17 +476,17 @@ export type header = {
     value: string;
 }
 
-export type NewIntegrationAuthAPIKeyFormValues = {
+export type AuthAPIKeyFormValues = {
     endpoint: string;
     headers: header[];
     fields: field[];
 }
 
-export type AuthFirstStepProps = {
+export type AuthStepsProps = {
     register: UseFormRegister<NewIntegrationAuthAPIKeyFormValues>;
     control: Control<NewIntegrationAuthAPIKeyFormValues, any>;
-    authFields?: field[];
-    watch: UseFormWatch<NewIntegrationAuthAPIKeyFormValues>
+    watch?: UseFormWatch<NewIntegrationAuthAPIKeyFormValues>;
+    getValues?:UseFormGetValues<NewIntegrationAuthAPIKeyFormValues>;
 }
 
 export type AuthNewFormProps = {
@@ -505,39 +505,16 @@ export type NewAuthFieldProps = {
 }
 
 export type field = {
-  key: string;
-  label: string;
-  type: string;
-  description?:string;
+  key: string | null | null;
+  label: string | null;
+  type: string | null;
+  description?:string | null;
   readOnly:boolean;
   required: boolean;
   canCopy: boolean;
 }
 
-export type header = {
-    key:string; 
-    value: string;
-}
 
-export type AuthSecondStepProps = {
-    headers: header[];
-    endpoint: string;
-    setEndpoint: (value: string) => void;
-    setHeaders: (value: header[] | ((prevValue: header[]) => header[])) => void;
-};
-
-export type AuthTestRequesFormProps = {
-    setEndPoint: (value: string) => void;
-    setHeaders: (value: header[] | ((prevValue: header[]) => header[])) => void;
-}
-
-export type AuthTestRequesFormValues = {
-    endpoint: string;
-    headers: {
-        key: string;
-        value: string;
-    }[]
-}
 
 export type AuthNewFormProps = {
     fieldsState:AuthFirstStepProps;

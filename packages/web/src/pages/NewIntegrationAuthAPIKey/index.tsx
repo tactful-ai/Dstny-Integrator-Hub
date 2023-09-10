@@ -1,5 +1,5 @@
 import { field } from "@automatisch/types"
-import { Box, Divider, FormHelperText, Grid } from "@mui/material"
+import { Box, Button, Divider, FormHelperText, Grid } from "@mui/material"
 import AuthFirstStep from "components/AuthFirstStep"
 import AuthSecondStep from "components/AuthSecondStep"
 import Container from "components/Container"
@@ -20,21 +20,26 @@ export type NewIntegrationAuthAPIKeyFormValues = {
 
 function NewIntegrationAuthAPIKey() {
 
-    const form = useForm<NewIntegrationAuthAPIKeyFormValues>({defaultValues: {
-        endpoint: '',
-        headers: [],
-        fields: []
-    }});
+    const form = useForm<NewIntegrationAuthAPIKeyFormValues>({
+        defaultValues: {
+            endpoint: '',
+            headers: [],
+            fields: []
+        }
+    });
 
-    
-    
-    const {register, control, handleSubmit, watch} = form;
-    
+
+
+    const { register, control, handleSubmit, watch, getValues } = form;
+
+    function onSubmit(data: NewIntegrationAuthAPIKeyFormValues) {
+        console.log(data)
+    }
 
     return (
         <Box sx={{ py: 3 }}>
             <Container>
-                <form noValidate>
+                <form noValidate onSubmit={handleSubmit(onSubmit)}>
                     <Grid container sx={{ mb: [0, 3] }} columnSpacing={1.5} rowSpacing={3}>
                         <Grid
                             container
@@ -56,14 +61,13 @@ function NewIntegrationAuthAPIKey() {
                         </FormHelperText>
                     </WrappingBox>
 
-                    <AuthFirstStep watch={watch} control={control} register={register} />
+                    <AuthFirstStep watch={watch} getValues={getValues} control={control} register={register} />
 
-                    {/* <AuthSecondStep
-                        headers={headers}
-                        setHeaders={setHeaders}
-                        endpoint={endpoint}
-                        setEndpoint={setEndpoint}
-                    /> */}
+                    <AuthSecondStep control={control} getValues={getValues} register={register} watch={watch} />
+
+                    <Grid container item flexDirection="row-reverse">                    
+                        <Button type="submit" variant="contained" >Submit</Button>
+                    </Grid>
                 </form>
             </Container>
         </Box>

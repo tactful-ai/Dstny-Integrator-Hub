@@ -6,7 +6,11 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import type {field} from '@automatisch/types';
+import DeleteIcon from '@mui/icons-material/Delete';
+import type { AuthAPIKeyFormValues, field } from '@automatisch/types';
+import { FieldArrayWithId } from 'react-hook-form';
+import { Button, IconButton } from '@mui/material';
+
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -31,12 +35,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 
 type AuthTableFieldsProps = {
-  rows: FieldArrayWithId<NewIntegrationAuthAPIKeyFormValues, "headers" | "fields", "id">[]
+  rows: field[];
+  removeField: (index: number) => void;
 }
 
-function AuthTableFields({rows} : AuthTableFieldsProps) {
-    
-  console.log(rows[0]);
+function AuthTableFields({ rows, removeField }: AuthTableFieldsProps) {
+
+
 
   return (
     <TableContainer component={Paper}>
@@ -47,18 +52,26 @@ function AuthTableFields({rows} : AuthTableFieldsProps) {
             <StyledTableCell align="left">Key</StyledTableCell>
             <StyledTableCell align="left">Type</StyledTableCell>
             <StyledTableCell align="left">Required</StyledTableCell>
+            <StyledTableCell align="right"></StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row:any) => (
-            <StyledTableRow key={row.id}>
+          {rows.map((row: field, index: number) => (
+            row.key && row.label && (<StyledTableRow key={row.key}>
               <StyledTableCell component="th" scope="row">
                 {row.label}
               </StyledTableCell>
               <StyledTableCell align="left">{row.key}</StyledTableCell>
               <StyledTableCell align="left">{row.type}</StyledTableCell>
               <StyledTableCell align="left">{row.required ? <span>&#x2705;</span> : <span>&#x1f6ab;</span>}</StyledTableCell>
-            </StyledTableRow>
+              <StyledTableCell align="right">
+
+                <IconButton onClick={() => removeField(index)} aria-label="delete">
+                  <DeleteIcon />
+                </IconButton>
+
+              </StyledTableCell>
+            </StyledTableRow>)
           ))}
         </TableBody>
       </Table>

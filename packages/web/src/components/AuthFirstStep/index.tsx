@@ -5,20 +5,20 @@ import CustomAccordion from 'components/CustomAccordion'
 import TagNumber from 'components/TagNumber'
 import WrappingBox from 'components/WrappingBox'
 import { useState } from 'react'
-import type { AuthFirstStepProps, NewIntegrationAuthAPIKeyFormValues, field } from '@automatisch/types'
+import type { AuthAPIKeyFormValues, AuthStepsProps } from '@automatisch/types'
 import { useFieldArray } from 'react-hook-form'
 
 
-function AuthFirstStep({register,  watch, control}:AuthFirstStepProps) {
+function AuthFirstStep({register,  watch, control, getValues}:AuthStepsProps) {
 
-    const {fields, remove, append} = useFieldArray<NewIntegrationAuthAPIKeyFormValues>({name: 'fields', control});
+    const {fields, remove, append} = useFieldArray<AuthAPIKeyFormValues>({name: 'fields', control});
 
 
     const [open, setOpen] = useState(false);
 
     const handleClickOpen = () => {
         setOpen(true);
-        append({key: "", label: "", type: "", description: "", readOnly: false, required: true, canCopy: false});
+        append({key: null, label: null, type: "string", description: "", readOnly: false, required: false, canCopy: false});
     };
 
     const handleClose = () => {
@@ -31,7 +31,7 @@ function AuthFirstStep({register,  watch, control}:AuthFirstStepProps) {
 
     return (
         <>
-            <AuthNewField formUtilities={{register, watch, control}} handleClose={handleClose} removeField={removeField} openModal={open} />
+            <AuthNewField formUtilities={{register, watch, control, getValues}} handleClose={handleClose} removeField={removeField} openModal={open}  />
             <CustomAccordion tag={<TagNumber text="Step 1" />} heading="Configure your fields">
                 <WrappingBox>
                     <Typography sx={{ fontSize: '1rem', display: 'inline-block' }} >Authentication Fields <Typography sx={{ fontSize: '10px', color: 'red', fontWeight: '600', display: 'inline-block' }}>{'(required)'}</Typography></Typography>
@@ -47,9 +47,9 @@ function AuthFirstStep({register,  watch, control}:AuthFirstStepProps) {
                     </FormHelperText>
                 </WrappingBox>
 
-                <AuthTableFields rows={fields} />
+                <AuthTableFields removeField={removeField} rows={watch('fields')} />
 
-                <Box sx={{ mt: '1rem', display: 'flex', gap: '1rem' }}>
+                <Box sx={{ mt: '1rem', display: 'flex', gap: '1rem', flexDirection: 'row-reverse' }}>
                     <Button type="button" size="small" variant="outlined" onClick={handleClickOpen}>Add Fields</Button>
                     <Button type="button" size="small" variant="contained">Continue</Button>
                 </Box>

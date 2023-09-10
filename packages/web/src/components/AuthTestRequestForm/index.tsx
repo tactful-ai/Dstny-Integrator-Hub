@@ -1,29 +1,17 @@
 
-import { AuthTestRequesFormProps, AuthTestRequesFormValues } from "@automatisch/types";
+import { AuthStepsProps } from "@automatisch/types";
 import { Button, Grid, TextField, Typography } from "@mui/material";
 import WrappingBox from "components/WrappingBox";
-import { useFieldArray, useForm } from "react-hook-form";
+import { useFieldArray } from "react-hook-form";
 
 
 
-function AuthTestRequesForm({ setEndPoint, setHeaders }: AuthTestRequesFormProps) {
-
-    const form = useForm<AuthTestRequesFormValues>({
-        defaultValues: {
-            endpoint: '',
-            headers: []
-        }
-    });
-
-    const { register, control, handleSubmit } = form;
+function AuthTestRequesForm({control, register}: AuthStepsProps) {
 
     const { fields, append, remove } = useFieldArray({ name: 'headers', control });
 
-    function onSubmit(values: AuthTestRequesFormValues) {
-        console.log(values)
-    }
     return (
-        <form noValidate onSubmit={handleSubmit(onSubmit)}>
+        <>
             <WrappingBox>
                 <Grid rowGap={2} container direction="column">
                     <Grid item container direction="row" columnGap={0.5} rowGap={2}>
@@ -53,13 +41,13 @@ function AuthTestRequesForm({ setEndPoint, setHeaders }: AuthTestRequesFormProps
                     }
 
                     <Grid>
-                        <Button onClick={() => append({ key: "", value: "" })} variant="contained">Add</Button>
+                        <Button onClick={() => append({ key: "", value: "" })} variant="outlined">Add</Button>
                     </Grid>
                 </Grid>
             </WrappingBox>
 
             <Button variant="contained" type="submit">Save & Continue</Button>
-        </form>
+        </>
     )
 }
 

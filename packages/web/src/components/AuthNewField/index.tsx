@@ -9,7 +9,7 @@ import { NewAuthFieldProps } from '@automatisch/types';
 
 
 
-export default function AuthNewField({handleClose, removeField, openModal, formUtilities}:NewAuthFieldProps) {
+export default function AuthNewField({handleClose, removeField, openModal, formUtilities, }:NewAuthFieldProps) {
 
 
 
@@ -20,7 +20,7 @@ export default function AuthNewField({handleClose, removeField, openModal, formU
                     <DialogContentText>
                        Use standard Fields to request info from users. Computed Fields are used programmatically and not shown to users.
                     </DialogContentText>
-                    <AuthNewForm removeField={removeField} handleClose={handleClose} formUtilities={formUtilities} />
+                    <AuthNewForm  removeField={removeField} handleClose={handleClose} formUtilities={formUtilities} />
                 </DialogContent>
 
             </Dialog>

@@ -6,20 +6,27 @@ import { AuthNewFormProps } from '@automatisch/types';
 
 function AuthNewForm({  handleClose, removeField,  formUtilities }: AuthNewFormProps) {
 
-    const currIndex = formUtilities.authFields.length - 1;
-    console.log(formUtilities.authFields);
+    const lastIndex = formUtilities.getValues().fields.length - 1;
+    function handleAdd() {
+        handleClose();
+    }
+
+    function handleCancel() {
+        removeField(lastIndex);
+        handleClose()
+    }
     
     return (
-        <Box sx={{ py: 4 }}>
+        <Box sx={{ py: 2 }}>
             <Container>
-                <Divider sx={{ mt: [2, 0], mb: 2 }} />
+                <Divider sx={{ mt: [2, 0], mb: 1 }} />
                     <TextField
                         fullWidth
                         label={<span>Label <span style={{ color: 'red' }}>*</span></span>}
                         helperText="Enter the field's friendly name for users."
                         sx={{ my: '0.5rem' }}
                         
-                        {...formUtilities.register('label', { required: 'The label is required' })}
+                        {...formUtilities.register(`fields.${lastIndex}.label`, { required: 'The label is required' })}
                     />
 
                     <TextField
@@ -27,7 +34,7 @@ function AuthNewForm({  handleClose, removeField,  formUtilities }: AuthNewFormP
                         fullWidth
                         label={<span>Key <span style={{ color: 'red' }}>*</span></span>}
                         helperText={<span>Add the field key, for example: <code style={{ border: '1px solid #eee', padding: '2px' }}>api_key</code></span>}
-                        {...formUtilities.register('key', { required: 'The key is required' })}
+                        {...formUtilities.register(`fields.${lastIndex}.key`, { required: 'The key is required' })}
                     />
 
                     <TextField
@@ -36,7 +43,7 @@ function AuthNewForm({  handleClose, removeField,  formUtilities }: AuthNewFormP
                         fullWidth
                         defaultValue="string"
                         helperText="Select the field type. Use String (default) for most text input, or Password to obscure text for secret values."
-                        {...formUtilities.register('type')}
+                        {...formUtilities.register(`fields.${lastIndex}.type`)}
 
                     >
                         {['string', 'password'].map((option) => <MenuItem key={option} value={option}>{option}</MenuItem>)}
@@ -49,32 +56,32 @@ function AuthNewForm({  handleClose, removeField,  formUtilities }: AuthNewFormP
                         fullWidth
                         maxRows={6}
                         multiline
-                        {...formUtilities.register('description')}
+                        {...formUtilities.register(`fields.${lastIndex}.description`)}
 
                     />
 
-                    <FormGroup>
+                    <FormGroup sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                         <FormControlLabel
                             sx={{ my: '0.5rem' }}
-                            control={<Checkbox {...formUtilities.register('required')} />}
-                            label="Is this field required? check if yes"
+                            control={<Checkbox {...formUtilities.register(`fields.${lastIndex}.required`)} />}
+                            label="Required"
                         />
 
                         <FormControlLabel
                             sx={{ my: '0.5rem' }}
-                            control={<Checkbox {...formUtilities.register('canCopy')} />}
-                            label="Do you allow to copy this field? check if yes"
+                            control={<Checkbox {...formUtilities.register(`fields.${lastIndex}.canCopy`)} />}
+                            label="Allow to copy"
                         />
 
                         <FormControlLabel
                             sx={{ my: '0.5rem' }}
-                            control={<Checkbox {...formUtilities.register('readOnly')} />}
-                            label="Is this field read-only? check if yes"
+                            control={<Checkbox {...formUtilities.register(`fields.${lastIndex}.readOnly`)} />}
+                            label="Read only"
                         />
                     </FormGroup>
-                    <Box sx={{ mt: '1rem', display: 'flex', gap: '1rem' }}>
-                        <Button onClick={handleClose} type="submit" size="small" variant="contained" >Add</Button>
-                        <Button onClick={() => {removeField(currIndex); handleClose()}} type="button" size="small" variant="outlined">Cancel</Button>
+                    <Box sx={{ mt: '1rem', display: 'flex', gap: '1rem', flexDirection: 'row-reverse' }}>
+                        <Button onClick={handleAdd} type="submit" size="small" variant="contained" >Add</Button>
+                        <Button onClick={handleCancel} type="button" size="small" variant="outlined">Cancel</Button>
                     </Box>
             </Container>
         </Box>

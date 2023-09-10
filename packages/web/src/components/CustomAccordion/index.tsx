@@ -4,12 +4,12 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import React, { useState } from 'react';
-import { Box } from '@mui/material';
 
 type CustomAccordionProps = {
     tag?: React.ReactNode;
     heading: string;
     children: string | React.ReactNode | React.ReactNode[];
+    
 
 }
 
