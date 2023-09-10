@@ -10,6 +10,8 @@ import * as URLS from 'config/urls';
 import config from 'config/app';
 import { useLocation, useNavigate } from 'react-router-dom';
 import FormData from 'form-data';
+import LoadingButton from '@mui/lab/LoadingButton';
+import CircularProgress from '@mui/material/CircularProgress'; 
 
 
 
@@ -28,6 +30,7 @@ function IntegrationForm() {
     homePageUrl: false,
     BaseUrl: false,
   });
+  const [isLoading, setIsLoading] = useState(false);
 
 
   
@@ -87,6 +90,7 @@ function IntegrationForm() {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    setIsLoading(true);
   
     if (!isUrlValid(integrationData.BaseUrl) || !isUrlValid(integrationData.homePageUrl)) {
       return;
@@ -126,14 +130,18 @@ function IntegrationForm() {
         console.log('Integration data sent successfully!');
         if (mainkey !== null && mainkey !== undefined) {
           window.location.href = `${URLS.TRIGGER_PAGE}?mainkey=${mainkey}`;
+          setIsLoading(false);
         } else {
           console.error('mainkey is null or undefined');
+          setIsLoading(false);
         }
       } else {
         console.error('Failed to send integration data to the backend.');
+        setIsLoading(false);
       }
     } catch (error) {
       console.error('An error occurred:', error);
+      setIsLoading(false);
     }
   };
   
@@ -247,9 +255,18 @@ function IntegrationForm() {
         </div>
 
         
-        <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }} disabled={(!isUrlValid(integrationData.BaseUrl)) || (!isUrlValid(integrationData.homePageUrl))|| (integrationData.logo === null)} >
-          Create
-        </Button>
+        <LoadingButton
+      type="submit"
+      variant="contained"
+      color="primary"
+      sx={{ mt: 2 }}
+      disabled={isLoading || (!isUrlValid(integrationData.BaseUrl)) || (!isUrlValid(integrationData.homePageUrl)) || (integrationData.logo === null)}
+      onClick={handleSubmit}
+      loading={isLoading}
+      loadingIndicator={<CircularProgress size={24} />} 
+    >
+      Create
+    </LoadingButton>
       </form>
     </Paper>
   );

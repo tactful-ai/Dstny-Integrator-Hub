@@ -57,6 +57,7 @@ function ActionForm2() {
 
   const [isCodeModified, setIsCodeModified] = useState(false);
   let isTestSuccessful = false;
+  let loading =false;
 
   const [isContinuePressed, setIsContinuePressed] = useState(false);
 
@@ -73,6 +74,8 @@ function ActionForm2() {
   const locationState = location.state as State;
 
   const handleTest = async () => {
+    loading = true;
+    setTestResult(loading ? 'loading': '');
     const formattedActionData = {
       name: ActionData.name,
       key: ActionData.Key,
@@ -81,6 +84,9 @@ function ActionForm2() {
       args: locationState.inputActionData,
     };
     console.log(formattedActionData);
+
+
+
 
     try {
       const response = await fetch(`${config.apiUrl}/integrations/actions/${mainkey}`, {
@@ -103,6 +109,7 @@ function ActionForm2() {
     }
 
     setTestResult(isTestSuccessful ? 'Successful' : 'Failed');
+
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -193,10 +200,10 @@ function ActionForm2() {
               )}
             </WrappingBox>
           </CustomAccordion>
-          <Button type="submit" variant="contained" color="primary" size="small" sx={{ mt: 2 }} onClick={handleAdd} >
+          {/* <Button type="submit" variant="contained" color="primary" size="small" sx={{ mt: 2 }} onClick={handleAdd} >
             Add Another Action
           </Button>
-          <br></br>
+          <br></br> */}
           <Button type="submit" variant="contained" color="primary" size="small" sx={{ mt: 2 }} onClick={handleSubmit}>
             Finish
           </Button>

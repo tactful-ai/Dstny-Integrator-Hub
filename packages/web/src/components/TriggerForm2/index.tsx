@@ -60,11 +60,13 @@ function TriggerForm2() {
   }, [location.search]);
 
   let isTestSuccessful = false; 
+  let loading =false;
 
 
   const handleTest = async () => {
 
-  
+    loading = true;
+    setTestResult(loading ? 'loading': '');
     const codeToUse = isContinuePressed ? triggerData.run : providedCode; 
   
     const formattedTriggerData = {
@@ -209,10 +211,10 @@ function TriggerForm2() {
               )}
             </WrappingBox>
           </CustomAccordion>
-          <Button type="submit" variant="contained" color="primary" size="small" sx={{ mt: 2 }} onClick={handleAdd} >
+          {/* <Button type="submit" variant="contained" color="primary" size="small" sx={{ mt: 2 }} onClick={handleAdd} >
             Add Another Trigger
           </Button>
-          <br></br>
+          <br></br> */}
           <Button type="submit" variant="contained" color="primary" size="small" sx={{ mt: 2 }} onClick={handleSubmit} >
             Finish
           </Button>
