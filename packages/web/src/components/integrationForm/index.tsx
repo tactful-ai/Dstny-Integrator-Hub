@@ -2,18 +2,16 @@ import React, { useState } from 'react';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress'; 
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
+import Checkbox from '@mui/material/Checkbox';
 import * as URLS from 'config/urls';
 import config from 'config/app';
 import { useLocation, useNavigate } from 'react-router-dom';
 import FormData from 'form-data';
 import LoadingButton from '@mui/lab/LoadingButton';
-import CircularProgress from '@mui/material/CircularProgress'; 
-
-
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 
 function IntegrationForm() {
@@ -36,22 +34,28 @@ function IntegrationForm() {
   
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
+    const { name, value, type, checked } = event.target;
     if (name === 'logo') {
       return;
     }
-
-
-    setTouchedFields((prevTouchedFields) => ({
-      ...prevTouchedFields,
-      [name]: true,
-    }));
-
-    setIntegrationData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    if (type === 'checkbox') {
+      setIntegrationData((prevData) => ({
+        ...prevData,
+        [name]: checked,
+      }));
+    } else {
+      setTouchedFields((prevTouchedFields) => ({
+        ...prevTouchedFields,
+        [name]: true,
+      }));
+  
+      setIntegrationData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
   };
+  
   
   
   const isUrlValid = (url: string) => {
@@ -78,15 +82,6 @@ function IntegrationForm() {
   
 
 
-  const handleSelectChange = (event: SelectChangeEvent<string>) => {
-    const { name, value } = event.target;
-    const parsedValue = value === 'true';
-
-    setIntegrationData((prevData) => ({
-      ...prevData,
-      [name]: parsedValue,
-    }));
-  };
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -239,20 +234,17 @@ function IntegrationForm() {
           />
         </div>
         <div style={{ marginBottom: '8px' }}>
-          <label htmlFor="SupportsConnections">Supports Connections:</label>
-          <FormControl fullWidth>
-            <Select
-              name="SupportsConnections"
-              value={integrationData.SupportsConnections.toString()} 
-              onChange={handleSelectChange}
-              margin="dense"
-              size="small"
-            >
-              <MenuItem value="false">False</MenuItem>
-              <MenuItem value="true">True</MenuItem>
-            </Select>
-          </FormControl>
-        </div>
+  <FormControlLabel
+    control={
+      <Checkbox
+        name="SupportsConnections"
+        checked={integrationData.SupportsConnections}
+        onChange={(event) => handleInputChange(event)}
+      />
+    }
+    label="Supports Connections"
+  />
+</div>
 
         
         <LoadingButton
