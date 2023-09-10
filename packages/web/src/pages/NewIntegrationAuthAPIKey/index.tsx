@@ -5,6 +5,7 @@ import AuthSecondStep from "components/AuthSecondStep"
 import Container from "components/Container"
 import PageTitle from "components/PageTitle"
 import WrappingBox from "components/WrappingBox"
+import createIntegrationAuth from "helpers/createIntegrationAuth"
 import { useForm } from "react-hook-form"
 
 export type header = {
@@ -32,8 +33,16 @@ function NewIntegrationAuthAPIKey() {
 
     const { register, control, handleSubmit, watch, getValues } = form;
 
-    function onSubmit(data: NewIntegrationAuthAPIKeyFormValues) {
-        console.log(data)
+    async function onSubmit(data: NewIntegrationAuthAPIKeyFormValues) {
+        const submittedHeaders:Record<string, string> = {};
+        data.headers.forEach((header) => {
+            submittedHeaders[header.key] = header.value;
+        });
+
+        const response = await createIntegrationAuth({fields:data.fields,endpoint:data.endpoint, headers:submittedHeaders, appKey:'key'});
+
+        
+
     }
 
     return (
