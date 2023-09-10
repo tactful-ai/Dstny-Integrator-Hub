@@ -92,7 +92,7 @@ function LoginForm() {
           color="primary"
           sx={{ boxShadow: 2, mt: 3 }}
           loading={loading}
-          fullWidth
+          fullWidth 
           data-test="login-button"
         >
           {formatMessage('loginForm.submit')}
