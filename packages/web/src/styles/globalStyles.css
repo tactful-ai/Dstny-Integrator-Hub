@@ -1,0 +1,17 @@
+.wrapping-box {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+
+.tag-number {
+    width: 10%;
+    margin-right: 1rem;
+    border-radius: 100px;
+    background-color:#118199;
+    color: #fff;
+    text-align: center;
+    padding: 0.5rem;
+    font-size: 14px;
+    font-weight: 500;
+}
