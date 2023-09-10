@@ -153,6 +153,9 @@ router.post('/create', uniqueApp, createApp);
  *                 verifyEndpoint:
  *                   type: string
  *                   description: The verification endpoint for the authentication.
+ *                 headers:
+ *                   type: object
+ *                   description: Additional headers for the authentication request. (Optional)
  *
  *       responses:
  *         '200':
