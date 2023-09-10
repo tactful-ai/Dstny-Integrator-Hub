@@ -17,6 +17,9 @@ import * as URLS from 'config/urls';
 import settingsRoutes from './settingsRoutes';
 import adminSettingsRoutes from './adminSettingsRoutes';
 import Notifications from 'pages/Notifications';
+import NewIntegrationAuthType from 'pages/NewIntegrationAuthType';
+import NewIntegrationAuthAPIKey from 'pages/NewIntegrationAuthAPIKey';
+
 import IntegrationPage from 'pages/integrationPage';
 import OverviewPage from 'pages/overviewPage';
 import TriggerPage from 'pages/TriggerPage'
@@ -107,6 +110,7 @@ export default (
         </Layout>
       }
     />
+    
 
     <Route
       path={URLS.FLOW_PATTERN}
@@ -116,6 +120,13 @@ export default (
         </Layout>
       }
     />
+
+    <Route element={<Layout><NewIntegrationAuthType /></Layout>} path={URLS.NEW_INTEGRATION_AUTH_TYPE}/>
+
+    <Route element={<Layout><NewIntegrationAuthAPIKey /></Layout>} path={URLS.NEW_INTEGRATION_AUTH_API_KEY}/>
+
+
+
 
     <Route
       path={`${URLS.APPS}/*`}
@@ -200,5 +211,7 @@ export default (
         </Layout>
       }
     />
+
+    
   </Routes>
 );

@@ -5,12 +5,10 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import React, { useState } from 'react';
 
-
 type CustomAccordionProps = {
     tag?: React.ReactNode;
     heading: string;
     children: string | React.ReactNode | React.ReactNode[];
-
 }
 
 
