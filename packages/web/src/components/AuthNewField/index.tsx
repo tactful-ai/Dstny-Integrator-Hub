@@ -11,8 +11,6 @@ import { NewAuthFieldProps } from '@automatisch/types';
 
 export default function AuthNewField({handleClose, removeField, openModal, formUtilities, }:NewAuthFieldProps) {
 
-
-
     return (
             <Dialog open={openModal} onClose={handleClose}>
                 <DialogTitle>New Field</DialogTitle>

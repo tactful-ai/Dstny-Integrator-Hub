@@ -7,9 +7,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import DeleteIcon from '@mui/icons-material/Delete';
-import type { AuthAPIKeyFormValues, field } from '@automatisch/types';
-import { FieldArrayWithId } from 'react-hook-form';
-import { Button, IconButton } from '@mui/material';
+import type { field } from '@automatisch/types';
+import {IconButton } from '@mui/material';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
