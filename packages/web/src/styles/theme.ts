@@ -6,9 +6,9 @@ const referenceTheme = createTheme();
 const extendedTheme = createTheme({
   palette: {
     primary: {
-      main: '#0059F7',
-      light: '#4286FF',
-      dark: '#001F52',
+      main: '#118199',
+      light: '#E0F2F5',
+      dark: '#118199',
       contrastText: '#fff',
     },
     divider: 'rgba(194, 194, 194, .2)',
@@ -107,7 +107,7 @@ const extendedTheme = createTheme({
       [referenceTheme.breakpoints.down('sm')]: {
         fontSize: referenceTheme.typography.pxToRem(16),
       },
-    },
+    },    
     h6: {
       fontSize: referenceTheme.typography.pxToRem(20),
       lineHeight: 1.2,
@@ -115,7 +115,7 @@ const extendedTheme = createTheme({
       [referenceTheme.breakpoints.down('sm')]: {
         fontSize: referenceTheme.typography.pxToRem(20),
       },
-    },
+    },  
     subtitle1: {
       fontSize: referenceTheme.typography.pxToRem(14),
       lineHeight: 1.71,
