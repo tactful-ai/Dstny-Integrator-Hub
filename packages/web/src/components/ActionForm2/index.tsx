@@ -9,6 +9,8 @@ import TagNumber from 'components/TagNumber';
 import CodeEditor from '@uiw/react-textarea-code-editor';
 import * as URLS from 'config/urls';
 import config from 'config/app';
+import LoadingButton from '@mui/lab/LoadingButton';
+import CircularProgress from '@mui/material/CircularProgress'; 
 
 interface State {
   actionFormData: {
@@ -57,7 +59,7 @@ function ActionForm2() {
 
   const [isCodeModified, setIsCodeModified] = useState(false);
   let isTestSuccessful = false;
-  let loading =false;
+  const [isLoading, setIsLoading] = useState(false);
 
   const [isContinuePressed, setIsContinuePressed] = useState(false);
 
@@ -74,8 +76,7 @@ function ActionForm2() {
   const locationState = location.state as State;
 
   const handleTest = async () => {
-    loading = true;
-    setTestResult(loading ? 'loading': '');
+    setIsLoading(true);
     const formattedActionData = {
       name: ActionData.name,
       key: ActionData.Key,
@@ -100,12 +101,16 @@ function ActionForm2() {
       if (response.ok) {
         console.log('Action data sent successfully!');
         isTestSuccessful = true;
+        setIsLoading(false);
+
       } else {
         console.error('Failed to send Action data to the backend.');
         isTestSuccessful = false;
+        setIsLoading(false);
       }
     } catch (error) {
       console.error('An error occurred:', error);
+      setIsLoading(false);
     }
 
     setTestResult(isTestSuccessful ? 'Successful' : 'Failed');
@@ -183,16 +188,18 @@ function ActionForm2() {
               <Typography variant="h6" sx={{ mb: 2 }}>
                 Response
               </Typography>
-              <Button
-                type="button"
-                variant="contained"
-                color="primary"
-                size="small"
-                sx={{ mt: 2 }}
-                onClick={handleTest}
-              >
-                Test
-              </Button>
+              <LoadingButton
+      type="submit"
+      variant="contained"
+      color="primary"
+      sx={{ mt: 2 }}
+      disabled={isLoading}
+      onClick={handleTest}
+      loading={isLoading}
+      loadingIndicator={<CircularProgress size={24} />} 
+    >
+      test
+    </LoadingButton>
               {testResult && (
                 <Typography variant="body2" sx={{ mt: 2 }}>
                   Test Result: {testResult}

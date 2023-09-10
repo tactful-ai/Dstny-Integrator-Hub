@@ -9,6 +9,8 @@ import TagNumber from "components/TagNumber";
 import CodeEditor from '@uiw/react-textarea-code-editor'; 
 import * as URLS from 'config/urls';
 import config from 'config/app';
+import LoadingButton from '@mui/lab/LoadingButton';
+import CircularProgress from '@mui/material/CircularProgress'; 
 
 interface FormData {
   name: string;
@@ -22,6 +24,7 @@ function TriggerForm2() {
   const location = useLocation();
   const [mainKey, setMainKey] = useState<string | null>(null);
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   
 
   const providedCode = `let page = 0;\nlet response;\n\nconst headers = {
@@ -60,13 +63,13 @@ function TriggerForm2() {
   }, [location.search]);
 
   let isTestSuccessful = false; 
-  let loading =false;
+
 
 
   const handleTest = async () => {
 
-    loading = true;
-    setTestResult(loading ? 'loading': '');
+    setIsLoading(true);
+
     const codeToUse = isContinuePressed ? triggerData.run : providedCode; 
   
     const formattedTriggerData = {
@@ -93,13 +96,16 @@ function TriggerForm2() {
         console.log('Trigger data sent successfully!');
         isTestSuccessful = true;
         setTestResult("Successful");
+        setIsLoading(false);
       } else {
         console.error('Failed to send Trigger data to the backend.');
         isTestSuccessful = false;
         setTestResult("Failed");
+        setIsLoading(false);
       }
     } catch (error) {
       console.error('An error occurred:', error);
+      setIsLoading(false);
     }
   };
   
@@ -194,16 +200,18 @@ function TriggerForm2() {
           <CustomAccordion tag={<TagNumber text="Step 2" />} heading="Test your API request">
             <WrappingBox>
               <Typography variant="h6" sx={{ mb: 2 }}>Response</Typography>
-              <Button
-                type="button"
-                variant="contained"
-                color="primary"
-                size="small"
-                sx={{ mt: 2 }}
-                onClick={handleTest}
-              >
-                Test
-              </Button>
+              <LoadingButton
+      type="submit"
+      variant="contained"
+      color="primary"
+      sx={{ mt: 2 }}
+      disabled={isLoading}
+      onClick={handleTest}
+      loading={isLoading}
+      loadingIndicator={<CircularProgress size={24} />} 
+    >
+      test
+    </LoadingButton>
               {testResult && (
                 <Typography variant="body2" sx={{ mt: 2 }}>
                   Test Result: {testResult}
