@@ -1,7 +1,7 @@
 import 'styles/globalStyles.css';
 
 type WrappingBoxProps = {
-    children: string | JSX.Element | JSX.Element[];
+    children: string | JSX.Element | JSX.Element[] | React.ReactNode;
     padding?: number;
     widthRatio?: number;
 }
