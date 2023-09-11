@@ -129,8 +129,10 @@ function IntegrationForm() {
       if (response.ok) {
         console.log('Integration data sent successfully!');
         if (mainkey !== null && mainkey !== undefined) {
-          window.location.href = `${URLS.TRIGGER_PAGE}?mainkey=${mainkey}`;
+          // window.location.href = `${URLS.TRIGGER_PAGE}?mainkey=${mainkey}`;
+          localStorage.setItem('appKey', mainkey);
           setIsLoading(false);
+          navigate(URLS.OVERVIEW_PAGE);
         } else {
           console.error('mainkey is null or undefined');
           setIsLoading(false);

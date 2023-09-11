@@ -22,7 +22,7 @@ interface FormData {
 
 function TriggerForm2() {
   const location = useLocation();
-  const [mainKey, setMainKey] = useState<string | null>(null);
+  const mainKey = localStorage.getItem('appKey')
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   
@@ -48,10 +48,7 @@ function TriggerForm2() {
     const name = searchParams.get("name") || "";
     const key = searchParams.get("key") || "";
     const description = searchParams.get("description") || "";
-    const mainKeyFromParams = searchParams.get('mainkey') || '';
-
-    setMainKey(mainKeyFromParams);
-
+    
     setTriggerData({
       name,
       key: key,

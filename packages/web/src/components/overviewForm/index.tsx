@@ -58,7 +58,7 @@ function OverviewForm() {
             <div style={buttonContainerStyle}>
               <Button
                 component={Link}
-                to={URLS.LOGIN}
+                to={URLS.NEW_INTEGRATION_AUTH_TYPE}
                 variant="outlined"
                 color="primary"
                 size="small"

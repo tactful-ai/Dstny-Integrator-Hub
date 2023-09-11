@@ -1,20 +1,26 @@
-import { Box, Divider, FormHelperText, Grid, RadioGroup, Radio } from "@mui/material";
+import { Box, Divider, FormHelperText, Grid, RadioGroup, Radio, Button } from "@mui/material";
 import Container from "components/Container";
 import PageTitle from "components/PageTitle";
-// import RadioGroup from '@mui/joy/RadioGroup';
-// import Radio from '@mui/joy/Radio';
+import * as URLS from 'config/urls';
 import WrappingBox from "components/WrappingBox";
 import { ChangeEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 
 export default function NewIntegrationAuthentication(): React.ReactElement {
 
     const [authType, setAuthType] = useState<string>('');
-
+    const navigate = useNavigate();
     function changeAuthTypeHandler(e: ChangeEvent<HTMLInputElement>) {
         console.log(authType)
         setAuthType(e.target.value);
+    }
+
+    function handleClickContinue() {
+        if(authType === "api-key")
+            navigate(URLS.NEW_INTEGRATION_AUTH_API_KEY);
+
     }
 
     return (
@@ -52,17 +58,9 @@ export default function NewIntegrationAuthentication(): React.ReactElement {
                         </FormHelperText>
                     </label>
                 </WrappingBox>
-                {/* <RadioGroup name="radio-buttons-group" defaultValue="api-key">
-                    <WrappingBox>
-                        <Radio 
-                            value="api-key"
-                        />
-
-                        <FormHelperText> 
-                            Use API Key authentication type if you simply need to collect some information from your users and then include that information, as it was entered by the user, when you make an API request. Learn more.
-                        </FormHelperText>
-                    </WrappingBox>
-                </RadioGroup> */}
+                <Grid>
+                    <Button disabled={authType !== 'api-key'} variant="contained" onClick={handleClickContinue}>Continue</Button>
+                </Grid>
             </Container>
         </Box>);
 }

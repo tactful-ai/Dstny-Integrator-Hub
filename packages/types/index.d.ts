@@ -191,7 +191,7 @@ export interface IFieldDynamic {
   fields: (IFieldDropdown | IFieldText)[];
 }
 
-export type IField = IFieldDropdown | IFieldText | IFieldDynamic;
+export type IField = IFieldDropdown | IFieldText | IFieldDynamic ;
 
 export interface IAuthenticationStepField {
   name: string;

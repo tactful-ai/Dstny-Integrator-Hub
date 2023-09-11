@@ -7,6 +7,9 @@ import PageTitle from "components/PageTitle"
 import WrappingBox from "components/WrappingBox"
 import createIntegrationAuth from "helpers/createIntegrationAuth"
 import { useForm } from "react-hook-form"
+import { useNavigate } from "react-router-dom"
+import * as URLS from 'config/urls';
+
 
 export type header = {
     key: string;
@@ -29,7 +32,7 @@ function NewIntegrationAuthAPIKey() {
         }
     });
 
-
+    const navigate = useNavigate();
 
     const { register, control, handleSubmit, watch, getValues } = form;
 
@@ -39,8 +42,12 @@ function NewIntegrationAuthAPIKey() {
             submittedHeaders[header.key] = header.value;
         });
 
-        const response = await createIntegrationAuth({fields:data.fields,endpoint:data.endpoint, headers:submittedHeaders, appKey:'key'});
+        const appKey = localStorage.getItem('appKey') as string;
+        console.log(appKey)
+        const response = await createIntegrationAuth({fields:data.fields,endpoint:data.endpoint, headers:submittedHeaders, appKey});
 
+        if(response)
+            navigate(URLS.TRIGGER_PAGE);
         
 
     }

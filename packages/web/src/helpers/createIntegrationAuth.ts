@@ -9,6 +9,19 @@ type AuthIntegrationData = {
     appKey: string;
 }
 
+
+/**
+ * 
+ *     const headers = new Headers();
+  
+    try {
+      const response = await fetch(`${config.apiUrl}/integrations/create`, {
+        method: 'POST',
+        headers: headers,
+        body: formData as unknown as BodyInit,
+      });
+ */
+
 async function createIntegrationAuth({fields, endpoint, headers, appKey}:AuthIntegrationData) {
     try {
         const res = await fetch(`${endpointUrl}/${appKey}`, {
@@ -17,17 +30,23 @@ async function createIntegrationAuth({fields, endpoint, headers, appKey}:AuthInt
                 fields: fields,
                 headers: headers,
                 verifyEndpoint: endpoint
-            })
+            }),
+            headers: {
+        'accept': '/',
+        'Content-Type': 'application/json'
+    },
         });
 
         if(!res.ok) {
             throw new Error('There is an error sending the data')
         }
         
-        const responseData = await res.json();
-        console.log(responseData)
+        return true;
+
+        
     } catch(e) {
         console.log(e);
+        return false;
     }
 }
 
