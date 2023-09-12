@@ -23,11 +23,11 @@ function IntegrationForm() {
     Key: '',
     logo: null as File | null, 
     BaseUrl: '',
-    homePageUrl: '',
+    apiBaseUrl: '',
     SupportsConnections: true,
   });
   const [touchedFields, setTouchedFields] = useState({
-    homePageUrl: false,
+    apiBaseUrl: false,
     BaseUrl: false,
   });
   const [isLoading, setIsLoading] = useState(false);
@@ -92,7 +92,7 @@ function IntegrationForm() {
     event.preventDefault();
     setIsLoading(true);
   
-    if (!isUrlValid(integrationData.BaseUrl) || !isUrlValid(integrationData.homePageUrl)) {
+    if (!isUrlValid(integrationData.BaseUrl) || !isUrlValid(integrationData.apiBaseUrl)) {
       return;
     }
   
@@ -105,7 +105,7 @@ function IntegrationForm() {
       key: integrationData.Key,
       supportsConnections: integrationData.SupportsConnections.toString(),
       baseUrl: integrationData.BaseUrl,
-      apiBaseUrl: integrationData.homePageUrl,
+      apiBaseUrl: integrationData.apiBaseUrl,
     };
   
     for (const key of Object.keys(formattedIntegrationData)) {
@@ -192,30 +192,7 @@ function IntegrationForm() {
 
           </div>
         </div>
-        <div style={{ marginBottom: '15px' }}>
-          <label htmlFor="homePageUrl">Home Page URL:</label>
-          <TextField
-            name="homePageUrl"
-            fullWidth
-            required
-            value={integrationData.homePageUrl}
-            onChange={handleInputChange}
-            onBlur={() => {
-              setTouchedFields((prevTouchedFields) => ({
-                ...prevTouchedFields,
-                homePageUrl: true,
-              }));
-            }}
-            margin="dense"
-            size="small"
-            error={touchedFields.homePageUrl && !isUrlValid(integrationData.homePageUrl)}
-            helperText={
-              touchedFields.homePageUrl && !isUrlValid(integrationData.homePageUrl)
-                ? 'Invalid URL. Please enter a valid URL.'
-                : ''
-            }
-          />
-        </div>
+
         <div style={{ marginBottom: '8px' }}>
           <label htmlFor="BaseUrl">Base URL:</label>
           <TextField
@@ -235,6 +212,30 @@ function IntegrationForm() {
             error={touchedFields.BaseUrl && !isUrlValid(integrationData.BaseUrl)}
             helperText={
               touchedFields.BaseUrl && !isUrlValid(integrationData.BaseUrl)
+                ? 'Invalid URL. Please enter a valid URL.'
+                : ''
+            }
+          />
+        </div>
+        <div style={{ marginBottom: '15px' }}>
+          <label htmlFor="apiBaseUrl">API Base URL:</label>
+          <TextField
+            name="apiBaseUrl"
+            fullWidth
+            required
+            value={integrationData.apiBaseUrl}
+            onChange={handleInputChange}
+            onBlur={() => {
+              setTouchedFields((prevTouchedFields) => ({
+                ...prevTouchedFields,
+                apiBaseUrl: true,
+              }));
+            }}
+            margin="dense"
+            size="small"
+            error={touchedFields.apiBaseUrl && !isUrlValid(integrationData.apiBaseUrl)}
+            helperText={
+              touchedFields.apiBaseUrl && !isUrlValid(integrationData.apiBaseUrl)
                 ? 'Invalid URL. Please enter a valid URL.'
                 : ''
             }
@@ -262,7 +263,7 @@ function IntegrationForm() {
       variant="contained"
       color="primary"
       sx={{ mt: 2 }}
-      disabled={isLoading || (!isUrlValid(integrationData.BaseUrl)) || (!isUrlValid(integrationData.homePageUrl)) || (integrationData.logo === null)}
+      disabled={isLoading || (!isUrlValid(integrationData.BaseUrl)) || (!isUrlValid(integrationData.apiBaseUrl)) || (integrationData.logo === null)}
       onClick={handleSubmit}
       loading={isLoading}
       loadingIndicator={<CircularProgress size={24} />} 

@@ -137,7 +137,7 @@ function ActionForm2() {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    navigate(URLS.OVERVIEW_PAGE);
+    navigate(URLS.FLOWS);
   };
   const handleAdd = async (event: React.FormEvent) => {
     event.preventDefault();
