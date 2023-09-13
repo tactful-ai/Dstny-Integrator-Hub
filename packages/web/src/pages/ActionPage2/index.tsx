@@ -5,7 +5,7 @@ import Container from 'components/Container';
 import ActionForm2 from 'components/ActionForm2'; 
 
 
-export default function TriggerPage() {
+export default function ActionPage2() {
 
 
   return (

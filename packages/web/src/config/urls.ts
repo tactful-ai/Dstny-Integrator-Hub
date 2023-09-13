@@ -15,7 +15,7 @@ export const TRIGGER_PAGE ='/trigger';
 export const TRIGGER_PAGE2 ='/trigger2';
 export const ACTION_PAGE ='/action';
 export const ACTION_PAGE2 ='/action2';
-export const INPUTACTION_PAGE ='inputaction';
+export const INPUTACTION_PAGE ='/inputaction';
 export const SSO_LOGIN = (issuer: string) => `${appConfig.apiUrl}/login/saml/${issuer}`;
 export const SIGNUP = '/sign-up';
 export const FORGOT_PASSWORD = '/forgot-password';
