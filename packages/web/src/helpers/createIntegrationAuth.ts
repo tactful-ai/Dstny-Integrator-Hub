@@ -1,6 +1,7 @@
 import { field } from "@automatisch/types"
+import config from "config/app";
 
-const endpointUrl = `http://localhost:3000/integrations/auth/apikey`
+const endpointUrl = `${config.apiUrl}integrations/auth/apikey`
 
 type AuthIntegrationData = {
     fields: field[];
