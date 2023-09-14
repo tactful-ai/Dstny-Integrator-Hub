@@ -1,8 +1,7 @@
 import { AuthStepsProps } from "@automatisch/types";
 import AuthTestRequesForm from "components/AuthTestRequestForm";
 import CustomAccordion from "components/CustomAccordion"
-import TagNumber from "components/TagNumber"
-import WrappingBox from "components/WrappingBox"
+
 
 
 

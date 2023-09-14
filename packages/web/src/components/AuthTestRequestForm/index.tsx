@@ -1,7 +1,6 @@
 
 import { AuthStepsProps } from "@automatisch/types";
 import { Button, Grid, TextField, Typography } from "@mui/material";
-import WrappingBox from "components/WrappingBox";
 import { useFieldArray } from "react-hook-form";
 
 
