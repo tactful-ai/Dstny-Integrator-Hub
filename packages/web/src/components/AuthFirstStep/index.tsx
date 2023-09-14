@@ -2,8 +2,6 @@ import { Box, Button, FormHelperText, Typography } from '@mui/material'
 import AuthTableFields from 'components/AuthFieldsTable'
 import AuthNewField from 'components/AuthNewField'
 import CustomAccordion from 'components/CustomAccordion'
-import TagNumber from 'components/TagNumber'
-import WrappingBox from 'components/WrappingBox'
 import { useState } from 'react'
 import type { AuthAPIKeyFormValues, AuthStepsProps } from '@automatisch/types'
 import { useFieldArray } from 'react-hook-form'
@@ -32,8 +30,8 @@ function AuthFirstStep({register,  watch, control, getValues}:AuthStepsProps) {
     return (
         <>
             <AuthNewField formUtilities={{register, watch, control, getValues}} handleClose={handleClose} removeField={removeField} openModal={open}  />
-            <CustomAccordion tag={<TagNumber text="Step 1" />} heading="Configure your fields">
-                <WrappingBox>
+            <CustomAccordion tag={<div className='tag-number'>Step 1</div>} heading="Configure your fields">
+                <div className='wrapping-box'>
                     <Typography sx={{ fontSize: '1rem', display: 'inline-block' }} >Authentication Fields <Typography sx={{ fontSize: '10px', color: 'red', fontWeight: '600', display: 'inline-block' }}>{'(required)'}</Typography></Typography>
 
                     <FormHelperText focused>
@@ -45,7 +43,7 @@ function AuthFirstStep({register,  watch, control, getValues}:AuthStepsProps) {
                             You must define at least one field where your users can enter API credentials. Your authentication configuration is not complete
                         </Typography>
                     </FormHelperText>
-                </WrappingBox>
+                </div>
 
                 <AuthTableFields removeField={removeField} rows={watch('fields')} />
 

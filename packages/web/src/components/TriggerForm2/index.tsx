@@ -4,13 +4,13 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { useLocation, useNavigate } from 'react-router-dom';
 import WrappingBox from "components/WrappingBox";
-import CustomAccordion from "components/CustomAccordion"; 
+import CustomAccordion from "components/CustomAccordion";
 import TagNumber from "components/TagNumber";
-import CodeEditor from '@uiw/react-textarea-code-editor'; 
+import CodeEditor from '@uiw/react-textarea-code-editor';
 import * as URLS from 'config/urls';
 import config from 'config/app';
 import LoadingButton from '@mui/lab/LoadingButton';
-import CircularProgress from '@mui/material/CircularProgress'; 
+import CircularProgress from '@mui/material/CircularProgress';
 
 interface FormData {
   name: string;
@@ -25,7 +25,7 @@ function TriggerForm2() {
   const mainKey = localStorage.getItem('appKey')
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  
+
 
   const providedCode = `let page = 0;\nlet response;\n\nconst headers = {
     'X-API-KEY': $.auth.data.apiKey as string,
@@ -35,8 +35,8 @@ function TriggerForm2() {
     name: '',
     key: '',
     description: '',
-    run: '', 
-    pollInterval : 15,
+    run: '',
+    pollInterval: 15,
   });
 
   const [isCodeModified, setIsCodeModified] = useState(false);
@@ -48,18 +48,18 @@ function TriggerForm2() {
     const name = searchParams.get("name") || "";
     const key = searchParams.get("key") || "";
     const description = searchParams.get("description") || "";
-    
+
     setTriggerData({
       name,
       key: key,
       description: description,
-      run: providedCode, 
+      run: providedCode,
       pollInterval: 15,
     });
 
   }, [location.search]);
 
-  let isTestSuccessful = false; 
+  let isTestSuccessful = false;
 
 
 
@@ -67,8 +67,8 @@ function TriggerForm2() {
 
     setIsLoading(true);
 
-    const codeToUse = isContinuePressed ? triggerData.run : providedCode; 
-  
+    const codeToUse = isContinuePressed ? triggerData.run : providedCode;
+
     const formattedTriggerData = {
       name: triggerData.name,
       key: triggerData.key,
@@ -79,7 +79,7 @@ function TriggerForm2() {
     console.log(formattedTriggerData);
     console.log(mainKey);
 
-  
+
     try {
       const response = await fetch(`${config.apiUrl}/integrations/trigger/polling/${mainKey}`, {
         method: 'POST',
@@ -88,7 +88,7 @@ function TriggerForm2() {
         },
         body: JSON.stringify(formattedTriggerData),
       });
-  
+
       if (response.ok) {
         console.log('Trigger data sent successfully!');
         isTestSuccessful = true;
@@ -105,8 +105,8 @@ function TriggerForm2() {
       setIsLoading(false);
     }
   };
-  
-  
+
+
   const paperStyle = {
     width: '700px',
     padding: '20px',
@@ -121,15 +121,15 @@ function TriggerForm2() {
         ...prevData,
         run: prevData.run,
       }));
-      setIsContinuePressed(true); 
-  };
-  }  
-  
-  
-  
-  
-  
-  
+      setIsContinuePressed(true);
+    };
+  }
+
+
+
+
+
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     window.location.href = `${URLS.ACTION_PAGE}?mainkey=${mainKey}`;
@@ -141,13 +141,13 @@ function TriggerForm2() {
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target;
-  
+
     if (name === 'run') {
       setTriggerData((prevData) => ({
         ...prevData,
         run: value,
       }));
-      
+
       setIsCodeModified(true);
     } else {
       setTriggerData((prevData) => ({
@@ -164,8 +164,8 @@ function TriggerForm2() {
           <div style={{ marginBottom: '15px' }}>
             <Typography variant="h6" sx={{ mb: 2 }}>Triggers</Typography>
           </div>
-          <CustomAccordion tag={<TagNumber text="Step 1" />} heading="Configure your API request">
-            <WrappingBox>
+          <CustomAccordion tag={<div className='tag-number'>Step 2</div>} heading="Configure your API request">
+            <div className='wrapping-box'>
               <Typography variant="h6" sx={{ mb: 2 }}>Polling Trigger</Typography>
               <div style={{ marginBottom: '15px' }}>
                 <label htmlFor="run">Code:</label>
@@ -192,29 +192,29 @@ function TriggerForm2() {
               >
                 Continue
               </Button>
-            </WrappingBox>
+            </div>
           </CustomAccordion>
-          <CustomAccordion tag={<TagNumber text="Step 2" />} heading="Test your API request">
-            <WrappingBox>
+          <CustomAccordion tag={<div className='tag-number'>Step 2</div>} heading="Test your API request">
+            <div className='wrapping-box'>
               <Typography variant="h6" sx={{ mb: 2 }}>Response</Typography>
               <LoadingButton
-      type="submit"
-      variant="contained"
-      color="primary"
-      sx={{ mt: 2 }}
-      disabled={isLoading}
-      onClick={handleTest}
-      loading={isLoading}
-      loadingIndicator={<CircularProgress size={24} />} 
-    >
-      test
-    </LoadingButton>
+                type="submit"
+                variant="contained"
+                color="primary"
+                sx={{ mt: 2 }}
+                disabled={isLoading}
+                onClick={handleTest}
+                loading={isLoading}
+                loadingIndicator={<CircularProgress size={24} />}
+              >
+                test
+              </LoadingButton>
               {testResult && (
                 <Typography variant="body2" sx={{ mt: 2 }}>
                   Test Result: {testResult}
                 </Typography>
               )}
-            </WrappingBox>
+            </div>
           </CustomAccordion>
           {/* <Button type="submit" variant="contained" color="primary" size="small" sx={{ mt: 2 }} onClick={handleAdd} >
             Add Another Trigger

@@ -70,12 +70,12 @@ function NewIntegrationAuthAPIKey() {
                     </Grid>
                     <Divider sx={{ mt: [2, 0], mb: 2 }} />
 
-                    <WrappingBox>
+                    <div className='wrapping-box'>
                         <PageTitle marginBottom="1rem" fontSize="1.3rem">What is API key?</PageTitle>
                         <FormHelperText>
                             API Key Auth lets you build a form to request an API key, along with any additional fields your API requires for authentication. Zapier then passes the data users enter in those fields with every API call.
                         </FormHelperText>
-                    </WrappingBox>
+                    </div>
 
                     <AuthFirstStep watch={watch} getValues={getValues} control={control} register={register} />
 

@@ -12,7 +12,7 @@ function AuthTestRequesForm({control, register}: AuthStepsProps) {
 
     return (
         <>
-            <WrappingBox>
+            <div className='wrapping-box'>
                 <Grid rowGap={2} container direction="column">
                     <Grid item container direction="row" columnGap={0.5} rowGap={2}>
                         <Grid xs={1}>
@@ -44,7 +44,7 @@ function AuthTestRequesForm({control, register}: AuthStepsProps) {
                         <Button onClick={() => append({ key: "", value: "" })} variant="outlined">Add</Button>
                     </Grid>
                 </Grid>
-            </WrappingBox>
+            </div>
 
             <Button variant="contained" type="submit">Save & Continue</Button>
         </>

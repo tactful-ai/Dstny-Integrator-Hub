@@ -10,11 +10,11 @@ import WrappingBox from "components/WrappingBox"
 
 function AuthSecondStep({control, register}: AuthStepsProps) {
     return (
-        <CustomAccordion tag={<TagNumber text="Step 2" />} heading="Configure a Test Request">
+        <CustomAccordion tag={<div className='tag-number'>Step 2</div>} heading="Configure a Test Request">
 
-            <WrappingBox>
+            <div className='wrapping-box'>
                 Add a simple API endpoint to test user credentials. Also provide the required headers for this endpoint.
-            </WrappingBox>
+            </div>
 
             <AuthTestRequesForm control={control} register={register} />
         </CustomAccordion>

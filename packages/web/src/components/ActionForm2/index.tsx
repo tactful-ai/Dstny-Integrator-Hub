@@ -10,7 +10,7 @@ import CodeEditor from '@uiw/react-textarea-code-editor';
 import * as URLS from 'config/urls';
 import config from 'config/app';
 import LoadingButton from '@mui/lab/LoadingButton';
-import CircularProgress from '@mui/material/CircularProgress'; 
+import CircularProgress from '@mui/material/CircularProgress';
 
 interface State {
   actionFormData: {
@@ -153,8 +153,8 @@ function ActionForm2() {
               Actions
             </Typography>
           </div>
-          <CustomAccordion tag={<TagNumber text="Step 1" />} heading="Configure your API request">
-            <WrappingBox>
+          <CustomAccordion tag={<div className='tag-number'>Step 1</div>} heading="Configure your API request">
+            <div className='wrapping-box'>
               <div style={{ marginBottom: '15px' }}>
                 <label htmlFor="run">Code:</label>
                 <CodeEditor
@@ -181,31 +181,31 @@ function ActionForm2() {
               >
                 Continue
               </Button>
-            </WrappingBox>
+            </div>
           </CustomAccordion>
-          <CustomAccordion tag={<TagNumber text="Step 2" />} heading="Test your API request">
-            <WrappingBox>
+          <CustomAccordion tag={<div className='tag-number'>Step 2</div>} heading="Test your API request">
+            <div className='wrapping-box'>
               <Typography variant="h6" sx={{ mb: 2 }}>
                 Response
               </Typography>
               <LoadingButton
-      type="submit"
-      variant="contained"
-      color="primary"
-      sx={{ mt: 2 }}
-      disabled={isLoading}
-      onClick={handleTest}
-      loading={isLoading}
-      loadingIndicator={<CircularProgress size={24} />} 
-    >
-      test
-    </LoadingButton>
+                type="submit"
+                variant="contained"
+                color="primary"
+                sx={{ mt: 2 }}
+                disabled={isLoading}
+                onClick={handleTest}
+                loading={isLoading}
+                loadingIndicator={<CircularProgress size={24} />}
+              >
+                test
+              </LoadingButton>
               {testResult && (
                 <Typography variant="body2" sx={{ mt: 2 }}>
                   Test Result: {testResult}
                 </Typography>
               )}
-            </WrappingBox>
+            </div>
           </CustomAccordion>
           {/* <Button type="submit" variant="contained" color="primary" size="small" sx={{ mt: 2 }} onClick={handleAdd} >
             Add Another Action
