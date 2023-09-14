@@ -17,9 +17,17 @@ import * as URLS from 'config/urls';
 import settingsRoutes from './settingsRoutes';
 import adminSettingsRoutes from './adminSettingsRoutes';
 import Notifications from 'pages/Notifications';
+import NewIntegrationAuthType from 'pages/NewIntegrationAuthType';
+import NewIntegrationAuthAPIKey from 'pages/NewIntegrationAuthAPIKey';
+
 import IntegrationPage from 'pages/integrationPage';
 import OverviewPage from 'pages/overviewPage';
 import TriggerPage from 'pages/TriggerPage'
+import TriggerPage2 from 'pages/TriggerPage2'
+import ActionPage from 'pages/ActionPage'
+import ActionPage2 from 'pages/ActionPage2'
+import InputActionPage from 'pages/InputActionPage'
+import MyIntegrations from 'pages/MyIntegrations';
 export default (
   <Routes>
     <Route
@@ -47,11 +55,53 @@ export default (
         </Layout>
       }
     />
+
+    <Route
+      path={URLS.MY_INTEGRATIONS}  
+      element={
+        <Layout>
+          <MyIntegrations />
+        </Layout>
+      }
+    />
+
     <Route
       path={URLS.TRIGGER_PAGE}  
       element={
         <Layout>
           <TriggerPage />
+        </Layout>
+      }
+    />
+        <Route
+      path={URLS.TRIGGER_PAGE2}  
+      element={
+        <Layout>
+          <TriggerPage2 />
+        </Layout>
+      }
+    />
+        <Route
+      path={URLS.ACTION_PAGE}  
+      element={
+        <Layout>
+          <ActionPage />
+        </Layout>
+      }
+    />
+        <Route
+      path={URLS.ACTION_PAGE2}  
+      element={
+        <Layout>
+          <ActionPage2 />
+        </Layout>
+      }
+    />
+            <Route
+      path={URLS.INPUTACTION_PAGE}  
+      element={
+        <Layout>
+          <InputActionPage />
         </Layout>
       }
     />
@@ -71,6 +121,7 @@ export default (
         </Layout>
       }
     />
+    
 
     <Route
       path={URLS.FLOW_PATTERN}
@@ -80,6 +131,13 @@ export default (
         </Layout>
       }
     />
+
+    <Route element={<Layout><NewIntegrationAuthType /></Layout>} path={URLS.NEW_INTEGRATION_AUTH_TYPE}/>
+
+    <Route element={<Layout><NewIntegrationAuthAPIKey /></Layout>} path={URLS.NEW_INTEGRATION_AUTH_API_KEY}/>
+
+
+
 
     <Route
       path={`${URLS.APPS}/*`}
@@ -164,5 +222,7 @@ export default (
         </Layout>
       }
     />
+
+    
   </Routes>
 );
