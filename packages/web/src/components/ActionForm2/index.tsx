@@ -132,7 +132,6 @@ function ActionForm2() {
 
 
   return (
-    <div className="wrapping-box">
       <Paper sx={paperStyle}>
         <form onSubmit={handleSubmit}>
           <div style={{ marginBottom: '15px' }}>
@@ -201,7 +200,7 @@ function ActionForm2() {
           </Button>
         </form>
       </Paper>
-    </div>
+
   );
 }
 
