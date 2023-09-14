@@ -9,7 +9,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 function TriggerForm() {
   const location = useLocation(); 
-  const queryParams = new URLSearchParams(location.search);
+  const navigate = useNavigate();
   const [triggerData, setTriggerData] = useState({
     name: '',
     Key: '',
@@ -33,12 +33,9 @@ function TriggerForm() {
       key: triggerData.Key,
       description: triggerData.Description,
     };
-
-
-    window.location.href = `${URLS.TRIGGER_PAGE2}?name=${formattedTriggerData.name}&key=${formattedTriggerData.key}&description=${formattedTriggerData.description}`;
     
-
-
+    navigate(URLS.TRIGGER_PAGE2, { 
+      state:  formattedTriggerData  });
   };
 
   const paperStyle = {

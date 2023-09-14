@@ -6,9 +6,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import CustomAccordion from 'components/CustomAccordion';
 import CodeEditor from '@uiw/react-textarea-code-editor';
 import * as URLS from 'config/urls';
-import config from 'config/app';
 import LoadingButton from '@mui/lab/LoadingButton';
-import CircularProgress from '@mui/material/CircularProgress';
+import CircularProgress from '@mui/material/CircularProgress'; 
+import newActionTesting from 'helpers/newActionTesting'; 
 
 interface State {
   actionFormData: {
@@ -29,7 +29,7 @@ interface State {
 function ActionForm2() {
   const location = useLocation();
   const navigate = useNavigate();
-  const mainKey = localStorage.getItem('appKey')
+  const mainKey = localStorage.getItem('appKey') || ''; 
 
   const [ActionData, setActionData] = useState({
     name: '',
@@ -82,38 +82,30 @@ function ActionForm2() {
       run: isContinuePressed ? ActionData.run : providedCode,
       args: locationState.inputActionData,
     };
+    
     console.log(formattedActionData);
 
 
 
 
     try {
-      const response = await fetch(`${config.apiUrl}/integrations/actions/${mainKey}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formattedActionData),
-      });
+      const result = await newActionTesting(formattedActionData, mainKey);
 
-      if (response.ok) {
-        console.log('Action data sent successfully!');
+  
+      if (result.success) {
         isTestSuccessful = true;
-        setIsLoading(false);
-
       } else {
-        console.error('Failed to send Action data to the backend.');
         isTestSuccessful = false;
-        setIsLoading(false);
       }
-    } catch (error) {
-      console.error('An error occurred:', error);
+    }  finally {
       setIsLoading(false);
+      setTestResult(isTestSuccessful ? 'Successful' : 'Failed');
     }
-
-    setTestResult(isTestSuccessful ? 'Successful' : 'Failed');
-
   };
+
+
+
+  
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target;
@@ -137,23 +129,20 @@ function ActionForm2() {
     event.preventDefault();
     navigate(URLS.FLOWS);
   };
-  const handleAdd = async (event: React.FormEvent) => {
-    event.preventDefault();
-    window.location.href = `${URLS.ACTION_PAGE}?mainkey=${mainKey}`;
-  };
+
 
   return (
-    <div style={{ marginLeft: '-80px' }}>
+    <div className="wrapping-box">
       <Paper sx={paperStyle}>
         <form onSubmit={handleSubmit}>
           <div style={{ marginBottom: '15px' }}>
-            <Typography variant="h6" sx={{ mb: 2 }}>
+            <Typography variant="h6" sx={{ mb: 2 , mt:4}}>
               Actions
             </Typography>
           </div>
-          <CustomAccordion tag={<div className='tag-number'>Step 1</div>} heading="Configure your API request">
-            <div className='wrapping-box'>
-              <div style={{ marginBottom: '15px' }}>
+          <CustomAccordion tag={<div className="tag-number">Step 1</div>} heading="Configure your API request">
+            <div className="wrapping-box">
+              <div style={{ marginBottom: '15px' , marginLeft : '10px'}}>
                 <label htmlFor="run">Code:</label>
                 <CodeEditor
                   name="run"
@@ -162,7 +151,7 @@ function ActionForm2() {
                   padding={15}
                   onChange={(evn) => handleInputChange(evn)}
                   style={{
-                    fontSize: 12,
+                    fontSize: 13,
                     backgroundColor: '#f5f5f5',
                     fontFamily:
                       'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
@@ -174,23 +163,25 @@ function ActionForm2() {
                 variant="contained"
                 color="primary"
                 size="small"
-                sx={{ mt: 2 }}
+                sx={{ mt: 2 , ml :1 , mb:2}}
                 onClick={handleContinue}
+                
               >
                 Continue
               </Button>
             </div>
           </CustomAccordion>
-          <CustomAccordion tag={<div className='tag-number'>Step 2</div>} heading="Test your API request">
-            <div className='wrapping-box'>
-              <Typography variant="h6" sx={{ mb: 2 }}>
+          <CustomAccordion tag={<div className="tag-number">Step 2</div>} heading="Test your API request">
+            <div className="wrapping-box">
+              <Typography variant="h6" sx={{ mt: 2 , ml :1 , mb:2}}>
                 Response
               </Typography>
               <LoadingButton
                 type="submit"
                 variant="contained"
                 color="primary"
-                sx={{ mt: 2 }}
+                size="small"
+                sx={{ mt: 2 , ml :1 , mb:2}}
                 disabled={isLoading}
                 onClick={handleTest}
                 loading={isLoading}
@@ -199,16 +190,12 @@ function ActionForm2() {
                 test
               </LoadingButton>
               {testResult && (
-                <Typography variant="body2" sx={{ mt: 2 }}>
+                <Typography variant="body2" sx={{ mt: 2 , ml :1 , mb:2}}>
                   Test Result: {testResult}
                 </Typography>
               )}
             </div>
           </CustomAccordion>
-          {/* <Button type="submit" variant="contained" color="primary" size="small" sx={{ mt: 2 }} onClick={handleAdd} >
-            Add Another Action
-          </Button>
-          <br></br> */}
           <Button type="submit" variant="contained" color="primary" size="small" sx={{ mt: 2 }} onClick={handleSubmit}>
             Finish
           </Button>

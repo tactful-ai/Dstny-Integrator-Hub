@@ -10,13 +10,25 @@ import Checkbox from '@mui/material/Checkbox';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-
+interface State {
+  actionFormData: {
+    name: string;
+    key: string;
+    description: string;
+  };
+  inputActionData: {
+    label: string;
+    key: string;
+    type: string;
+    required: boolean;
+    description: string;
+    variables: boolean;
+  }[];
+}
 
 function InputActionForm() {
   const navigate = useNavigate();
   const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const mainkey = queryParams.get('mainkey');
 
   const [combinedFormData, setCombinedFormData] = useState({
     actionFormData: {
@@ -33,23 +45,22 @@ function InputActionForm() {
         description: '',
         variables: false,
       },
-    ],
-    mainkey: mainkey,
+    ]
   });
 
-  useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
-    const actionFormData = {
-      name: searchParams.get('name') || '',
-      Key: searchParams.get('key') || '',
-      Description: searchParams.get('description') || '',
-    };
-
+  useEffect(() => { 
+    const locationState = location.state as State["actionFormData"];
+    const { name , key , description } = locationState;
+    console.log(name,key,description);
     setCombinedFormData((prevData) => ({
       ...prevData,
-      actionFormData,
-    }));
-  }, [location.search]);
+      actionFormData: {
+        name: name || '',
+        Key: key || '',
+        Description: description || '',
+      },
+   }));
+  }, [location]);
 
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement >,
@@ -113,7 +124,6 @@ function InputActionForm() {
     navigate(URLS.ACTION_PAGE2, {
       state: combinedFormData,
     });
-    console.log(mainkey);
     console.log(combinedFormData, combinedFormData.inputActionData);
   };
 

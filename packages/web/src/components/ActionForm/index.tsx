@@ -8,42 +8,36 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 function ActionForm() {
   const location = useLocation(); 
-  const queryParams = new URLSearchParams(location.search);
-  const mainkey = queryParams.get('mainkey');
-  const [actions, setActions] = useState([
+  const navigate = useNavigate();
+  const [actions, setActions] = useState(
     {
       name: '',
       Key: '',
       Description: '',
     },
-  ]);
+  );
 
-  const handleInputChange = (event : React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    const fieldName = name.split('-')[0]; 
 
-    setActions((prevActions) => {
-      const newActions = [...prevActions];
-      const index = Number(name.split('-')[1]); 
-      newActions[index] = {
-        ...newActions[index],
-        [fieldName]: value,
-      };
-      return newActions;
-    });
+    setActions((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
+
 
   const handleSubmit = async (event : React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const queryParameters = actions
-      .map((action) => `name=${action.name}&key=${action.Key}&description=${action.Description}`)
-      .join('&');
-
-    window.location.href = `${URLS.INPUTACTION_PAGE}?${queryParameters}&mainkey=${mainkey}`;
-    console.log(mainkey);
-    console.log(queryParameters);
-
+    const formattedActionData = {
+      name: actions.name,
+      key: actions.Key,
+      description: actions.Description,
+    };
+    
+    navigate(URLS.INPUTACTION_PAGE, { 
+      state:  formattedActionData  });
   };
 
   const paperStyle = {
@@ -55,46 +49,42 @@ function ActionForm() {
     <Paper sx={paperStyle}>
       <Typography variant="h6" sx={{ mb: 2 }}>Actions</Typography>
       <form onSubmit={handleSubmit}>
-        {actions.map((action, index) => (
-          <div key={index}>
             <div style={{ marginBottom: '15px' }}>
-              <label htmlFor={`name-${index}`}>Name:</label>
+              <label htmlFor={"name"}>Name:</label>
               <TextField
-                name={`name-${index}`}
+                name={"name"}
                 fullWidth
                 required
-                value={action.name}
+                value={actions.name}
                 onChange={handleInputChange}
                 margin="dense"
                 size="small"
               />
             </div>
             <div style={{ marginBottom: '15px' }}>
-              <label htmlFor={`Key-${index}`}>Key:</label>
+              <label htmlFor={"Key"}>Key:</label>
               <TextField
-                name={`Key-${index}`}
+                name={"Key"}
                 fullWidth
                 required
-                value={action.Key}
+                value={actions.Key}
                 onChange={handleInputChange}
                 margin="dense"
                 size="small"
               />
             </div>
             <div style={{ marginBottom: '15px' }}>
-              <label htmlFor={`Description-${index}`}>Description:</label>
+              <label htmlFor={"Description"}>Description:</label>
               <TextField
-                name={`Description-${index}`}
+                name={"Description"}
                 fullWidth
                 required
-                value={action.Description}
+                value={actions.Description}
                 onChange={handleInputChange}
                 margin="dense"
                 size="small"
               />
             </div>
-          </div>
-        ))}
         <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }}>
           Continue
         </Button>

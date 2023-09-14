@@ -12,6 +12,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import FormData from 'form-data';
 import LoadingButton from '@mui/lab/LoadingButton';
 import CircularProgress from '@mui/material/CircularProgress'; 
+import newIntegration from 'helpers/newIntegration';
 
 
 
@@ -93,59 +94,25 @@ function IntegrationForm() {
     setIsLoading(true);
   
     if (!isUrlValid(integrationData.BaseUrl) || !isUrlValid(integrationData.apiBaseUrl)) {
+      setIsLoading(false);
       return;
     }
   
-    const mainkey = integrationData.Key;
-  
-    const formData = new FormData();
-  
-    const formattedIntegrationData = {
-      name: integrationData.name,
-      key: integrationData.Key,
-      supportsConnections: integrationData.SupportsConnections.toString(),
-      baseUrl: integrationData.BaseUrl,
-      apiBaseUrl: integrationData.apiBaseUrl,
-    };
-  
-    for (const key of Object.keys(formattedIntegrationData)) {
-      const value = formattedIntegrationData[key as keyof typeof formattedIntegrationData];
-      formData.append(key, value);
-    }
-  
-    if (integrationData.logo) {
-      formData.append('logo', integrationData.logo);
-    }
-  
-    const headers = new Headers();
-  
     try {
-      const response = await fetch(`${config.apiUrl}/integrations/create`, {
-        method: 'POST',
-        headers: headers,
-        body: formData as unknown as BodyInit,
-      });
+      const result = await newIntegration(integrationData);
   
-      if (response.ok) {
-        console.log('Integration data sent successfully!');
-        if (mainkey !== null && mainkey !== undefined) {
-          // window.location.href = `${URLS.TRIGGER_PAGE}?mainkey=${mainkey}`;
-          localStorage.setItem('appKey', mainkey);
-          setIsLoading(false);
-          navigate(URLS.OVERVIEW_PAGE);
-        } else {
-          console.error('mainkey is null or undefined');
-          setIsLoading(false);
-        }
+      if (result.success) {
+        navigate(URLS.OVERVIEW_PAGE);
       } else {
-        console.error('Failed to send integration data to the backend.');
-        setIsLoading(false);
+        console.error(result.message);
       }
     } catch (error) {
       console.error('An error occurred:', error);
+    } finally {
       setIsLoading(false);
     }
   };
+  
   
   
   return (
