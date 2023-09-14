@@ -38,12 +38,7 @@ const drawerLinks = [
     to: URLS.EXECUTIONS,
     dataTest: 'executions-page-drawer-link',
   },
-  {
-    Icon: IntegrationInstructionsIcon,
-    primary: 'Create Integration',
-    to: URLS.INTEGRATION_PAGE,
-    dataTest: 'integration-page-drawer-link',
-  },
+
   {
     Icon: DisplaySettingsIcon,
     primary: 'My integrations',
