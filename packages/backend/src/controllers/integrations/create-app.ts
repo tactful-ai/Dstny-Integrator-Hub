@@ -1,4 +1,4 @@
-import { Response } from 'express';
+import { Response, Request } from 'express';
 import { IRequest } from '@automatisch/types';
 import type { IApp } from '@automatisch/types';
 import { addAppDirectory } from '../../helpers/get-app';
@@ -10,7 +10,7 @@ import logger from '../../helpers/logger';
 import AppConfig from '../../../src/models/app-config'
 
 
-export default async (request: IRequest, response: Response) => {
+export default async (request: Request, response: Response) => {
   logger.debug(
     `Handling incoming app creation request at ${request.originalUrl}.`
   );
@@ -30,7 +30,6 @@ export default async (request: IRequest, response: Response) => {
 };
 
 async function saveAppToDatabase(input: AppConfig): Promise<AppConfig> {
-  console.log(input)
   const key = input.key;
 
   const app = await App.findOneByKey(key);
@@ -38,11 +37,15 @@ async function saveAppToDatabase(input: AppConfig): Promise<AppConfig> {
   if (!app) throw new Error('The app cannot be found!');
 
 
+  if (typeof input.supportsConnections === 'string'){
+    input.supportsConnections = input.supportsConnections === 'true';
+  }
+  console.log(input)
   const appConfig = await AppConfig.query().insert(input);
 
   return appConfig;
 }
-async function handleLogo(req: IRequest, appDirectory: string) {
+async function handleLogo(req: Request, appDirectory: string) {
   const logoFile = req.file;
 
   try {

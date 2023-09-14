@@ -18,7 +18,6 @@ const getIntegrations = async (_parent: unknown, params: Params, context: Contex
     .findOne({
       user_id: params.userId
     });
-    console.log("APP: ", appConfig)
 
   return appConfig;
 };

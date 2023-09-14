@@ -15,6 +15,7 @@ type Params = {
     allowCustomConnection?: boolean;
     shared?: boolean;
     disabled?: boolean;
+    supportsConnections: boolean;
   };
 };
 

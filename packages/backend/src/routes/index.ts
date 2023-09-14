@@ -1,49 +1,46 @@
 import { NextFunction, Response, Router, Request } from 'express';
 import jwt from 'jsonwebtoken';
-import User from '../models/user';
 import appConfig from '../config/app';
 import graphQLInstance from '../helpers/graphql-instance';
 import webhooksRouter from './webhooks';
 import paddleRouter from './paddle.ee';
 import integrationsRouter from './integrations';
 
+import multer from 'multer';
 const router = Router();
 const authenticate = async (request: Request, response: Response, next: NextFunction) => {
     const token = request.headers['authorization'];
-    console.log(token)
 
-    if (token == null) {
+    if (!token || !token.startsWith('Bearer ')) {
         return response.status(401).json({ message: 'Unauthorized' });
     }
 
+    const tokenPart = token.split(' ')[1];
+
     try {
         console.log(appConfig.appSecretKey)
-        const { userId } = jwt.verify(token, appConfig.appSecretKey) as {
+        const { userId } = jwt.verify(tokenPart, appConfig.appSecretKey) as {
             userId: string;
         };
-        request.body.currentUser = await User.query()
-            .findById(userId)
-            .leftJoinRelated({
-                role: true,
-                permissions: true,
-            })
-            .withGraphFetched({
-                role: true,
-                permissions: true,
-            });
+        request.body.userId = userId;
+        console.log(userId)
 
         next();
     } catch (error) {
-        // console.log(error)
+        console.log(error);
         return response.status(401).json({ message: 'Unauthorized' });
     }
 };
 
 router.use('/graphql', graphQLInstance);
 router.use('/webhooks', webhooksRouter);
-
-// router.use(authenticate);
-router.use('/integrations', integrationsRouter);
 router.use('/paddle', paddleRouter);
+
+const storage = multer.memoryStorage(); 
+const upload = multer({ storage });
+router.use(upload.single('logo'))
+
+router.use(authenticate);
+router.use('/integrations', integrationsRouter);
 
 export default router;

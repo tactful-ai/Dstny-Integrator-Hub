@@ -185,6 +185,7 @@ type AppConfig {
   userId: String
   canConnect: Boolean
   canCustomConnect: Boolean
+  supportsConnections: Boolean
 }
 
 type App {
@@ -768,6 +769,7 @@ input CreateAppConfigInput {
   allowCustomConnection: Boolean
   shared: Boolean
   disabled: Boolean
+  supportsConnections: Boolean
 }
 
 input UpdateAppConfigInput {
@@ -782,6 +784,7 @@ input UpdateAppConfigInput {
   iconUrl: String
   authDocUrl: String
   userId: String
+  supportsConnections: Boolean
 }
 
 type AppAuthClient {

@@ -17,6 +17,7 @@ class AppConfig extends Base {
   disabled: boolean;
   userId: string;
   appAuthClients?: AppAuthClient[];
+  supportsConnections: boolean;
 
 
   static tableName = 'app_configs';
@@ -37,7 +38,8 @@ class AppConfig extends Base {
       allowCustomConnection: { type: 'boolean', default: false },
       shared: { type: 'boolean', default: false },
       disabled: { type: 'boolean', default: false },
-      user_id: { type: 'string', format: 'uuid' },
+      userId: { type: 'string', format: 'uuid' },
+      supportsConnections: {type: 'boolean', default: false}
     },
   };
   static get virtualAttributes() {

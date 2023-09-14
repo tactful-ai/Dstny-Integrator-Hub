@@ -445,6 +445,7 @@ type AppConfig = {
   disabled: boolean;
   canConnect: boolean;
   canCustomConnect: boolean;
+  supportsConnections: boolean;
 };
 
 
