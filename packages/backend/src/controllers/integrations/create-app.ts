@@ -1,9 +1,12 @@
 import { Response } from 'express';
 import { IRequest } from '@automatisch/types';
 import type { IApp } from '@automatisch/types';
+import App from '../../models/app';
 import * as fs from 'fs-extra';
 
 import logger from '../../helpers/logger';
+import AppConfig from '../../../src/models/app-config'
+
 
 export default async (request: IRequest, response: Response) => {
   logger.debug(
@@ -11,11 +14,27 @@ export default async (request: IRequest, response: Response) => {
   );
   generateAppConfigFile(request.body as IApp);
 
+  await saveAppToDatabase(request.body as AppConfig);
+
   response.status(200).send({
     success: true,
     message: 'App created successfully.',
   });
 };
+
+async function saveAppToDatabase(input: AppConfig): Promise<AppConfig> {
+  console.log(input)
+  const key = input.key;
+
+  const app = await App.findOneByKey(key);
+
+  if (!app) throw new Error('The app cannot be found!');
+
+
+  const appConfig = await AppConfig.query().insert(input);
+
+  return appConfig;
+}
 
 function generateAppConfigFile(config: IApp): void {
   const content = `
@@ -29,7 +48,7 @@ const appConfig = {
   )},
   authDocUrl: ${JSON.stringify(
     config.authDocUrl ||
-      `https://automatisch.io/docs/apps/${config.key}/connection`
+    `https://automatisch.io/docs/apps/${config.key}/connection`
   )},
   supportsConnections: ${config.supportsConnections || false},
   baseUrl: ${JSON.stringify(config.baseUrl || '')},
@@ -46,5 +65,5 @@ export default defineApp(appConfig);
   fs.ensureDirSync(directoryPath);
   fs.writeFileSync(filePath, content, 'utf-8');
 
-  logger.debug(`App config file generated at ${filePath}.`);
+  logger.info(`App config file generated at ${filePath}.`);
 }

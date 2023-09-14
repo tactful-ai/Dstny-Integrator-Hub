@@ -441,6 +441,8 @@ type AppConfig = {
   allowCustomConnection: boolean;
   shared: boolean;
   disabled: boolean;
+  canConnect: boolean;
+  canCustomConnect: boolean;
 };
 
 
