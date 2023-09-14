@@ -8,6 +8,7 @@ import SwapCallsIcon from '@mui/icons-material/SwapCalls';
 import HistoryIcon from '@mui/icons-material/History';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import IntegrationInstructionsIcon from '@mui/icons-material/IntegrationInstructions';
+import DisplaySettingsIcon from '@mui/icons-material/DisplaySettings';
 
 import * as URLS from 'config/urls';
 import useVersion from 'hooks/useVersion';
@@ -43,6 +44,12 @@ const drawerLinks = [
     to: URLS.INTEGRATION_PAGE,
     dataTest: 'integration-page-drawer-link',
   },
+  {
+    Icon: DisplaySettingsIcon,
+    primary: 'My integrations',
+    to: URLS.MY_INTEGRATIONS,
+    dataTest: 'all-integration-page-drawer-link'
+  }
 ];
 
 const generateDrawerBottomLinks = ({ notificationBadgeContent = 0 }) => [
