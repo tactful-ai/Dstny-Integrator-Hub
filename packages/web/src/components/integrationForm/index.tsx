@@ -15,8 +15,6 @@ import CircularProgress from '@mui/material/CircularProgress';
 import newIntegration from 'helpers/newIntegration';
 
 
-
-
 function IntegrationForm() {
   const navigate = useNavigate();
   const [integrationData, setIntegrationData] = useState({
@@ -32,6 +30,7 @@ function IntegrationForm() {
     BaseUrl: false,
   });
   const [isLoading, setIsLoading] = useState(false);
+
 
 
   
@@ -112,8 +111,6 @@ function IntegrationForm() {
       setIsLoading(false);
     }
   };
-  
-  
   
   return (
     <Paper sx={{ p: 3 }}>
