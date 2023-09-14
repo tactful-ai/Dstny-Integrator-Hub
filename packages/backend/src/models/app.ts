@@ -10,6 +10,10 @@ class App {
     .readdirSync(this.folderPath)
     .filter((file) => fs.statSync(this.folderPath + '/' + file).isDirectory());
 
+  static updateApps(appKey: string) {
+    this.list.push(appKey);
+  }
+
   static async findAll(name?: string, stripFuncs = true): Promise<IApp[]> {
     if (!name)
       return Promise.all(
@@ -37,27 +41,39 @@ class App {
     return appInfoConverter(rawAppData);
   }
 
-  static async checkAppAndAction(appKey: string, actionKey: string): Promise<void> {
+  static async checkAppAndAction(
+    appKey: string,
+    actionKey: string
+  ): Promise<void> {
     const app = await this.findOneByKey(appKey);
 
     if (!actionKey) return;
 
-    const hasAction = app.actions?.find(action => action.key === actionKey);
+    const hasAction = app.actions?.find((action) => action.key === actionKey);
 
     if (!hasAction) {
-      throw new Error(`${app.name} does not have an action with the "${actionKey}" key!`);
+      throw new Error(
+        `${app.name} does not have an action with the "${actionKey}" key!`
+      );
     }
   }
 
-  static async checkAppAndTrigger(appKey: string, triggerKey: string): Promise<void> {
+  static async checkAppAndTrigger(
+    appKey: string,
+    triggerKey: string
+  ): Promise<void> {
     const app = await this.findOneByKey(appKey);
 
     if (!triggerKey) return;
 
-    const hasTrigger = app.triggers?.find(trigger => trigger.key === triggerKey);
+    const hasTrigger = app.triggers?.find(
+      (trigger) => trigger.key === triggerKey
+    );
 
     if (!hasTrigger) {
-      throw new Error(`${app.name} does not have a trigger with the "${triggerKey}" key!`);
+      throw new Error(
+        `${app.name} does not have a trigger with the "${triggerKey}" key!`
+      );
     }
   }
 }

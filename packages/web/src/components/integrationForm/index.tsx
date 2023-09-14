@@ -3,12 +3,16 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { useNavigate } from 'react-router-dom';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import * as URLS from 'config/urls';
 import config from 'config/app';
+import { useLocation, useNavigate } from 'react-router-dom';
+import FormData from 'form-data';
+import LoadingButton from '@mui/lab/LoadingButton';
+import CircularProgress from '@mui/material/CircularProgress'; 
+import newIntegration from 'helpers/newIntegration';
 
 
 function IntegrationForm() {
@@ -18,13 +22,15 @@ function IntegrationForm() {
     Key: '',
     logo: null as File | null, 
     BaseUrl: '',
-    homePageUrl: '',
+    apiBaseUrl: '',
     SupportsConnections: true,
   });
   const [touchedFields, setTouchedFields] = useState({
-    homePageUrl: false,
+    apiBaseUrl: false,
     BaseUrl: false,
   });
+  const [isLoading, setIsLoading] = useState(false);
+
 
 
   
@@ -84,44 +90,27 @@ function IntegrationForm() {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    setIsLoading(true);
   
-    // Make sure the BaseUrl and homePageUrl are valid before submitting
-    if (!isUrlValid(integrationData.BaseUrl) || !isUrlValid(integrationData.homePageUrl)) {
+    if (!isUrlValid(integrationData.BaseUrl) || !isUrlValid(integrationData.apiBaseUrl)) {
+      setIsLoading(false);
       return;
     }
   
-    const formattedIntegrationData = {
-      name: integrationData.name,
-      key: integrationData.Key,
-      supportsConnections: integrationData.SupportsConnections,
-      baseUrl: integrationData.BaseUrl,
-      apiBaseUrl: integrationData.homePageUrl,
-    };
-    // console.log(JSON.stringify(formattedIntegrationData))
-    // navigate(URLS.OVERVIEW_PAGE);
-  
     try {
-      const response = await fetch(`${config.apiUrl}/integrations/create`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formattedIntegrationData),
-      });
+      const result = await newIntegration(integrationData);
   
-      if (response.ok) {
-        console.log('Integration data sent successfully!');
+      if (result.success) {
         navigate(URLS.OVERVIEW_PAGE);
       } else {
-        console.error('Failed to send integration data to the backend.');
-
+        console.error(result.message);
       }
     } catch (error) {
       console.error('An error occurred:', error);
-
+    } finally {
+      setIsLoading(false);
     }
   };
-  
   
   return (
     <Paper sx={{ p: 3 }}>
@@ -167,30 +156,7 @@ function IntegrationForm() {
 
           </div>
         </div>
-        <div style={{ marginBottom: '15px' }}>
-          <label htmlFor="homePageUrl">Home Page URL:</label>
-          <TextField
-            name="homePageUrl"
-            fullWidth
-            required
-            value={integrationData.homePageUrl}
-            onChange={handleInputChange}
-            onBlur={() => {
-              setTouchedFields((prevTouchedFields) => ({
-                ...prevTouchedFields,
-                homePageUrl: true,
-              }));
-            }}
-            margin="dense"
-            size="small"
-            error={touchedFields.homePageUrl && !isUrlValid(integrationData.homePageUrl)}
-            helperText={
-              touchedFields.homePageUrl && !isUrlValid(integrationData.homePageUrl)
-                ? 'Invalid URL. Please enter a valid URL.'
-                : ''
-            }
-          />
-        </div>
+
         <div style={{ marginBottom: '8px' }}>
           <label htmlFor="BaseUrl">Base URL:</label>
           <TextField
@@ -200,7 +166,6 @@ function IntegrationForm() {
             value={integrationData.BaseUrl}
             onChange={handleInputChange}
             onBlur={() => {
-              // Set the field as touched when the input loses focus
               setTouchedFields((prevTouchedFields) => ({
                 ...prevTouchedFields,
                 BaseUrl : true,
@@ -211,6 +176,30 @@ function IntegrationForm() {
             error={touchedFields.BaseUrl && !isUrlValid(integrationData.BaseUrl)}
             helperText={
               touchedFields.BaseUrl && !isUrlValid(integrationData.BaseUrl)
+                ? 'Invalid URL. Please enter a valid URL.'
+                : ''
+            }
+          />
+        </div>
+        <div style={{ marginBottom: '15px' }}>
+          <label htmlFor="apiBaseUrl">API Base URL:</label>
+          <TextField
+            name="apiBaseUrl"
+            fullWidth
+            required
+            value={integrationData.apiBaseUrl}
+            onChange={handleInputChange}
+            onBlur={() => {
+              setTouchedFields((prevTouchedFields) => ({
+                ...prevTouchedFields,
+                apiBaseUrl: true,
+              }));
+            }}
+            margin="dense"
+            size="small"
+            error={touchedFields.apiBaseUrl && !isUrlValid(integrationData.apiBaseUrl)}
+            helperText={
+              touchedFields.apiBaseUrl && !isUrlValid(integrationData.apiBaseUrl)
                 ? 'Invalid URL. Please enter a valid URL.'
                 : ''
             }
@@ -233,9 +222,18 @@ function IntegrationForm() {
         </div>
 
         
-        <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }} disabled={!isUrlValid(integrationData.BaseUrl) && !isUrlValid(integrationData.homePageUrl)} >
-          Create
-        </Button>
+        <LoadingButton
+      type="submit"
+      variant="contained"
+      color="primary"
+      sx={{ mt: 2 }}
+      disabled={isLoading || (!isUrlValid(integrationData.BaseUrl)) || (!isUrlValid(integrationData.apiBaseUrl)) || (integrationData.logo === null)}
+      onClick={handleSubmit}
+      loading={isLoading}
+      loadingIndicator={<CircularProgress size={24} />} 
+    >
+      Create
+    </LoadingButton>
       </form>
     </Paper>
   );

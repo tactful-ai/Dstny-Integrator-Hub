@@ -19,7 +19,8 @@
       "node_modules/@automatisch/types",
       "./src/types",
       "./src/apps"
-    ]
+    ],
+    "resolveJsonModule": true
   },
   "include": ["src/**/*", "bin/**/*"]
 }
