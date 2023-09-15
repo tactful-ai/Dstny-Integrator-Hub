@@ -28,6 +28,7 @@ import ActionPage from 'pages/ActionPage'
 import ActionPage2 from 'pages/ActionPage2'
 import InputActionPage from 'pages/InputActionPage'
 import MyIntegrations from 'pages/MyIntegrations';
+import ActionTabs from 'pages/ActionTabs'
 export default (
   <Routes>
     <Route
@@ -61,6 +62,14 @@ export default (
       element={
         <Layout>
           <MyIntegrations />
+        </Layout>
+      }
+    />
+        <Route
+          path={URLS.ACTION_TABS}  
+      element={
+        <Layout>
+          <ActionTabs />
         </Layout>
       }
     />

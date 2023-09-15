@@ -12,8 +12,8 @@ export default function ActionPage() {
     <Box sx={{ display: 'flex', flex: 1, alignItems: 'center' }}>
       <Container maxWidth="sm">
         <Stack direction="column" gap={2}>
-          <ActionForm />
-         
+          {/* <ActionForm />
+          */}
         </Stack>
       </Container>
     </Box>

@@ -8,6 +8,7 @@ export const EXECUTION = (executionId: string) =>
 
 export const LOGIN = '/login';
 export const LOGIN_CALLBACK = `${LOGIN}/callback`;
+export const ACTION_TABS = `/actiontabs`;
 export const OVERVIEW_PAGE = '/overview';
 export const INTEGRATION_PAGE = '/integration';
 export const INTEGRATION_PAGE_CALLBACK = `${INTEGRATION_PAGE}/callback`;

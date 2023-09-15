@@ -11,7 +11,7 @@ export default function InputActionPage() {
     <Box sx={{ display: 'flex', flex: 1, alignItems: 'center' }}>
       <Container maxWidth="sm">
         <Stack direction="column" gap={2}>
-          <InputActionForm />
+          {/* <InputActionForm /> */}
          
         </Stack>
       </Container>

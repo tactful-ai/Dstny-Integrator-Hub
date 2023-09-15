@@ -3,10 +3,20 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import * as URLS from 'config/urls';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-function ActionForm() {
+interface ActionData {
+  name: string;
+  key: string;
+  description: string;
+}
+
+interface ActionFormProps {
+  onNext: (data: ActionData) => void;
+}
+
+function ActionForm({ onNext }: ActionFormProps){
+
   const location = useLocation(); 
   const navigate = useNavigate();
   const [actions, setActions] = useState(
@@ -35,9 +45,7 @@ function ActionForm() {
       key: actions.Key,
       description: actions.Description,
     };
-    
-    navigate(URLS.INPUTACTION_PAGE, { 
-      state:  formattedActionData  });
+    onNext(formattedActionData);
   };
 
   const paperStyle = {

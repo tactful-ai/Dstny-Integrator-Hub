@@ -104,7 +104,7 @@ function OverviewForm() {
             <div style={buttonContainerStyle}>
               <Button
                 component={Link}
-                to={URLS.ACTION_PAGE}
+                to={URLS.ACTION_TABS}
                 variant="outlined"
                 color="primary"
                 size="small"

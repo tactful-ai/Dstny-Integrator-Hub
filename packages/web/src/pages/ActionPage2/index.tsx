@@ -12,7 +12,7 @@ export default function ActionPage2() {
     <Box sx={{ display: 'flex', flex: 1, alignItems: 'center' }}>
       <Container maxWidth="sm">
         <Stack direction="column" gap={2}>
-          <ActionForm2 />
+          {/* <ActionForm2 /> */}
          
         </Stack>
       </Container>

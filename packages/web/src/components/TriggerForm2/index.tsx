@@ -107,7 +107,7 @@ function TriggerForm2() {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    navigate(URLS.ACTION_PAGE);
+    navigate(URLS.ACTION_TABS);
   };
   // const handleAdd = async (event: React.FormEvent) => {
   //   event.preventDefault();
