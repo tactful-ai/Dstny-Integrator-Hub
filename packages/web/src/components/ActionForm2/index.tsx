@@ -25,7 +25,7 @@ interface ActionForm2Props {
     key: string;
     description: string;
   };
-  inputActionData: InputActionData[];
+  inputActionData?: InputActionData[]; 
 }
 
 function ActionForm2({ actionFormData, inputActionData }: ActionForm2Props) {
@@ -85,7 +85,7 @@ function ActionForm2({ actionFormData, inputActionData }: ActionForm2Props) {
       key: ActionData.key,
       description: ActionData.description,
       run: isContinuePressed ? ActionData.run : providedCode,
-      args: inputActionData, // Use inputActionData from props
+      args: inputActionData || [], 
     };
 
     try {
@@ -116,11 +116,7 @@ function ActionForm2({ actionFormData, inputActionData }: ActionForm2Props) {
     }
   };
 
-  const paperStyle = {
-    width: '700px',
-    padding: '20px',
 
-  };
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -128,7 +124,7 @@ function ActionForm2({ actionFormData, inputActionData }: ActionForm2Props) {
   };
 
   return (
-    <Paper sx={paperStyle}>
+    <Paper sx={{ p: 3, width: '100%' , padding:'24px' }}>
       <form onSubmit={handleSubmit}>
         <div style={{ marginBottom: '15px' }}>
           <Typography variant="h6" sx={{ mb: 2, mt: 4 }}>
@@ -137,7 +133,7 @@ function ActionForm2({ actionFormData, inputActionData }: ActionForm2Props) {
         </div>
         <CustomAccordion tag={<div className="tag-number">Step 1</div>} heading="Configure your API request">
           <div className="wrapping-box">
-            <div style={{ marginBottom: '15px', marginLeft: '10px' }}>
+            <div style={{ marginBottom: '15px' }}>
               <label htmlFor="run">Code:</label>
               <CodeEditor
                 name="run"

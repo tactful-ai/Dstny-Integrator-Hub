@@ -18,7 +18,7 @@ interface State {
     key: string;
     description: string;
   };
-  inputActionData: {
+  inputActionData?: {
     label: string;
     key: string;
     type: string;
@@ -86,10 +86,10 @@ function ActionTabs() {
             onNext={navigateToActionForm2}
           />
         )}
-        {activeTab === 2 && allAction && (
+        {activeTab === 2 && (
           <ActionForm2
-            actionFormData={allAction.actionFormData}
-            inputActionData={allAction.inputActionData}
+             actionFormData={allAction?.actionFormData || actionFormData || { name: '', key: '', description: '' }}
+             inputActionData={allAction?.inputActionData || []} 
           />
         )}
       </div>

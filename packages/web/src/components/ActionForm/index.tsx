@@ -48,13 +48,9 @@ function ActionForm({ onNext }: ActionFormProps){
     onNext(formattedActionData);
   };
 
-  const paperStyle = {
-    width: '500px',
-    padding: '20px',
-  };
 
   return (
-    <Paper sx={paperStyle}>
+    <Paper sx={{ p: 3 }}>
       <Typography variant="h6" sx={{ mb: 2 }}>Actions</Typography>
       <form onSubmit={handleSubmit}>
             <div style={{ marginBottom: '15px' }}>
