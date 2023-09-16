@@ -24,9 +24,6 @@ import IntegrationPage from 'pages/integrationPage';
 import OverviewPage from 'pages/overviewPage';
 import TriggerPage from 'pages/TriggerPage'
 import TriggerPage2 from 'pages/TriggerPage2'
-import ActionPage from 'pages/ActionPage'
-import ActionPage2 from 'pages/ActionPage2'
-import InputActionPage from 'pages/InputActionPage'
 import MyIntegrations from 'pages/MyIntegrations';
 import ActionTabs from 'pages/ActionTabs'
 export default (
@@ -90,30 +87,7 @@ export default (
         </Layout>
       }
     />
-        <Route
-      path={URLS.ACTION_PAGE}  
-      element={
-        <Layout>
-          <ActionPage />
-        </Layout>
-      }
-    />
-        <Route
-      path={URLS.ACTION_PAGE2}  
-      element={
-        <Layout>
-          <ActionPage2 />
-        </Layout>
-      }
-    />
-            <Route
-      path={URLS.INPUTACTION_PAGE}  
-      element={
-        <Layout>
-          <InputActionPage />
-        </Layout>
-      }
-    />
+  
    <Route
       path={URLS.OVERVIEW_PAGE}
       element={
