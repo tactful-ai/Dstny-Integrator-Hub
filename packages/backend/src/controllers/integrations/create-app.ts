@@ -100,9 +100,11 @@ export default defineApp(appConfig);
 
   const directoryPath = `./src/apps/${config.key}`;
   const filePath = `${directoryPath}/index.ts`;
+  const dtsFilePath = `${directoryPath}/index.d.ts`;
 
   fs.ensureDirSync(directoryPath);
   fs.writeFileSync(filePath, content, 'utf-8');
+  fs.writeFileSync(dtsFilePath, '', 'utf-8');
 
   logger.info(`App config file generated at ${filePath}.`);
 }

@@ -314,7 +314,7 @@ class User extends Base {
   can(action: string, subject: string) {
     const can = this.ability.can(action, subject);
 
-    // if (!can) throw new Error('Not authorized!');
+    if (!can) throw new Error('Not authorized!');
 
     const relevantRule = this.ability.relevantRuleFor(action, subject);
 
