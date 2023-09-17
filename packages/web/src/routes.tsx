@@ -28,8 +28,19 @@ import ActionPage from 'pages/ActionPage'
 import ActionPage2 from 'pages/ActionPage2'
 import InputActionPage from 'pages/InputActionPage'
 import MyIntegrations from 'pages/MyIntegrations';
+import Dashboard from 'pages/Dashboard';
 export default (
   <Routes>
+
+    <Route 
+      path={URLS.DASHBOARD}
+      element={
+        <Layout>
+          <Dashboard />
+        </Layout>
+      }
+    />
+
     <Route
       path={URLS.EXECUTIONS}
       element={

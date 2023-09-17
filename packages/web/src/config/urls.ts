@@ -105,7 +105,6 @@ export const ROLE = (roleId: string) => `${ROLES}/${roleId}`;
 export const ROLE_PATTERN = `${ROLES}/:roleId`;
 export const CREATE_ROLE = `${ROLES}/create`;
 
-export const DASHBOARD = FLOWS;
 
 // External links
 export const WEBHOOK_DOCS =
@@ -117,3 +116,6 @@ export const NEW_INTEGRATION_AUTH_API_KEY = '/new-integration/auth/api-key';
 
 // list all integrations
 export const MY_INTEGRATIONS = '/my-integrations';
+
+// Dashboard
+export const DASHBOARD = '/dashboard';
