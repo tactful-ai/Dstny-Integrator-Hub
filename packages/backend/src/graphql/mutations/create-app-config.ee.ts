@@ -5,9 +5,17 @@ import Context from '../../types/express/context';
 type Params = {
   input: {
     key: string;
+    name?: string; 
+    base_url?: string;
+    api_base_url?: string;
+    primary_color?: string;
+    icon_url?: string;
+    auth_doc_url?: string;
+    user_id?: string;
     allowCustomConnection?: boolean;
     shared?: boolean;
     disabled?: boolean;
+    supportsConnections: boolean;
   };
 };
 
@@ -24,11 +32,7 @@ const createAppConfig = async (
 
   if (!app) throw new Error('The app cannot be found!');
 
-  const appConfig = await AppConfig
-    .query()
-    .insert(
-      params.input
-    );
+  const appConfig = await AppConfig.query().insert(params.input);
 
   return appConfig;
 };

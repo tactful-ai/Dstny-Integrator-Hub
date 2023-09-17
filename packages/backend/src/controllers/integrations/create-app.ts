@@ -1,4 +1,4 @@
-import { Response } from 'express';
+import { Response, Request } from 'express';
 import { IRequest } from '@automatisch/types';
 import type { IApp } from '@automatisch/types';
 import { addAppDirectory } from '../../helpers/get-app';
@@ -7,8 +7,10 @@ import * as fs from 'fs-extra';
 import path from 'path';
 
 import logger from '../../helpers/logger';
+import AppConfig from '../../../src/models/app-config'
 
-export default async (request: IRequest, response: Response) => {
+
+export default async (request: Request, response: Response) => {
   logger.debug(
     `Handling incoming app creation request at ${request.originalUrl}.`
   );
@@ -19,13 +21,31 @@ export default async (request: IRequest, response: Response) => {
   await addAppDirectory(request.body.key);
   App.updateApps(request.body.key);
 
+  await saveAppToDatabase(request.body as AppConfig);
+
   response.status(200).send({
     success: true,
     message: 'App created successfully.',
   });
 };
 
-async function handleLogo(req: IRequest, appDirectory: string) {
+async function saveAppToDatabase(input: AppConfig): Promise<AppConfig> {
+  const key = input.key;
+
+  const app = await App.findOneByKey(key);
+
+  if (!app) throw new Error('The app cannot be found!');
+
+
+  if (typeof input.supportsConnections === 'string'){
+    input.supportsConnections = input.supportsConnections === 'true';
+  }
+  console.log(input)
+  const appConfig = await AppConfig.query().insert(input);
+
+  return appConfig;
+}
+async function handleLogo(req: Request, appDirectory: string) {
   const logoFile = req.file;
 
   try {
@@ -67,7 +87,7 @@ const appConfig = {
   )},
   authDocUrl: ${JSON.stringify(
     config.authDocUrl ||
-      `https://automatisch.io/docs/apps/${config.key}/connection`
+    `https://automatisch.io/docs/apps/${config.key}/connection`
   )},
   supportsConnections: ${config.supportsConnections || false},
   baseUrl: ${JSON.stringify(config.baseUrl || '')},
@@ -80,9 +100,11 @@ export default defineApp(appConfig);
 
   const directoryPath = `./src/apps/${config.key}`;
   const filePath = `${directoryPath}/index.ts`;
+  const dtsFilePath = `${directoryPath}/index.d.ts`;
 
   fs.ensureDirSync(directoryPath);
   fs.writeFileSync(filePath, content, 'utf-8');
+  fs.writeFileSync(dtsFilePath, '', 'utf-8');
 
-  logger.debug(`App config file generated at ${filePath}.`);
+  logger.info(`App config file generated at ${filePath}.`);
 }

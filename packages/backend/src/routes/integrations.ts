@@ -1,5 +1,4 @@
 import express, { Router } from 'express';
-import multer from 'multer';
 
 
 import { IRequest } from '@automatisch/types';
@@ -34,7 +33,7 @@ router.use(
  *       requestBody:
  *         required: true
  *         content:
- *           application/json:
+ *           multipart/form-data:
  *             schema:
  *               type: object
  *               properties:
@@ -62,6 +61,9 @@ router.use(
  *                 primaryColor:
  *                   type: string
  *                   description: The primary color of the app. (Optional)
+ *                 logo:
+ *                   type: file
+ *                   description: The app's logo file. (Required)
  *
  *       responses:
  *         '200':
@@ -94,10 +96,10 @@ router.use(
  *           type: integer
  *
  */
-const storage = multer.memoryStorage(); 
-const upload = multer({ storage });
 
-router.post('/create', uniqueApp, upload.single('logo'), createApp);
+router.post('/create',  uniqueApp, createApp);
+
+
 
 /**
  * @openapi
