@@ -51,7 +51,7 @@ function TriggerForm({ onNext }: TriggerFormProps){
 
   return (
     <Paper sx={{ p: 3 }}>
-      <Typography variant="h6" sx={{ mb: 2 }}>Actions</Typography>
+      <Typography variant="h6" sx={{ mb: 2 }}>Triggers:</Typography>
       <form onSubmit={handleSubmit}>
             <div style={{ marginBottom: '15px' }}>
               <label htmlFor={"name"}>Name:</label>

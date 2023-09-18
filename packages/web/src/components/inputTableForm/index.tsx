@@ -16,17 +16,20 @@ interface InputTableFormProps {
 }
 
 function InputTableForm({ inputData, onNext, onAddAnotherField }: InputTableFormProps) {
-
   return (
     <div>
-      <h2>Input Fields Table</h2>
-      <InputTable inputData={inputData} />
-      <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }} onClick={onNext}>
-        Continue
-      </Button>
-      <Button variant="contained" sx={{ mt: 2, ml: 2 }} onClick={onAddAnotherField}>
-        Add Another Field
-      </Button>
+            <div>
+        <h2>Input Fields Table</h2>
+        <InputTable inputData={inputData} />
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Button type="button" variant="contained" sx={{ mt: 2, order: 1 }} onClick={onAddAnotherField}>
+          Add Another Field
+        </Button>
+        <Button type="button" variant="contained" color="primary" sx={{ mt: 2, order: 2 }} onClick={onNext}>
+          Continue
+        </Button>
+      </div>
     </div>
   );
 }
