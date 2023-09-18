@@ -188,6 +188,11 @@ type AppConfig {
   supportsConnections: Boolean
 }
 
+type DynamicData {
+  name: String
+  key: String
+}
+
 type App {
   name: String
   key: String
@@ -202,6 +207,7 @@ type App {
   triggers: [Trigger]
   actions: [Action]
   connections: [Connection]
+  dynamicData: [DynamicData]
 }
 
 type AppAuth {

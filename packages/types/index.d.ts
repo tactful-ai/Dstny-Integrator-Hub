@@ -315,6 +315,12 @@ export interface IAction extends IBaseAction {
   substeps?: ISubstep[];
 }
 
+export interface IBaseDynamicData {
+  name: string;
+  key: string;
+  run?($: IGlobalVariable): Promise<void>;
+}
+
 export interface IAuthentication {
   client: unknown;
   verifyCredentials(): Promise<IJSONObject>;
