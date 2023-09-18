@@ -8,7 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
 interface InputTableProps {
-  inputActionData: {
+  inputData: {
     label: string;
     key: string;
     type: string;
@@ -17,7 +17,7 @@ interface InputTableProps {
   }[];
 }
 
-function InputTable({ inputActionData }: InputTableProps) {
+function InputTable({ inputData }: InputTableProps) {
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -31,7 +31,7 @@ function InputTable({ inputActionData }: InputTableProps) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {inputActionData.map((item, index) => (
+          {inputData.map((item, index) => (
             <TableRow key={index}>
               <TableCell>{item.label}</TableCell>
               <TableCell>{item.key}</TableCell>

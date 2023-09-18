@@ -22,10 +22,9 @@ import NewIntegrationAuthAPIKey from 'pages/NewIntegrationAuthAPIKey';
 
 import IntegrationPage from 'pages/integrationPage';
 import OverviewPage from 'pages/overviewPage';
-import TriggerPage from 'pages/TriggerPage'
-import TriggerPage2 from 'pages/TriggerPage2'
 import MyIntegrations from 'pages/MyIntegrations';
 import ActionTabs from 'pages/ActionTabs'
+import TriggerTabs from 'pages/TriggerTabs'
 export default (
   <Routes>
     <Route
@@ -72,21 +71,14 @@ export default (
     />
 
     <Route
-      path={URLS.TRIGGER_PAGE}  
+      path={URLS.TRIGGER_TABS}  
       element={
         <Layout>
-          <TriggerPage />
+          <TriggerTabs />
         </Layout>
       }
     />
-        <Route
-      path={URLS.TRIGGER_PAGE2}  
-      element={
-        <Layout>
-          <TriggerPage2 />
-        </Layout>
-      }
-    />
+
   
    <Route
       path={URLS.OVERVIEW_PAGE}

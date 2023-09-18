@@ -3,7 +3,7 @@ import InputTable from '../inputTable';
 import Button from '@mui/material/Button';
 
 interface InputTableFormProps {
-  inputActionData: {
+  inputData: {
     label: string;
     key: string;
     description: string;
@@ -15,12 +15,12 @@ interface InputTableFormProps {
   onAddAnotherField: () => void; 
 }
 
-function InputTableForm({ inputActionData, onNext, onAddAnotherField }: InputTableFormProps) {
+function InputTableForm({ inputData, onNext, onAddAnotherField }: InputTableFormProps) {
 
   return (
     <div>
       <h2>Input Fields Table</h2>
-      <InputTable inputActionData={inputActionData} />
+      <InputTable inputData={inputData} />
       <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }} onClick={onNext}>
         Continue
       </Button>

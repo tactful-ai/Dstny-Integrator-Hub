@@ -5,7 +5,14 @@ type TriggerData = {
   key: string;
   description: string;
   run: string;
-  pollInterval: number;
+  args: {
+    label: string;
+    key: string;
+    type: string;
+    required: boolean;
+    description: string;
+    variables: boolean;
+  }[];
 };
 
 async function newTriggerTesting(triggerData: TriggerData, mainKey: string) {
@@ -15,10 +22,10 @@ async function newTriggerTesting(triggerData: TriggerData, mainKey: string) {
       key: triggerData.key,
       description: triggerData.description,
       run: triggerData.run,
-      pollInterval: triggerData.pollInterval,
+      args: triggerData.args,
     };
 
-    const response = await fetch(`${config.apiUrl}/integrations/trigger/polling/${mainKey}`, {
+    const response = await fetch(`${config.apiUrl}/integrations/actions/${mainKey}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

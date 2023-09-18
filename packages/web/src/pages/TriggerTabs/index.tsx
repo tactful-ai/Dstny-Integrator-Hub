@@ -2,19 +2,19 @@ import React, { useState } from 'react';
 import Paper from '@mui/material/Paper';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import ActionForm from '../../components/ActionForm';
+import TriggerForm from '../../components/TriggerForm';
 import InputForm from '../../components/InputForm';
-import ActionForm2 from '../../components/ActionForm2';
+import TriggerForm2 from '../../components/TriggerForm2';
 import InputTableForm from '../../components/inputTableForm';
 import { useNavigate } from 'react-router-dom';
 
 interface State {
-  actionFormData: {
+  TriggerFormData: {
     name: string;
     key: string;
     description: string;
   };
-  inputActionData?: {
+  inputTriggerData?: {
     label: string;
     key: string;
     type: string;
@@ -24,7 +24,7 @@ interface State {
   }[];
 }
 
-type InputActionField = {
+type InputTriggerField = {
   label: string;
   key: string;
   type: string;
@@ -33,13 +33,13 @@ type InputActionField = {
   variables: boolean;
 };
 
-function ActionTabs() {
+function TriggerTabs() {
   const [activeTab, setActiveTab] = useState(0);
-  const [actionFormData, setActionFormData] = useState<State['actionFormData'] | null>(null);
-  const [inputActionData, setInputActionData] = useState<InputActionField[]>([]);
+  const [triggerFormData, setTriggerFormData] = useState<State['TriggerFormData'] | null>(null);
+  const [inputTriggerData, setInputTriggerData] = useState<InputTriggerField[]>([]);
   const [settingsCompleted, setSettingsCompleted] = useState(false);
   const navigate = useNavigate();
-  const [showInputActionForm, setShowInputActionForm] = useState(true);
+  const [showInputTriggerForm, setShowInputTriggerForm] = useState(true);
 
   const handleTabChange = (
     event: React.ChangeEvent<unknown>,
@@ -48,16 +48,16 @@ function ActionTabs() {
     setActiveTab(newValue);
   };
 
-  const switchToInputActionFormTab = (data: State['actionFormData']) => {
-    setActionFormData(data);
-    setShowInputActionForm(true);
+  const switchToInputTriggerFormTab = (data: State['TriggerFormData']) => {
+    setTriggerFormData(data);
+    setShowInputTriggerForm(true);
     setActiveTab(1);
   };
 
-  const handleInputActionData = (data: InputActionField[]) => {
+  const handleInputTriggerData = (data: InputTriggerField[]) => {
     if (data.length > 0) {
-      setInputActionData((prevData) => [...prevData, ...data]);
-      setShowInputActionForm(false);
+      setInputTriggerData((prevData) => [...prevData, ...data]);
+      setShowInputTriggerForm(false);
     }
   };
 
@@ -65,12 +65,12 @@ function ActionTabs() {
     setSettingsCompleted(true);
   };
 
-  const navigateToActionForm2 = () => {
+  const navigateToTriggerForm2 = () => {
     setActiveTab(2);
   };
 
   const handleAddAnotherField = () => {
-    setShowInputActionForm(true);
+    setShowInputTriggerForm(true);
   };
   
 
@@ -91,35 +91,35 @@ function ActionTabs() {
       </Paper>
       <div style={{ padding: '20px' }}>
         {activeTab === 0 && (
-          <ActionForm
+          <TriggerForm
             onNext={(data) => {
-              switchToInputActionFormTab(data);
+              switchToInputTriggerFormTab(data);
               handleSettingsCompleted();
             }}
           />
         )}
         {activeTab === 1 && (
           <>
-            {showInputActionForm && (
+            {showInputTriggerForm && (
               <InputForm
-                FormData={actionFormData || { name: '', key: '', description: '' }}
-                inputData={inputActionData}
-                onNext={(data) => handleInputActionData(data)}
+                FormData={triggerFormData || { name: '', key: '', description: '' }}
+                inputData={inputTriggerData}
+                onNext={(data) => handleInputTriggerData(data)}
               />
             )}
-            {!showInputActionForm && (
+            {!showInputTriggerForm && (
               <InputTableForm
-                inputData={inputActionData}
-                onNext={navigateToActionForm2}
+                inputData={inputTriggerData}
+                onNext={navigateToTriggerForm2}
                 onAddAnotherField={handleAddAnotherField}
               />
             )}
           </>
         )}
         {activeTab === 2 && (
-          <ActionForm2
-            actionFormData={actionFormData || { name: '', key: '', description: '' }}
-            inputActionData={inputActionData}
+          <TriggerForm2
+            triggerFormData={triggerFormData || { name: '', key: '', description: '' }}
+            inputTriggerData={inputTriggerData}
           />
         )}
       </div>
@@ -127,4 +127,4 @@ function ActionTabs() {
   );
 }
 
-export default ActionTabs;
+export default TriggerTabs;

@@ -11,12 +11,12 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 interface State {
-  actionFormData: {
+  FormData: {
     name: string;
     key: string;
     description: string;
   };
-  inputActionData: {
+  inputData: {
     label: string;
     key: string;
     type: string;
@@ -26,26 +26,26 @@ interface State {
   }[];
 }
 
-interface InputActionFormProps {
-  actionFormData: State['actionFormData'] | null;
-  inputActionData: State['inputActionData'] | null;
-  onNext: (data: State['inputActionData']) => void;
+interface InputFormProps {
+  FormData: State['FormData'] | null;
+  inputData: State['inputData'] | null;
+  onNext: (data: State['inputData']) => void;
 }
 
 
-function InputActionForm({ actionFormData, inputActionData, onNext }: InputActionFormProps) {
+function InputForm({ FormData, inputData, onNext }: InputFormProps) {
   const navigate = useNavigate();
   const location = useLocation();
 
 
   const [combinedFormData, setCombinedFormData] = useState<State>({
-    actionFormData: {
+    FormData: {
       name: '',
       key: '',
       description: '',
     },
-    inputActionData: inputActionData && inputActionData.length > 0
-      ? inputActionData
+    inputData: inputData && inputData.length > 0
+      ? inputData
       : [
         {
           label: '',
@@ -62,19 +62,19 @@ function InputActionForm({ actionFormData, inputActionData, onNext }: InputActio
   
 
   useEffect(() => {
-    if (actionFormData) {
-      const { name, key, description } = actionFormData;
+    if (FormData) {
+      const { name, key, description } = FormData;
 
       setCombinedFormData((prevData) => ({
         ...prevData,
-        actionFormData: {
+        FormData: {
           name: name || '',
           key: key || '',
           description: description || '',
         },
       }));
     }
-  }, [location, actionFormData]); 
+  }, [location, FormData]); 
 
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -87,7 +87,7 @@ function InputActionForm({ actionFormData, inputActionData, onNext }: InputActio
 
       setCombinedFormData((prevData) => ({
         ...prevData,
-        inputActionData: prevData.inputActionData.map((item, i) =>
+        inputData: prevData.inputData.map((item, i) =>
           i === index
             ? {
                 ...item,
@@ -99,7 +99,7 @@ function InputActionForm({ actionFormData, inputActionData, onNext }: InputActio
     } else {
       setCombinedFormData((prevData) => ({
         ...prevData,
-        inputActionData: prevData.inputActionData.map((item, i) =>
+        inputData: prevData.inputData.map((item, i) =>
           i === index
             ? {
                 ...item,
@@ -119,7 +119,7 @@ function InputActionForm({ actionFormData, inputActionData, onNext }: InputActio
 
     setCombinedFormData((prevData) => ({
       ...prevData,
-      inputActionData: prevData.inputActionData.map((item, i) =>
+      inputData: prevData.inputData.map((item, i) =>
         i === index
           ? {
               ...item,
@@ -131,11 +131,10 @@ function InputActionForm({ actionFormData, inputActionData, onNext }: InputActio
   };
 
   const handleNext = () => {
-    onNext(combinedFormData.inputActionData);
-    // Reset the inputActionData to an empty array
+    onNext(combinedFormData.inputData);
     setCombinedFormData((prevData) => ({
       ...prevData,
-      inputActionData: [
+      inputData: [
         {
           label: '',
           key: '',
@@ -155,7 +154,7 @@ function InputActionForm({ actionFormData, inputActionData, onNext }: InputActio
         Input Field
       </Typography>
       <form onSubmit={handleNext}>
-        {combinedFormData.inputActionData.map((item, index) => (
+        {combinedFormData.inputData.map((item, index) => (
           <div key={index}>
             <div style={{ marginBottom: '15px' }}>
               <label htmlFor={`label-${index}`}>Label:</label>
@@ -243,4 +242,4 @@ function InputActionForm({ actionFormData, inputActionData, onNext }: InputActio
   );
 }
 
-export default InputActionForm;
+export default InputForm;
