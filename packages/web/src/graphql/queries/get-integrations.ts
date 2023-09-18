@@ -1,16 +1,11 @@
 import { gql } from '@apollo/client';
 
 export const GET_INTEGRATIONS = gql`
-    query GetConnectedApps($name: String) {
-    getConnectedApps(name: $name) {
+    query GetIntegrations($userId: String!) {
+    getIntegrations(userId: $userId) {
+      id
       key
       name
-      iconUrl
-      docUrl
-      primaryColor
-      connectionCount
-      flowCount
-      supportsConnections
     }
   }
 
