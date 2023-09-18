@@ -27,14 +27,16 @@ interface State {
 }
 
 interface InputActionFormProps {
-  actionFormData: State['actionFormData'] | null; 
-  onNext: (data: State) => void;
+  actionFormData: State['actionFormData'] | null;
+  inputActionData: State['inputActionData'] | null;
+  onNext: (data: State['inputActionData']) => void;
 }
 
 
-function InputActionForm({ actionFormData, onNext }: InputActionFormProps) {
+function InputActionForm({ actionFormData, inputActionData, onNext }: InputActionFormProps) {
   const navigate = useNavigate();
   const location = useLocation();
+
 
   const [combinedFormData, setCombinedFormData] = useState<State>({
     actionFormData: {
@@ -42,17 +44,22 @@ function InputActionForm({ actionFormData, onNext }: InputActionFormProps) {
       key: '',
       description: '',
     },
-    inputActionData: [
-      {
-        label: '',
-        key: '',
-        type: '',
-        required: false,
-        description: '',
-        variables: false,
-      },
-    ],
+    inputActionData: inputActionData && inputActionData.length > 0
+      ? inputActionData
+      : [
+        {
+          label: '',
+          key: '',
+          type: '',
+          required: false,
+          description: '',
+          variables: false,
+        },
+      ],
   });
+  
+  
+  
 
   useEffect(() => {
     if (actionFormData) {
@@ -124,8 +131,23 @@ function InputActionForm({ actionFormData, onNext }: InputActionFormProps) {
   };
 
   const handleNext = () => {
-    onNext(combinedFormData);
+    onNext(combinedFormData.inputActionData);
+    // Reset the inputActionData to an empty array
+    setCombinedFormData((prevData) => ({
+      ...prevData,
+      inputActionData: [
+        {
+          label: '',
+          key: '',
+          type: '',
+          required: false,
+          description: '',
+          variables: false,
+        },
+      ],
+    }));
   };
+  
 
   return (
     <Paper sx={{ p: 3 }}>
