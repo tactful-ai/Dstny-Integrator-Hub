@@ -13,12 +13,13 @@ import { GET_CONNECTED_APPS } from "graphql/queries/get-connected-apps"
 import { Link, useNavigate } from "react-router-dom"
 import * as URLS from 'config/urls';
 import React from "react"
+import { GET_INTEGRATIONS } from "graphql/queries/get-integrations"
 
 function MyIntegrations() {
 
   const navigate = useNavigate();
   const [appName, setAppName] = React.useState(null);
-  const { data, loading } = useQuery(GET_CONNECTED_APPS, {
+  const { data, loading } = useQuery(GET_INTEGRATIONS, {
     variables: { name: appName },
   });
 
