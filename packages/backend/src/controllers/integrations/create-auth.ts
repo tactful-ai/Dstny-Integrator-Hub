@@ -2,10 +2,12 @@ import { Response } from 'express';
 import { IRequest } from '@automatisch/types';
 import * as fs from 'fs-extra';
 import type { IField } from '@automatisch/types';
+import { addAppDirectory } from '../../helpers/get-app';
 
 import appendImportToFile from './add-import';
 import appendModuleToExport from './add-export';
 import getExistingAppKeys from './get-apps';
+import generateAddAuthHeaders from './add-auth-headers';
 
 import logger from '../../helpers/logger';
 
@@ -48,7 +50,16 @@ export default async (req: IRequest, res: Response) => {
 
     await appendImportToFile(`./src/apps/${appKey}/index.ts`, newImport);
     await appendModuleToExport(`./src/apps/${appKey}/index.ts`, 'auth');
+    await generateAddAuthHeaders(req.body.headers, appKey);
 
+    const commonImport = `import addAuthHeaders from './common/add-headers';`;
+    await appendImportToFile(`./src/apps/${appKey}/index.ts`, commonImport);
+    await appendModuleToExport(
+      `./src/apps/${appKey}/index.ts`,
+      'beforeRequest: [addAuthHeaders]'
+    );
+
+    await addAppDirectory(appKey);
     res.sendStatus(200);
   } catch (error) {
     logger.error(`Error creating auth index file for app ${appKey}: ${error}`);

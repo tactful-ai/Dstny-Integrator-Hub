@@ -1,6 +1,8 @@
 import type { AxiosInstance, AxiosRequestConfig } from 'axios';
 export type IHttpClient = AxiosInstance;
 import type { Request } from 'express';
+import {UseFormRegister, Control } from 'react-hook-form'
+
 
 // Type definitions for automatisch
 
@@ -189,7 +191,7 @@ export interface IFieldDynamic {
   fields: (IFieldDropdown | IFieldText)[];
 }
 
-export type IField = IFieldDropdown | IFieldText | IFieldDynamic;
+export type IField = IFieldDropdown | IFieldText | IFieldDynamic ;
 
 export interface IAuthenticationStepField {
   name: string;
@@ -431,12 +433,21 @@ type TSamlAuthProvider = {
 type AppConfig = {
   id: string;
   key: string;
+  name: string;
+  baseUrl: string;
+  apiBaseUrl: string;
+  primaryColor: string;
+  iconUrl: string;
+  authDocUrl: string;
+  userId: string;
   allowCustomConnection: boolean;
-  canConnect: boolean;
-  canCustomConnect: boolean;
   shared: boolean;
   disabled: boolean;
-}
+  canConnect: boolean;
+  canCustomConnect: boolean;
+  supportsConnections: boolean;
+};
+
 
 type AppAuthClient = {
   id: string;
@@ -465,3 +476,57 @@ export interface IRequest extends Request {
   rawBody?: Buffer;
   currentUser?: IUser;
 }
+
+
+// New Integration Authentication types
+
+export type header = {
+    key: string;
+    value: string;
+}
+
+export type AuthAPIKeyFormValues = {
+    endpoint: string;
+    headers: header[];
+    fields: field[];
+}
+
+export type AuthStepsProps = {
+    register: UseFormRegister<NewIntegrationAuthAPIKeyFormValues>;
+    control: Control<NewIntegrationAuthAPIKeyFormValues, any>;
+    watch?: UseFormWatch<NewIntegrationAuthAPIKeyFormValues>;
+    getValues?:UseFormGetValues<NewIntegrationAuthAPIKeyFormValues>;
+}
+
+export type AuthNewFormProps = {
+    formUtilities:AuthFirstStepProps;
+    removeField: (index:number) => void;
+    handleClose: () => void;
+
+}
+
+export type NewAuthFieldProps = {
+    openModal: boolean;
+    removeField: (index:number) => void;
+    handleClose: () => void;
+    formUtilities:AuthFirstStepProps;
+
+}
+
+export type field = {
+  key: string | null | null;
+  label: string | null;
+  type: string | null;
+  description?:string | null;
+  readOnly:boolean;
+  required: boolean;
+  canCopy: boolean;
+}
+
+
+
+export type AuthNewFormProps = {
+    fieldsState:AuthFirstStepProps;
+    handleClose:() => void;
+}
+

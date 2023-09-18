@@ -10,6 +10,7 @@ import Router from 'components/Router';
 import LiveChat from 'components/LiveChat/index.ee';
 import routes from 'routes';
 import reportWebVitals from './reportWebVitals';
+import 'styles/globalStyles.css';
 
 ReactDOM.render(
   <Router>

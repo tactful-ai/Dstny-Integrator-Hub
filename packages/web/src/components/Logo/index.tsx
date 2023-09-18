@@ -15,7 +15,8 @@ const Logo = () => {
 
   return (
     <Typography variant="h6" component="h1" noWrap>
-      <FormattedMessage id="brandText" />
+      {/* <FormattedMessage id="brandText" /> */}
+      Integrator-Hub
     </Typography>
   );
 };
