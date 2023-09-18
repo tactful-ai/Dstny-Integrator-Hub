@@ -11,7 +11,11 @@ export const LOGIN_CALLBACK = `${LOGIN}/callback`;
 export const OVERVIEW_PAGE = '/overview';
 export const INTEGRATION_PAGE = '/integration';
 export const INTEGRATION_PAGE_CALLBACK = `${INTEGRATION_PAGE}/callback`;
-export const TRIGGER_PAGE ='/trigger'
+export const TRIGGER_PAGE ='/trigger';
+export const TRIGGER_PAGE2 ='/trigger2';
+export const ACTION_PAGE ='/action';
+export const ACTION_PAGE2 ='/action2';
+export const INPUTACTION_PAGE ='/inputaction';
 export const SSO_LOGIN = (issuer: string) => `${appConfig.apiUrl}/login/saml/${issuer}`;
 export const SIGNUP = '/sign-up';
 export const FORGOT_PASSWORD = '/forgot-password';
@@ -107,6 +111,9 @@ export const DASHBOARD = FLOWS;
 export const WEBHOOK_DOCS =
   'https://automatisch.io/docs/apps/webhooks/connection';
 
+// New integration
+export const NEW_INTEGRATION_AUTH_TYPE = '/new-integration/auth-type';
+export const NEW_INTEGRATION_AUTH_API_KEY = '/new-integration/auth/api-key';
 
 // list all integrations
 export const MY_INTEGRATIONS = '/my-integrations';

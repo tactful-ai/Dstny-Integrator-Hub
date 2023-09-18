@@ -3,7 +3,9 @@ import { IRequest } from '@automatisch/types';
 import fs from 'fs-extra';
 import appendImportToFile from './add-import';
 import appendModuleToExport from './add-export';
+import { addAppDirectory } from '../../helpers/get-app';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function generateTriggerFile(triggerConfig: any): string {
   const { name, key, pollInterval, description, run } = triggerConfig;
 
@@ -80,6 +82,8 @@ export default async (request: IRequest, res: Response) => {
       mainIndexFileContent,
       'utf-8'
     );
+
+    await addAppDirectory(request.body.key);
 
     res.sendStatus(200);
   } catch (error) {
