@@ -1,4 +1,3 @@
-import * as URLS from 'config/urls';
 import config from 'config/app';
 type TriggerData = {
   name: string;
@@ -25,7 +24,7 @@ async function newTriggerTesting(triggerData: TriggerData, mainKey: string) {
       args: triggerData.args,
     };
 
-    const response = await fetch(`${config.apiUrl}/integrations/actions/${mainKey}`, {
+    const response = await fetch(`${config.apiUrl}/integrations/trigger/polling/${mainKey}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
