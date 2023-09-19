@@ -10,6 +10,10 @@ export const GET_APP = gql`
       authDocUrl
       primaryColor
       supportsConnections
+      dynamicData {
+        name
+        key
+      }
       auth {
         fields {
           key

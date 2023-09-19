@@ -7,6 +7,13 @@ type Params = {
     allowCustomConnection?: boolean;
     shared?: boolean;
     disabled?: boolean;
+    name?: string;
+    base_url?: string;
+    api_base_url?: string;
+    primary_color?: string;
+    icon_url?: string;
+    auth_doc_url?: string;
+    user_id?: string;
   };
 };
 

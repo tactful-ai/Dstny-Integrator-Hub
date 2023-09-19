@@ -2,6 +2,7 @@ import getApp from './queries/get-app';
 import getAppAuthClient from './queries/get-app-auth-client.ee';
 import getAppAuthClients from './queries/get-app-auth-clients.ee';
 import getAppConfig from './queries/get-app-config.ee';
+import getIntegrations from './queries/get-integrations';
 import getApps from './queries/get-apps';
 import getAutomatischInfo from './queries/get-automatisch-info';
 import getBillingAndUsage from './queries/get-billing-and-usage.ee';
@@ -36,6 +37,7 @@ const queryResolvers = {
   getAppAuthClient,
   getAppAuthClients,
   getAppConfig,
+  getIntegrations,
   getApps,
   getAutomatischInfo,
   getBillingAndUsage,

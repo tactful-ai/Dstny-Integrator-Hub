@@ -6,6 +6,7 @@ type Query {
   ): [App]
   getApp(key: String!): App
   getAppConfig(key: String!): AppConfig
+  getIntegrations(userId: String!): AppConfig
   getAppAuthClient(id: String!): AppAuthClient
   getAppAuthClients(appKey: String!, active: Boolean): [AppAuthClient]
   getConnectedApps(name: String): [App]
@@ -172,11 +173,24 @@ type SubstepArgumentAdditionalFieldsArgument {
 type AppConfig {
   id: String
   key: String
+  name: String
+  baseUrl: String
+  apiBaseUrl: String
+  primaryColor: String
+  iconUrl: String
+  authDocUrl: String
   allowCustomConnection: Boolean
-  canConnect: Boolean
-  canCustomConnect: Boolean
   shared: Boolean
   disabled: Boolean
+  userId: String
+  canConnect: Boolean
+  canCustomConnect: Boolean
+  supportsConnections: Boolean
+}
+
+type DynamicData {
+  name: String
+  key: String
 }
 
 type App {
@@ -193,6 +207,7 @@ type App {
   triggers: [Trigger]
   actions: [Action]
   connections: [Connection]
+  dynamicData: [DynamicData]
 }
 
 type AppAuth {
@@ -750,9 +765,17 @@ type Subject {
 
 input CreateAppConfigInput {
   key: String
+  name: String
+  baseUrl: String
+  apiBaseUrl: String
+  primaryColor: String
+  iconUrl: String
+  authDocUrl: String
+  userId: String
   allowCustomConnection: Boolean
   shared: Boolean
   disabled: Boolean
+  supportsConnections: Boolean
 }
 
 input UpdateAppConfigInput {
@@ -760,6 +783,14 @@ input UpdateAppConfigInput {
   allowCustomConnection: Boolean
   shared: Boolean
   disabled: Boolean
+  name: String
+  baseUrl: String
+  apiBaseUrl: String
+  primaryColor: String
+  iconUrl: String
+  authDocUrl: String
+  userId: String
+  supportsConnections: Boolean
 }
 
 type AppAuthClient {

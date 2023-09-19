@@ -315,6 +315,12 @@ export interface IAction extends IBaseAction {
   substeps?: ISubstep[];
 }
 
+export interface IBaseDynamicData {
+  name: string;
+  key: string;
+  run?($: IGlobalVariable): Promise<void>;
+}
+
 export interface IAuthentication {
   client: unknown;
   verifyCredentials(): Promise<IJSONObject>;
@@ -433,12 +439,21 @@ type TSamlAuthProvider = {
 type AppConfig = {
   id: string;
   key: string;
+  name: string;
+  baseUrl: string;
+  apiBaseUrl: string;
+  primaryColor: string;
+  iconUrl: string;
+  authDocUrl: string;
+  userId: string;
   allowCustomConnection: boolean;
-  canConnect: boolean;
-  canCustomConnect: boolean;
   shared: boolean;
   disabled: boolean;
-}
+  canConnect: boolean;
+  canCustomConnect: boolean;
+  supportsConnections: boolean;
+};
+
 
 type AppAuthClient = {
   id: string;
