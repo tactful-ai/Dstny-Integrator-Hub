@@ -43,7 +43,6 @@ const triggerType = triggerConfig.type;
 export function generatePollingTriggerFile(triggerConfig: any): string {
   const { name, key, pollInterval, description, args, run } = triggerConfig;
 
-  console.log(args)
   const triggerFileContent = `
 import { IJSONObject } from '@automatisch/types';
 import defineTrigger from '../../../../helpers/define-trigger';
@@ -67,7 +66,6 @@ export default defineTrigger({
 
 export function generateWebhookTriggerFile(triggerConfig: any): string {
   const { name, key, description, args, testRun, registerHook, unregisterHook } = triggerConfig;
-  const argsJsCode = JSON.stringify(args, null, 2);
 
   const triggerFileContent = `
 import { IJSONObject } from '@automatisch/types';
@@ -79,7 +77,7 @@ export default defineTrigger({
   type: 'webhook',
   description: '${description}',
   arguments: 
-${argsJsCode},
+${JSON.stringify(args, null, 2)},
 
   async testRun($) {
     ${testRun}
