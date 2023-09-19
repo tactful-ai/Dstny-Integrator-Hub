@@ -36,7 +36,7 @@ type InputTriggerField = {
 function TriggerTabs() {
   const [activeTab, setActiveTab] = useState(0);
   const [triggerFormData, setTriggerFormData] = useState<State['TriggerFormData'] | null>(null);
-  const [inputTriggerData, setInputTriggerData] = useState<InputTriggerField[]>([]);
+  const [inputDataArray, setInputDataArray] = useState<InputTriggerField[]>([]); 
   const [settingsCompleted, setSettingsCompleted] = useState(false);
   const navigate = useNavigate();
   const [showInputTriggerForm, setShowInputTriggerForm] = useState(true);
@@ -54,11 +54,9 @@ function TriggerTabs() {
     setActiveTab(1);
   };
 
-  const handleInputTriggerData = (data: InputTriggerField[]) => {
-    if (data.length > 0) {
-      setInputTriggerData((prevData) => [...prevData, ...data]);
-      setShowInputTriggerForm(false);
-    }
+  const handleInputTriggerData = (data: InputTriggerField) => {
+    setInputDataArray((prevData) => [...prevData, data]);
+    setShowInputTriggerForm(false); 
   };
 
   const handleSettingsCompleted = () => {
@@ -98,18 +96,17 @@ function TriggerTabs() {
             }}
           />
         )}
-        {activeTab === 1 && (
+{activeTab === 1 && (
           <>
             {showInputTriggerForm && (
               <InputForm
                 FormData={triggerFormData || { name: '', key: '', description: '' }}
-                inputData={inputTriggerData}
-                onNext={(data) => handleInputTriggerData(data)}
+                onAddInputData={handleInputTriggerData} 
               />
             )}
             {!showInputTriggerForm && (
               <InputTableForm
-                inputData={inputTriggerData}
+                inputData={inputDataArray} 
                 onNext={navigateToTriggerForm2}
                 onAddAnotherField={handleAddAnotherField}
               />
@@ -119,7 +116,7 @@ function TriggerTabs() {
         {activeTab === 2 && (
           <TriggerForm2
             triggerFormData={triggerFormData || { name: '', key: '', description: '' }}
-            inputTriggerData={inputTriggerData}
+            inputTriggerData={inputDataArray} 
           />
         )}
       </div>

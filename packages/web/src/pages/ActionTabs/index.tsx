@@ -36,7 +36,7 @@ type InputActionField = {
 function ActionTabs() {
   const [activeTab, setActiveTab] = useState(0);
   const [actionFormData, setActionFormData] = useState<State['actionFormData'] | null>(null);
-  const [inputActionData, setInputActionData] = useState<InputActionField[]>([]);
+  const [inputDataArray, setInputDataArray] = useState<InputActionField[]>([]); 
   const [settingsCompleted, setSettingsCompleted] = useState(false);
   const navigate = useNavigate();
   const [showInputActionForm, setShowInputActionForm] = useState(true);
@@ -54,11 +54,9 @@ function ActionTabs() {
     setActiveTab(1);
   };
 
-  const handleInputActionData = (data: InputActionField[]) => {
-    if (data.length > 0) {
-      setInputActionData((prevData) => [...prevData, ...data]);
-      setShowInputActionForm(false);
-    }
+  const handleInputActionData = (data: InputActionField) => {
+    setInputDataArray((prevData) => [...prevData, data]);
+    setShowInputActionForm(false); 
   };
 
   const handleSettingsCompleted = () => {
@@ -102,14 +100,13 @@ function ActionTabs() {
           <>
             {showInputActionForm && (
               <InputForm
-                FormData={actionFormData || { name: '', key: '', description: '' }}
-                inputData={inputActionData}
-                onNext={(data) => handleInputActionData(data)}
-              />
+              FormData={actionFormData || { name: '', key: '', description: '' }}
+              onAddInputData={handleInputActionData} 
+            />
             )}
             {!showInputActionForm && (
               <InputTableForm
-                inputData={inputActionData}
+                inputData={inputDataArray}
                 onNext={navigateToActionForm2}
                 onAddAnotherField={handleAddAnotherField}
               />
@@ -119,7 +116,7 @@ function ActionTabs() {
         {activeTab === 2 && (
           <ActionForm2
             actionFormData={actionFormData || { name: '', key: '', description: '' }}
-            inputActionData={inputActionData}
+            inputActionData={inputDataArray}
           />
         )}
       </div>

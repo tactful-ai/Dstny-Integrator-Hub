@@ -28,12 +28,10 @@ interface State {
 
 interface InputFormProps {
   FormData: State['FormData'] | null;
-  inputData: State['inputData'] | null;
-  onNext: (data: State['inputData']) => void;
+  onAddInputData: (data: State['inputData'][0]) => void; 
 }
 
-
-function InputForm({ FormData, inputData, onNext }: InputFormProps) {
+function InputForm({ FormData, onAddInputData }: InputFormProps) {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -44,18 +42,16 @@ function InputForm({ FormData, inputData, onNext }: InputFormProps) {
       key: '',
       description: '',
     },
-    inputData: inputData && inputData.length > 0
-      ? inputData
-      : [
-        {
-          label: '',
-          key: '',
-          type: '',
-          required: false,
-          description: '',
-          variables: false,
-        },
-      ],
+    inputData: [
+      {
+        label: '',
+        key: '',
+        type: '',
+        required: false,
+        description: '',
+        variables: false,
+      },
+    ],
   });
   
   
@@ -131,7 +127,7 @@ function InputForm({ FormData, inputData, onNext }: InputFormProps) {
   };
 
   const handleNext = () => {
-    onNext(combinedFormData.inputData);
+    onAddInputData(combinedFormData.inputData[0]);
     setCombinedFormData((prevData) => ({
       ...prevData,
       inputData: [
