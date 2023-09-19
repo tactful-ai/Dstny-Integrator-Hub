@@ -32,7 +32,7 @@ function TriggerForm2({ triggerFormData, inputTriggerData }: TriggerForm2Props) 
   const location = useLocation();
   const navigate = useNavigate();
   const mainKey = localStorage.getItem('appKey') || '';
-
+  const authorization_header = localStorage.getItem('automatisch.token') || '';
   const [TriggerData, setTriggerData] = useState({
     name: triggerFormData.name,
     key: triggerFormData.key,
@@ -89,12 +89,13 @@ function TriggerForm2({ triggerFormData, inputTriggerData }: TriggerForm2Props) 
       name: TriggerData.name,
       key: TriggerData.key,
       description: TriggerData.description,
+      type: 'polling',
+      pollInterval: 15,
       run: isContinuePressed ? TriggerData.run : providedCode,
       args: inputTriggerData || [], 
     };
-
     try {
-      const result = await newTriggerTesting(formattedTriggerData, mainKey);
+      const result = await newTriggerTesting(formattedTriggerData, mainKey, authorization_header);
 
       if (result.success) {
         isTestSuccessful = true;

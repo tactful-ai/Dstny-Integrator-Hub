@@ -4,6 +4,8 @@ type TriggerData = {
   key: string;
   description: string;
   run: string;
+  type: string;
+  pollInterval: number;
   args: {
     label: string;
     key: string;
@@ -14,13 +16,15 @@ type TriggerData = {
   }[];
 };
 
-async function newTriggerTesting(triggerData: TriggerData, mainKey: string) {
+async function newTriggerTesting(triggerData: TriggerData, mainKey: string, authorization_header: string) {
   try {
     const formattedTriggerData = {
       name: triggerData.name,
       key: triggerData.key,
       description: triggerData.description,
       run: triggerData.run,
+      type: triggerData.type ,
+      pollInterval: triggerData.pollInterval,
       args: triggerData.args,
     };
 
@@ -28,10 +32,13 @@ async function newTriggerTesting(triggerData: TriggerData, mainKey: string) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+         'Token' : `< Bearer ${authorization_header}>`,
       },
       body: JSON.stringify(formattedTriggerData),
       
     });
+    console.log(formattedTriggerData);
+    console.log(`< Bearer ${authorization_header}>`);
 
 
     if (response.ok) {
