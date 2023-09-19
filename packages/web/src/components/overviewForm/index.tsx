@@ -81,7 +81,7 @@ function OverviewForm() {
             <div style={buttonContainerStyle}>
               <Button
                 component={Link}
-                to={URLS.TRIGGER_TABS}
+                to={URLS.LIST_TRIGGERS}
                 variant="outlined"
                 color="primary"
                 size="small"
