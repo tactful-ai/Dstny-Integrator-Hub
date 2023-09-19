@@ -32,6 +32,7 @@ function ActionForm2({ actionFormData, inputActionData }: ActionForm2Props) {
   const location = useLocation();
   const navigate = useNavigate();
   const mainKey = localStorage.getItem('appKey') || '';
+  const authorization_header = localStorage.getItem('automatisch.token') || '';
 
   const [ActionData, setActionData] = useState({
     name: actionFormData.name,
@@ -89,7 +90,7 @@ function ActionForm2({ actionFormData, inputActionData }: ActionForm2Props) {
     };
 
     try {
-      const result = await newActionTesting(formattedActionData, mainKey);
+      const result = await newActionTesting(formattedActionData, mainKey, authorization_header);
 
       if (result.success) {
         isTestSuccessful = true;

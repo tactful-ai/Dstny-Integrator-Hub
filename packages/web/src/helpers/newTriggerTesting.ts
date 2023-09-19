@@ -32,13 +32,12 @@ async function newTriggerTesting(triggerData: TriggerData, mainKey: string, auth
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-         'Token' : `< Bearer ${authorization_header}>`,
+        'Authorization' : `Bearer ${authorization_header}`
       },
       body: JSON.stringify(formattedTriggerData),
       
     });
-    console.log(formattedTriggerData);
-    console.log(`< Bearer ${authorization_header}>`);
+
 
 
     if (response.ok) {
