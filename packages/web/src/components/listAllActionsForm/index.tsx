@@ -1,7 +1,7 @@
 import React from 'react';
-import { Box, Typography, Button, Divider } from '@mui/material';
+import { Box, Typography, Button } from '@mui/material';
 import { IAction } from '@automatisch/types';
-import { Link } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom'; 
 import * as URLS from 'config/urls';
 
 interface ListAllActionsFormProps {
@@ -9,6 +9,14 @@ interface ListAllActionsFormProps {
 }
 
 function ListAllActionsForm({ actions }: ListAllActionsFormProps) {
+  const navigate = useNavigate();
+
+  const handleViewDetails = (actionData: IAction) => {
+    console.log(actionData);
+    navigate(URLS.ACTION_TABS, { state: { actionData } });
+  };
+
+
   return (
     <Box sx={{ mt: 3 }}>
       {actions.map((action, index) => (
@@ -20,8 +28,7 @@ function ListAllActionsForm({ actions }: ListAllActionsFormProps) {
               variant="outlined"
               size="small"
               color="primary"
-              component={Link}
-              to={URLS.ACTION_TABS}
+              onClick={() => handleViewDetails(action)}
             >
               View Details
             </Button>

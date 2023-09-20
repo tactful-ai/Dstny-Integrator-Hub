@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Paper from '@mui/material/Paper';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -6,7 +6,8 @@ import ActionForm from '../../components/ActionForm';
 import InputForm from '../../components/InputForm';
 import ActionForm2 from '../../components/ActionForm2';
 import InputTableForm from '../../components/inputTableForm';
-import { useNavigate } from 'react-router-dom';
+import {  useLocation } from 'react-router-dom';
+import { IAction } from '@automatisch/types';
 
 interface State {
   actionFormData: {
@@ -33,13 +34,17 @@ type InputActionField = {
   variables: boolean;
 };
 
+
 function ActionTabs() {
   const [activeTab, setActiveTab] = useState(0);
   const [actionFormData, setActionFormData] = useState<State['actionFormData'] | null>(null);
   const [inputDataArray, setInputDataArray] = useState<InputActionField[]>([]); 
   const [settingsCompleted, setSettingsCompleted] = useState(false);
-  const navigate = useNavigate();
   const [showInputActionForm, setShowInputActionForm] = useState(true);
+  const location = useLocation();
+  const actionData = (location.state as { actionData?: IAction })?.actionData;
+  
+ console.log(actionData);
 
   const handleTabChange = (
     event: React.ChangeEvent<unknown>,
@@ -47,6 +52,18 @@ function ActionTabs() {
   ) => {
     setActiveTab(newValue);
   };
+
+
+  useEffect(() => {
+    if (actionData) {
+      setActionFormData({
+        name: actionData.name,
+        key: actionData.key,
+        description: actionData.description,
+      });
+      // setInputDataArray(actionData.substeps || []);
+    }
+  }, [actionData]);
 
   const switchToInputActionFormTab = (data: State['actionFormData']) => {
     setActionFormData(data);
@@ -89,12 +106,13 @@ function ActionTabs() {
       </Paper>
       <div style={{ padding: '20px' }}>
         {activeTab === 0 && (
-          <ActionForm
-            onNext={(data) => {
-              switchToInputActionFormTab(data);
-              handleSettingsCompleted();
-            }}
-          />
+        <ActionForm
+        onNext={(data) => {
+          switchToInputActionFormTab(data);
+          handleSettingsCompleted();
+        }}
+        initialData={actionFormData || undefined} 
+      />
         )}
         {activeTab === 1 && (
           <>
