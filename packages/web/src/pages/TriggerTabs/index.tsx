@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Paper from '@mui/material/Paper';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -7,6 +7,8 @@ import InputForm from '../../components/InputForm';
 import TriggerForm2 from '../../components/TriggerForm2';
 import InputTableForm from '../../components/inputTableForm';
 import { useNavigate } from 'react-router-dom';
+import {  useLocation } from 'react-router-dom';
+import { ITrigger } from '@automatisch/types';
 
 interface State {
   TriggerFormData: {
@@ -40,6 +42,9 @@ function TriggerTabs() {
   const [settingsCompleted, setSettingsCompleted] = useState(false);
   const navigate = useNavigate();
   const [showInputTriggerForm, setShowInputTriggerForm] = useState(true);
+    const location = useLocation();
+  const triggerData = (location.state as { triggerData?: ITrigger })?.triggerData;
+  
 
   const handleTabChange = (
     event: React.ChangeEvent<unknown>,
@@ -47,6 +52,19 @@ function TriggerTabs() {
   ) => {
     setActiveTab(newValue);
   };
+
+    useEffect(() => {
+    if (triggerData) {
+      setTriggerFormData({
+        name: triggerData.name,
+        key: triggerData.key,
+        description: triggerData.description,
+      });
+      // setInputDataArray(actionData.substeps || []);
+    }
+  }, [triggerData]);
+
+
 
   const switchToInputTriggerFormTab = (data: State['TriggerFormData']) => {
     setTriggerFormData(data);
@@ -94,6 +112,7 @@ function TriggerTabs() {
               switchToInputTriggerFormTab(data);
               handleSettingsCompleted();
             }}
+            initialData={triggerFormData || undefined} 
           />
         )}
 {activeTab === 1 && (

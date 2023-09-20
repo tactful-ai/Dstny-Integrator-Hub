@@ -44,7 +44,7 @@ function ActionTabs() {
   const location = useLocation();
   const actionData = (location.state as { actionData?: IAction })?.actionData;
   
- console.log(actionData);
+
 
   const handleTabChange = (
     event: React.ChangeEvent<unknown>,
@@ -64,6 +64,7 @@ function ActionTabs() {
       // setInputDataArray(actionData.substeps || []);
     }
   }, [actionData]);
+
 
   const switchToInputActionFormTab = (data: State['actionFormData']) => {
     setActionFormData(data);

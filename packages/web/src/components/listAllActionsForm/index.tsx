@@ -12,7 +12,6 @@ function ListAllActionsForm({ actions }: ListAllActionsFormProps) {
   const navigate = useNavigate();
 
   const handleViewDetails = (actionData: IAction) => {
-    console.log(actionData);
     navigate(URLS.ACTION_TABS, { state: { actionData } });
   };
 

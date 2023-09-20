@@ -3,16 +3,24 @@ import { Box, Typography, Button, Divider } from '@mui/material';
 import { ITrigger } from '@automatisch/types';
 import { Link } from 'react-router-dom'; 
 import * as URLS from 'config/urls';
+import { useNavigate } from 'react-router-dom'; 
 
 interface ListAllTriggersFormProps {
   triggers: ITrigger[];
 }
 
 function ListAllTriggersForm({ triggers }: ListAllTriggersFormProps) {
-  return (
+
+    const navigate = useNavigate();
+
+  const handleViewDetails = (triggerData: ITrigger) => {
+    navigate(URLS.TRIGGER_TABS, { state: { triggerData } });
+  };
+
+ return (
     <Box sx={{ mt: 3 }}>
       {triggers.map((trigger, index) => (
-        <Box key={index} sx={{ mb: 2, borderBottom: '1px solid #ccc', padding: '16px' }}>
+        <Box key={index} sx={{ mb: 1, borderBottom: '1px solid #ccc', padding: '16px' }}>
           <Typography variant="h6">{trigger.name}</Typography>
           <Typography variant="body1" marginTop={'4px'}>Description: {trigger.description}</Typography>
           <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -20,8 +28,7 @@ function ListAllTriggersForm({ triggers }: ListAllTriggersFormProps) {
               variant="outlined"
               size="small"
               color="primary"
-              component={Link}
-              to={URLS.TRIGGER_TABS}
+              onClick={() => handleViewDetails(trigger)}
             >
               View Details
             </Button>
@@ -31,5 +38,4 @@ function ListAllTriggersForm({ triggers }: ListAllTriggersFormProps) {
     </Box>
   );
 }
-
 export default ListAllTriggersForm;
