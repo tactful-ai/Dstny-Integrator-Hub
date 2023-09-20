@@ -26,6 +26,8 @@ import MyIntegrations from 'pages/MyIntegrations';
 import ActionTabs from 'pages/ActionTabs';
 import TriggerTabs from 'pages/TriggerTabs';
 import ListAllTriggersPage from 'pages/listAllTriggersPage';
+import ListAllActionsPage from 'pages/listAllActionsPage';
+
 export default (
   <Routes>
     <Route
@@ -75,6 +77,14 @@ export default (
       element={
         <Layout>
           <ListAllTriggersPage />
+        </Layout>
+      }
+    />
+                <Route
+          path={URLS.LIST_ACTIONS}  
+      element={
+        <Layout>
+          <ListAllActionsPage />
         </Layout>
       }
     />

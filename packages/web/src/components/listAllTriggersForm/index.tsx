@@ -1,26 +1,21 @@
 import React from 'react';
-
-interface Trigger {
-  name: string;
-  type: string;
-  description: string;
-}
+import { Box, Typography } from '@mui/material';
+import { ITrigger } from '@automatisch/types';
 
 interface ListAllTriggersFormProps {
-  triggers: Trigger[];
+  triggers: ITrigger[];
 }
 
 function ListAllTriggersForm({ triggers }: ListAllTriggersFormProps) {
   return (
-    <div>
+    <Box sx={{ mt: 3 }}>
       {triggers.map((trigger, index) => (
-        <div key={index}>
-          <h3>{trigger.name}</h3>
-          <p>Type: {trigger.type}</p>
-          <p>Description: {trigger.description}</p>
-        </div>
+        <Box key={index} sx={{ mb: 2 }}>
+          <Typography variant="h6">{trigger.name}</Typography>
+          <Typography variant="body1">Description: {trigger.description}</Typography>
+        </Box>
       ))}
-    </div>
+    </Box>
   );
 }
 

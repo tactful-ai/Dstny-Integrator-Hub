@@ -127,7 +127,7 @@ function TriggerForm2({ triggerFormData, inputTriggerData }: TriggerForm2Props) 
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    navigate(URLS.ACTION_TABS);
+    navigate(URLS.LIST_ACTIONS);
   };
 
   return (
