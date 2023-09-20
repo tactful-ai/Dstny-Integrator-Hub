@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLazyQuery } from '@apollo/client';
 import Paper from '@mui/material/Paper';
 import { Box, CircularProgress, Divider, Grid, Typography, Button } from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { GET_APP } from 'graphql/queries/get-app';
 import ListAllTriggersForm from '../../components/listAllTriggersForm';
 import * as URLS from 'config/urls';
@@ -16,7 +16,6 @@ import useFormatMessage from 'hooks/useFormatMessage';
 function AppDetailsPage() {
   const appKey = localStorage.getItem('appKey') || '';
   const authorization_header = localStorage.getItem('automatisch.token') || '';
-  const navigate = useNavigate();
   const formatMessage = useFormatMessage();
 
   const [loading, setLoading] = useState(false);
@@ -40,9 +39,6 @@ function AppDetailsPage() {
     });
   }, [appKey, getApp]);
 
-  const handleButtonClick = () => {
-    navigate(URLS.TRIGGER_TABS);
-  };
 
   return (
     <Box sx={{ py: 3 }}>
@@ -89,7 +85,6 @@ function AppDetailsPage() {
             ) : (
               <NoResultFound
               text={formatMessage('No Triggers')}
-              to={URLS.NEW_APP_CONNECTION}
             />
             )}
           </Box>
