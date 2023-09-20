@@ -7,13 +7,17 @@ import { GET_APP } from 'graphql/queries/get-app';
 import ListAllTriggersForm from '../../components/listAllTriggersForm';
 import * as URLS from 'config/urls';
 import { ITrigger } from '@automatisch/types';
-
-type TriggerUnion = ITrigger;
+import Can from 'components/Can';
+import NoResultFound from 'components/NoResultFound';
+import ConditionalIconButton from 'components/ConditionalIconButton';
+import PageTitle from 'components/PageTitle';
+import useFormatMessage from 'hooks/useFormatMessage';
 
 function AppDetailsPage() {
   const appKey = localStorage.getItem('appKey') || '';
   const authorization_header = localStorage.getItem('automatisch.token') || '';
   const navigate = useNavigate();
+  const formatMessage = useFormatMessage();
 
   const [loading, setLoading] = useState(false);
   const [getApp, { data, error }] = useLazyQuery(GET_APP, {
@@ -42,12 +46,37 @@ function AppDetailsPage() {
 
   return (
     <Box sx={{ py: 3 }}>
-      <Paper sx={{ p: 3, width: '90%', padding: '24px', marginLeft: '8px' }}>
-        <Grid container alignItems="center" justifyContent="space-between">
-          <Typography variant="h2">Triggers</Typography>
-          <Button variant="contained" color="primary" onClick={handleButtonClick}>
-            Your Button
-          </Button>
+      <Paper sx={{ p: 3, width: '95%', padding: '24px', marginLeft: '8px' }}>
+      <Grid container sx={{ mb: [0, 3] }} columnSpacing={1.5} rowSpacing={3}>
+          <Grid container item xs sm alignItems="center" order={{ xs: 0 }}>
+            <PageTitle>{formatMessage('Triggers')}</PageTitle>
+          </Grid>
+
+          <Grid
+            container
+            item
+            xs="auto"
+            sm="auto"
+            alignItems="center"
+            order={{ xs: 1, sm: 2 }}
+          >
+            <Can I="create" a="Connection" passThrough>
+              {(allowed) => (
+                <ConditionalIconButton
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  component={Link}
+                  to={URLS.TRIGGER_TABS}
+                  fullWidth
+                  disabled={!allowed}
+                >
+                  {formatMessage('Add Trigger')}
+                </ConditionalIconButton>
+              )}
+            </Can>
+          </Grid>
         </Grid>
 
         <Divider sx={{ mt: [2, 0], mb: 2 }} />
@@ -55,15 +84,17 @@ function AppDetailsPage() {
         {error && <Typography variant="h6">Error: {error.message}</Typography>}
         {data && data.getApp ? (
           <Box>
-            <Typography variant="h4">{data.getApp.name || 'No name available'}</Typography>
             {data.getApp.triggers ? (
-              <ListAllTriggersForm triggers={data.getApp.triggers as TriggerUnion[]} />
+              <ListAllTriggersForm triggers={data.getApp.triggers as ITrigger[]} />
             ) : (
-              <Typography variant="body1">No triggers available for this app.</Typography>
+              <NoResultFound
+              text={formatMessage('No Triggers')}
+              to={URLS.NEW_APP_CONNECTION}
+            />
             )}
           </Box>
         ) : (
-          <Typography variant="body1">No data available for the specified key.</Typography>
+          <Typography> </Typography>
         )}
       </Paper>
     </Box>

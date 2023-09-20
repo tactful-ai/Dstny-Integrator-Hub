@@ -1,4 +1,4 @@
 import createTicket from './createTicket';
-import newEntry from './newEntry';
+import createToz from './createToz';
 
-export default [createTicket, newEntry];
+export default [createTicket, createToz];
