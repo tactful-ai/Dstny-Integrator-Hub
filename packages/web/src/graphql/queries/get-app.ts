@@ -92,6 +92,19 @@ export const GET_APP = gql`
         substeps {
           name
         }
+        arguments {
+          key
+          label
+          type
+          required
+          readOnly
+          value
+          placeholder
+          description
+          docUrl
+          clickToCopy
+          variables
+        }
       }
       actions {
         name
@@ -99,6 +112,19 @@ export const GET_APP = gql`
         description
         substeps {
           name
+        }
+        arguments {
+          key
+          label
+          type
+          required
+          readOnly
+          value
+          placeholder
+          description
+          docUrl
+          clickToCopy
+          variables
         }
       }
     }

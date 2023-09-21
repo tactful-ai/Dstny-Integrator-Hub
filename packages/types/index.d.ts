@@ -311,7 +311,7 @@ export interface IRawAction extends IBaseAction {
   arguments?: IField[];
 }
 
-export interface IAction extends IBaseAction {
+export interface IAction extends IBaseAction, IRawAction {
   substeps?: ISubstep[];
 }
 
