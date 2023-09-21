@@ -6,7 +6,7 @@ type Query {
   ): [App]
   getApp(key: String!): App
   getAppConfig(key: String!): AppConfig
-  getIntegrations(userId: String!): AppConfig
+  getIntegrations(userId: String!): [AppConfig]
   getAppAuthClient(id: String!): AppAuthClient
   getAppAuthClients(appKey: String!, active: Boolean): [AppAuthClient]
   getConnectedApps(name: String): [App]
