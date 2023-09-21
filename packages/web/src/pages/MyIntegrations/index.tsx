@@ -1,4 +1,4 @@
-import { useQuery } from "@apollo/client"
+import { useLazyQuery, useQuery } from "@apollo/client"
 import { IApp } from "@automatisch/types"
 import { AddIcCallOutlined } from "@mui/icons-material"
 import { Box, CircularProgress, Divider, Grid } from "@mui/material"
@@ -9,29 +9,78 @@ import Container from "components/Container"
 import NoResultFound from "components/NoResultFound"
 import PageTitle from "components/PageTitle"
 import SearchInput from "components/SearchInput"
-import { GET_CONNECTED_APPS } from "graphql/queries/get-connected-apps"
 import { Link, useNavigate } from "react-router-dom"
 import * as URLS from 'config/urls';
-import React from "react"
+import React, { useEffect, useState } from "react"
+import { GET_INTEGRATIONS } from "graphql/queries/get-integrations"
+import { debounce } from "lodash"
+import useCurrentUser from "hooks/useCurrentUser"
+import useUser from "hooks/useUser"
 
 function MyIntegrations() {
 
   const navigate = useNavigate();
-  const [appName, setAppName] = React.useState(null);
-  const { data, loading } = useQuery(GET_CONNECTED_APPS, {
-    variables: { name: appName },
+  // const [appName, setAppName] = React.useState(null);
+  // const { data, loading } = useQuery(GET_INTEGRATIONS, {
+  //   variables: { name: appName },
+  // });
+  const user = useCurrentUser();
+  const [loading, setLoading] = useState(false);
+  const [getIntegrations, { data }] = useLazyQuery(GET_INTEGRATIONS, {
+    onCompleted: () => {
+      setLoading(false);
+    },
   });
-
   const apps: IApp[] = data?.getConnectedApps;
   const hasApps = apps?.length;
 
-  const onSearchChange = React.useCallback((event) => {
-    setAppName(event.target.value);
-  }, []);
+  console.log("currUser", user, loading)
+  // const onSearchChange = React.useCallback((event) => {
+  //   setAppName(event.target.value);
+  // }, []);
 
-  const goToApps = React.useCallback(() => {
-    navigate(URLS.APPS);
-  }, [navigate]);
+  // const goToApps = React.useCallback(() => {
+  //   navigate(URLS.APPS);
+  // }, [navigate]);
+
+  const fetchData = React.useMemo(
+    () =>
+      debounce(
+        (userId:string | undefined) => {
+          console.log("user id:", userId);
+          getIntegrations({
+            variables: {
+              userId: userId
+            },
+          })
+        },
+          500
+      ),
+    [getIntegrations]
+  );
+
+  useEffect(() => {
+      setLoading(true);
+      
+      if(user) {
+        
+        fetchData(user?.id);
+      }
+      else console.log('not get');
+
+      return () => {
+      fetchData.cancel();
+      };
+  },
+    [fetchData, user]
+  );
+
+  // useEffect(function cancelDebounceOnUnmount() {
+  //   return () => {
+  //     fetchData.cancel();
+  //   };
+  // }, []);
+
 
   return (
     <Box sx={{ py: 3 }}>
@@ -40,10 +89,10 @@ function MyIntegrations() {
           <Grid container item xs sm alignItems="center" order={{ xs: 0 }}>
             <PageTitle>Integrations</PageTitle>
           </Grid>
-
+{/* 
           <Grid item xs={12} sm="auto" order={{ xs: 2, sm: 1 }}>
             <SearchInput onChange={onSearchChange} />
-          </Grid>
+          </Grid> */}
 
           <Grid
             container
@@ -76,7 +125,7 @@ function MyIntegrations() {
 
         <Divider sx={{ mt: [2, 0], mb: 2 }} />
 
-        {false && (
+        {loading && (
           <CircularProgress
             data-test="apps-loader"
             sx={{ display: 'block', margin: '20px auto' }}

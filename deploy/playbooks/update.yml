@@ -1,0 +1,26 @@
+---
+- name: Update and redeploy the application
+  hosts: main_node
+  become: true
+  gather_facts: true
+  tasks:
+    - name: Pull the latest changes from the 'dev' branch
+      git:
+        repo: '{{ git_repo }}'
+        dest: '{{ repo_dir }}'
+        version: dev
+        force: true
+      register: git_pull_result
+
+    - name: Stop the current Docker Compose stack
+      shell: |
+        cd {{ repo_dir }}
+        docker compose down --remove-orphans
+      when: git_pull_result.changed
+      ignore_errors: true
+
+    - name: start the current Docker Compose stack
+      shell: |
+        cd {{ repo_dir }}
+        docker compose up --remove-orphans
+      when: git_pull_result.changed
