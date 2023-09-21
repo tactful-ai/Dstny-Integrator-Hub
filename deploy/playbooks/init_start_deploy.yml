@@ -34,10 +34,15 @@
         dest: "{{ repo_dir}}"
         clone: yes
 
-    - name: Copy .env file from local to the cloned repo
+    - name: Copy fronent .env file from local to the cloned repo
       copy:
-        src: "{{ env_file_location }}"
-        dest: "{{ repo_dir }}/.env"  # Change to the actual path
+        src: "{{ frontend_env_file_location }}"
+        dest: "{{ repo_dir }}/packages/web/.env"
+
+    - name: Copy backend .env file from local to the cloned repo
+      copy:
+        src: "{{ backend_env_file_location }}"
+        dest: "{{ repo_dir }}/packages/backend/.env" 
 
 
     - name: deploy Docker Compose stack
