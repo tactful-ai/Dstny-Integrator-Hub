@@ -46,7 +46,7 @@ function TriggerTabs() {
   const [showInputTriggerForm, setShowInputTriggerForm] = useState(true);
   const location = useLocation();
   const specificTriggerKey = (location.state as { key: string })?.key || '';
-  // let specificTrigger = null;
+
 const [useStateUsing, setUseStateUsing] = useState(true);
   const handleTabChange = (event: React.ChangeEvent<unknown>, newValue: number) => {
     setActiveTab(newValue);

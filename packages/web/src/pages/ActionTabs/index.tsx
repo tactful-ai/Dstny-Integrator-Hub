@@ -8,6 +8,8 @@ import ActionForm2 from '../../components/ActionForm2';
 import InputTableForm from '../../components/inputTableForm';
 import {  useLocation } from 'react-router-dom';
 import { IAction } from '@automatisch/types';
+import { GET_APP } from 'graphql/queries/get-app';
+import { useLazyQuery } from '@apollo/client';
 
 interface State {
   actionFormData: {
@@ -15,14 +17,7 @@ interface State {
     key: string;
     description: string;
   };
-  inputActionData?: {
-    label: string;
-    key: string;
-    type: string;
-    required: boolean;
-    description: string;
-    variables: boolean;
-  }[];
+  inputActionData?: InputActionField [];
 }
 
 type InputActionField = {
@@ -36,16 +31,23 @@ type InputActionField = {
 
 
 function ActionTabs() {
+  const appKey = localStorage.getItem('appKey') || '';
+  const authorization_header = localStorage.getItem('automatisch.token') || '';
   const [activeTab, setActiveTab] = useState(0);
-  const [actionFormData, setActionFormData] = useState<State['actionFormData'] | null>(null);
+  const [actionFormData, setActionFormData] = useState<State['actionFormData']>({
+    name: '',
+    key: '',
+    description: '',
+  });
+
   const [inputDataArray, setInputDataArray] = useState<InputActionField[]>([]); 
   const [settingsCompleted, setSettingsCompleted] = useState(false);
   const [showInputActionForm, setShowInputActionForm] = useState(true);
   const location = useLocation();
-  const actionData = (location.state as { actionData?: IAction })?.actionData;
+  const specificActionKey = (location.state as { key: string })?.key || '';
   
 
-
+  const [useStateUsing, setUseStateUsing] = useState(true);
   const handleTabChange = (
     event: React.ChangeEvent<unknown>,
     newValue: number,
@@ -53,22 +55,63 @@ function ActionTabs() {
     setActiveTab(newValue);
   };
 
+  const [getApp, { data }] = useLazyQuery(GET_APP, {
+    context: {
+      headers: {
+        Authorization: `${authorization_header}`,
+      },
+    },
+    onError: (error) => {
+      console.error("GraphQL query error:", error);
+    },
+  });
 
-  useEffect(() => {
-    if (actionData) {
-      setActionFormData({
-        name: actionData.name,
-        key: actionData.key,
-        description: actionData.description,
+useEffect(() => {
+    if (appKey && useStateUsing) {
+      getApp({
+        variables: {
+          key: appKey,
+        },
+      })
+      .then((result) => {
+        const data = result.data; 
+        console.log(data); 
+        
+        if (specificActionKey && data && data.getApp.actions) {
+          const specificAction = data.getApp.actions.find((action: IAction) => action.key === specificActionKey);
+          if (specificAction) {
+            setActionFormData({
+              name: specificAction.name,
+              key: specificAction.key,
+              description: specificAction.description,
+            });
+      
+            let inputFields: InputActionField[] = [];
+            if (specificAction.arguments) {
+              inputFields = specificAction.arguments.map((argument: InputActionField) => ({
+                label: argument.label || '',
+                key: argument.key || '',
+                type: argument.type || '',
+                required: argument.required || false,
+                description: argument.description || '',
+                variables: argument.variables || false,
+              }));
+              setInputDataArray(inputFields);
+            }
+            setUseStateUsing(false);
+          }
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
       });
-      // setInputDataArray(actionData.substeps || []);
     }
-  }, [actionData]);
+  }, [appKey, useStateUsing, getApp, specificActionKey]);
 
 
   const switchToInputActionFormTab = (data: State['actionFormData']) => {
     setActionFormData(data);
-    setShowInputActionForm(true);
+    setShowInputActionForm(false);
     setActiveTab(1);
   };
 

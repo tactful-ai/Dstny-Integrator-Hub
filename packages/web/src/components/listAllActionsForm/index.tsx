@@ -11,8 +11,8 @@ interface ListAllActionsFormProps {
 function ListAllActionsForm({ actions }: ListAllActionsFormProps) {
   const navigate = useNavigate();
 
-  const handleViewDetails = (actionData: IAction) => {
-    navigate(URLS.ACTION_TABS, { state: { actionData } });
+  const handleViewDetails = (key: string) => {
+    navigate(URLS.ACTION_TABS, { state: {key} });
   };
 
 
@@ -27,7 +27,7 @@ function ListAllActionsForm({ actions }: ListAllActionsFormProps) {
               variant="outlined"
               size="small"
               color="primary"
-              onClick={() => handleViewDetails(action)}
+              onClick={() => handleViewDetails(action.key)}
             >
               View Details
             </Button>
