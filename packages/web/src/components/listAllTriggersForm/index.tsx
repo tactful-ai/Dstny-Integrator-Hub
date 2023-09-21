@@ -13,8 +13,8 @@ function ListAllTriggersForm({ triggers }: ListAllTriggersFormProps) {
 
     const navigate = useNavigate();
 
-  const handleViewDetails = (triggerData: ITrigger) => {
-    navigate(URLS.TRIGGER_TABS, { state: { triggerData } });
+  const handleViewDetails = (key: string) => {
+    navigate(URLS.TRIGGER_TABS, { state: {key} });
   };
 
  return (
@@ -28,7 +28,7 @@ function ListAllTriggersForm({ triggers }: ListAllTriggersFormProps) {
               variant="outlined"
               size="small"
               color="primary"
-              onClick={() => handleViewDetails(trigger)}
+              onClick={() => handleViewDetails(trigger.key)}
             >
               View Details
             </Button>

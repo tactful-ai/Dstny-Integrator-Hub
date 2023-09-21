@@ -6,9 +6,10 @@ import TriggerForm from '../../components/TriggerForm';
 import InputForm from '../../components/InputForm';
 import TriggerForm2 from '../../components/TriggerForm2';
 import InputTableForm from '../../components/inputTableForm';
-import { useNavigate } from 'react-router-dom';
-import {  useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { ITrigger } from '@automatisch/types';
+import { GET_APP } from 'graphql/queries/get-app';
+import { useLazyQuery } from '@apollo/client';
 
 interface State {
   TriggerFormData: {
@@ -16,14 +17,7 @@ interface State {
     key: string;
     description: string;
   };
-  inputTriggerData?: {
-    label: string;
-    key: string;
-    type: string;
-    required: boolean;
-    description: string;
-    variables: boolean;
-  }[];
+  inputTriggerData?: InputTriggerField[];
 }
 
 type InputTriggerField = {
@@ -35,46 +29,94 @@ type InputTriggerField = {
   variables: boolean;
 };
 
-function TriggerTabs() {
-  const [activeTab, setActiveTab] = useState(0);
-  const [triggerFormData, setTriggerFormData] = useState<State['TriggerFormData'] | null>(null);
-  const [inputDataArray, setInputDataArray] = useState<InputTriggerField[]>([]); 
-  const [settingsCompleted, setSettingsCompleted] = useState(false);
-  const navigate = useNavigate();
-  const [showInputTriggerForm, setShowInputTriggerForm] = useState(true);
-    const location = useLocation();
-  const triggerData = (location.state as { triggerData?: ITrigger })?.triggerData;
-  
 
-  const handleTabChange = (
-    event: React.ChangeEvent<unknown>,
-    newValue: number,
-  ) => {
+function TriggerTabs() {
+  const appKey = localStorage.getItem('appKey') || '';
+  const authorization_header = localStorage.getItem('automatisch.token') || '';
+  const [activeTab, setActiveTab] = useState(0);
+
+  const [triggerFormData, setTriggerFormData] = useState<State['TriggerFormData']>({
+    name: '',
+    key: '',
+    description: '',
+  });
+
+  const [inputDataArray, setInputDataArray] = useState<InputTriggerField[]>([]);
+  const [settingsCompleted, setSettingsCompleted] = useState(false);
+  const [showInputTriggerForm, setShowInputTriggerForm] = useState(true);
+  const location = useLocation();
+  const specificTriggerKey = (location.state as { key: string })?.key || '';
+  // let specificTrigger = null;
+const [useStateUsing, setUseStateUsing] = useState(true);
+  const handleTabChange = (event: React.ChangeEvent<unknown>, newValue: number) => {
     setActiveTab(newValue);
   };
 
-    useEffect(() => {
-    if (triggerData) {
-      setTriggerFormData({
-        name: triggerData.name,
-        key: triggerData.key,
-        description: triggerData.description,
-      });
-      // setInputDataArray(actionData.substeps || []);
-    }
-  }, [triggerData]);
+  const [getApp, { data }] = useLazyQuery(GET_APP, {
+    context: {
+      headers: {
+        Authorization: `${authorization_header}`,
+      },
+    },
+    onError: (error) => {
+      console.error("GraphQL query error:", error);
+    },
+  });
 
+
+  useEffect(() => {
+    if (appKey && useStateUsing) {
+      getApp({
+        variables: {
+          key: appKey,
+        },
+      })
+      .then((result) => {
+        const data = result.data; 
+        console.log(data); 
+        
+        if (specificTriggerKey && data && data.getApp.triggers) {
+          const specificTrigger = data.getApp.triggers.find((trigger: ITrigger) => trigger.key === specificTriggerKey);
+          if (specificTrigger) {
+            setTriggerFormData({
+              name: specificTrigger.name,
+              key: specificTrigger.key,
+              description: specificTrigger.description,
+            });
+      
+            let inputFields: InputTriggerField[] = [];
+            if (specificTrigger.arguments) {
+              inputFields = specificTrigger.arguments.map((argument: InputTriggerField) => ({
+                label: argument.label || '',
+                key: argument.key || '',
+                type: argument.type || '',
+                required: argument.required || false,
+                description: argument.description || '',
+                variables: argument.variables || false,
+              }));
+              setInputDataArray(inputFields);
+            }
+            setUseStateUsing(false);
+          }
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+    }
+  }, [appKey, useStateUsing, getApp, specificTriggerKey]);
+  
 
 
   const switchToInputTriggerFormTab = (data: State['TriggerFormData']) => {
     setTriggerFormData(data);
-    setShowInputTriggerForm(true);
+    setShowInputTriggerForm(false);
     setActiveTab(1);
   };
 
   const handleInputTriggerData = (data: InputTriggerField) => {
     setInputDataArray((prevData) => [...prevData, data]);
-    setShowInputTriggerForm(false); 
+    setShowInputTriggerForm(false);
   };
 
   const handleSettingsCompleted = () => {
@@ -88,7 +130,6 @@ function TriggerTabs() {
   const handleAddAnotherField = () => {
     setShowInputTriggerForm(true);
   };
-  
 
   return (
     <div>
@@ -112,20 +153,20 @@ function TriggerTabs() {
               switchToInputTriggerFormTab(data);
               handleSettingsCompleted();
             }}
-            initialData={triggerFormData || undefined} 
+            initialData={triggerFormData || undefined}
           />
         )}
-{activeTab === 1 && (
+        {activeTab === 1 && (
           <>
             {showInputTriggerForm && (
               <InputForm
                 FormData={triggerFormData || { name: '', key: '', description: '' }}
-                onAddInputData={handleInputTriggerData} 
+                onAddInputData={handleInputTriggerData}
               />
             )}
             {!showInputTriggerForm && (
               <InputTableForm
-                inputData={inputDataArray} 
+                inputData={inputDataArray}
                 onNext={navigateToTriggerForm2}
                 onAddAnotherField={handleAddAnotherField}
               />
@@ -135,7 +176,7 @@ function TriggerTabs() {
         {activeTab === 2 && (
           <TriggerForm2
             triggerFormData={triggerFormData || { name: '', key: '', description: '' }}
-            inputTriggerData={inputDataArray} 
+            inputTriggerData={inputDataArray}
           />
         )}
       </div>

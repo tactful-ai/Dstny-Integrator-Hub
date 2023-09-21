@@ -33,7 +33,6 @@ function TriggerForm({ onNext, initialData }: TriggerFormProps){
       setTriggers(initialData);
     }
   }, [initialData]);
-  console.log(initialData);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
