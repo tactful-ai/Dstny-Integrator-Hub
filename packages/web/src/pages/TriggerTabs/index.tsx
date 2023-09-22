@@ -130,6 +130,12 @@ const [useStateUsing, setUseStateUsing] = useState(true);
   const handleAddAnotherField = () => {
     setShowInputTriggerForm(true);
   };
+  const handleDeleteItem = (index: number) => {
+    const updatedData = [...inputDataArray];
+    updatedData.splice(index, 1);
+    setInputDataArray(updatedData);
+  };
+
 
   return (
     <div>
@@ -165,11 +171,12 @@ const [useStateUsing, setUseStateUsing] = useState(true);
               />
             )}
             {!showInputTriggerForm && (
-              <InputTableForm
-                inputData={inputDataArray}
-                onNext={navigateToTriggerForm2}
-                onAddAnotherField={handleAddAnotherField}
-              />
+            <InputTableForm
+            inputData={inputDataArray} 
+            onDelete={handleDeleteItem} 
+            onNext={navigateToTriggerForm2}
+            onAddAnotherField={handleAddAnotherField}
+          />
             )}
           </>
         )}

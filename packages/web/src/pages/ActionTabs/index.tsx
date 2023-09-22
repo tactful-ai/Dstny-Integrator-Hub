@@ -131,7 +131,11 @@ useEffect(() => {
   const handleAddAnotherField = () => {
     setShowInputActionForm(true);
   };
-  
+    const handleDeleteItem = (index: number) => {
+    const updatedData = [...inputDataArray];
+    updatedData.splice(index, 1);
+    setInputDataArray(updatedData);
+  };
 
   return (
     <div>
@@ -169,6 +173,7 @@ useEffect(() => {
             {!showInputActionForm && (
               <InputTableForm
                 inputData={inputDataArray}
+                onDelete={handleDeleteItem} 
                 onNext={navigateToActionForm2}
                 onAddAnotherField={handleAddAnotherField}
               />

@@ -91,6 +91,16 @@ function AppDetailsPage() {
         ) : (
           <Typography> </Typography>
         )}
+            <Button
+              variant="contained"
+              color="primary"
+              component={Link}
+              to= {URLS.OVERVIEW_PAGE}
+              sx={{ mt: 2 }}
+            >
+              Overview
+            </Button>
+
       </Paper>
     </Box>
   );
