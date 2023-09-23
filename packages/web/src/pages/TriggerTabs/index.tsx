@@ -44,6 +44,7 @@ function TriggerTabs() {
   const [inputDataArray, setInputDataArray] = useState<InputTriggerField[]>([]);
   const [settingsCompleted, setSettingsCompleted] = useState(false);
   const [showInputTriggerForm, setShowInputTriggerForm] = useState(true);
+  const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const location = useLocation();
   const specificTriggerKey = (location.state as { key: string })?.key || '';
 
@@ -118,6 +119,14 @@ const [useStateUsing, setUseStateUsing] = useState(true);
     setInputDataArray((prevData) => [...prevData, data]);
     setShowInputTriggerForm(false);
   };
+  const onUpdateInputData = (index: number, updatedData: InputTriggerField) => {
+    const updatedArray = [...inputDataArray];
+    updatedArray[index] = updatedData;
+    setInputDataArray(updatedArray);
+    setEditingIndex(null); 
+    setShowInputTriggerForm(false); 
+    
+  };
 
   const handleSettingsCompleted = () => {
     setSettingsCompleted(true);
@@ -135,7 +144,12 @@ const [useStateUsing, setUseStateUsing] = useState(true);
     updatedData.splice(index, 1);
     setInputDataArray(updatedData);
   };
-
+  const handleEdit = (index: number) => {
+    setEditingIndex(index);
+    setShowInputTriggerForm(true); 
+    setActiveTab(1);
+    console.log(index);
+  };
 
   return (
     <div>
@@ -166,8 +180,10 @@ const [useStateUsing, setUseStateUsing] = useState(true);
           <>
             {showInputTriggerForm && (
               <InputForm
-                FormData={triggerFormData || { name: '', key: '', description: '' }}
+              inputData={inputDataArray}
                 onAddInputData={handleInputTriggerData}
+                onUpdateInputData={onUpdateInputData} 
+                editingIndex={editingIndex} 
               />
             )}
             {!showInputTriggerForm && (
@@ -176,6 +192,7 @@ const [useStateUsing, setUseStateUsing] = useState(true);
             onDelete={handleDeleteItem} 
             onNext={navigateToTriggerForm2}
             onAddAnotherField={handleAddAnotherField}
+            onEdit={handleEdit} 
           />
             )}
           </>

@@ -11,11 +11,6 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 interface State {
-  FormData: {
-    name: string;
-    key: string;
-    description: string;
-  };
   inputData: {
     label: string;
     key: string;
@@ -27,21 +22,22 @@ interface State {
 }
 
 interface InputFormProps {
-  FormData: State['FormData'] | null;
-  onAddInputData: (data: State['inputData'][0]) => void; 
+  inputData: State['inputData'] | null;
+  onAddInputData: (data: State['inputData'][0]) => void;
+  editingIndex: number | null; // Receive the editing index from ActionTabs
+  onUpdateInputData: (index: number, data: State['inputData'][0]) => void; // Callback to send edited data to ActionTabs
 }
 
-function InputForm({ FormData, onAddInputData }: InputFormProps) {
+function InputForm({
+  inputData,
+  onAddInputData,
+  editingIndex,
+  onUpdateInputData,
+}: InputFormProps) {
   const navigate = useNavigate();
   const location = useLocation();
 
-
   const [combinedFormData, setCombinedFormData] = useState<State>({
-    FormData: {
-      name: '',
-      key: '',
-      description: '',
-    },
     inputData: [
       {
         label: '',
@@ -53,24 +49,35 @@ function InputForm({ FormData, onAddInputData }: InputFormProps) {
       },
     ],
   });
-  
-  
-  
 
   useEffect(() => {
-    if (FormData) {
-      const { name, key, description } = FormData;
-
+    if (inputData) { 
+      // Set all input data objects
       setCombinedFormData((prevData) => ({
         ...prevData,
-        FormData: {
-          name: name || '',
-          key: key || '',
-          description: description || '',
-        },
+        inputData: [...inputData],
       }));
     }
-  }, [location, FormData]); 
+  
+    if (editingIndex !== null) {
+      // If editingIndex is not null, it means we are editing existing data.
+      setCombinedFormData((prevData) => {
+        const editedData = prevData.inputData[editingIndex];
+        console.log(editedData);
+        console.log(inputData);
+        const updatedInputData = prevData.inputData.map((item, i) =>
+          i === editingIndex ? editedData : item
+        );
+        return {
+          ...prevData,
+          inputData: updatedInputData,
+        };
+      });
+    }
+  }, [location, inputData, editingIndex]);
+  
+  
+  
 
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -127,7 +134,12 @@ function InputForm({ FormData, onAddInputData }: InputFormProps) {
   };
 
   const handleNext = () => {
-    onAddInputData(combinedFormData.inputData[0]);
+    if (editingIndex !== null) {
+      onUpdateInputData(editingIndex, combinedFormData.inputData[0]);
+    } else {
+      onAddInputData(combinedFormData.inputData[0]);
+    }
+
     setCombinedFormData((prevData) => ({
       ...prevData,
       inputData: [
@@ -141,8 +153,9 @@ function InputForm({ FormData, onAddInputData }: InputFormProps) {
         },
       ],
     }));
+
   };
-  
+
 
   return (
     <Paper sx={{ p: 3 }}>
@@ -230,8 +243,8 @@ function InputForm({ FormData, onAddInputData }: InputFormProps) {
             </div>
           </div>
         ))}
-        <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }} >
-          Create
+        <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }}>
+          {editingIndex !== null ? 'Update' : 'Create'}
         </Button>
       </form>
     </Paper>

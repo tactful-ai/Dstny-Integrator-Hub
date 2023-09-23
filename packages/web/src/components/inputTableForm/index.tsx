@@ -13,15 +13,16 @@ interface InputTableFormProps {
   }[];
   onNext: () => void;
   onAddAnotherField: () => void;
+  onEdit: (index: number) => void; 
   onDelete: (index: number) => void; 
 }
 
-function InputTableForm({ inputData, onNext, onAddAnotherField, onDelete }: InputTableFormProps) {
+function InputTableForm({ inputData, onNext, onAddAnotherField, onEdit, onDelete }: InputTableFormProps) {
   return (
     <div>
       <div>
         <h2>Input Fields Table</h2>
-        <InputTable inputData={inputData} onDelete={onDelete} />
+        <InputTable inputData={inputData} onEdit={onEdit} onDelete={onDelete} />
       </div>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <Button type="button" variant="contained" sx={{ mt: 2, order: 1 }} onClick={onAddAnotherField}>
