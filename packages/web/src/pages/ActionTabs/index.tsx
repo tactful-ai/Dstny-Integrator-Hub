@@ -132,10 +132,10 @@ useEffect(() => {
     setEditingIndex(index);
     setShowInputActionForm(true); 
     setActiveTab(1);
-    console.log(index);
   };
   const handleAddAnotherField = () => {
     setShowInputActionForm(true);
+    setActiveTab(1);
   };
     const handleDeleteItem = (index: number) => {
     const updatedData = [...inputDataArray];
@@ -150,7 +150,9 @@ useEffect(() => {
     setShowInputActionForm(false); 
     
   };
-
+  const emptyFunction = () => {
+    // do nothing
+  };
 
   return (
     <div>
@@ -177,27 +179,42 @@ useEffect(() => {
         initialData={actionFormData || undefined} 
       />
         )}
-   {activeTab === 1 && (
-    <>
-      {showInputActionForm && (
-        <InputForm
-          inputData={inputDataArray}
-          onAddInputData={handleInputActionData}
-          onUpdateInputData={onUpdateInputData} 
-          editingIndex={editingIndex} 
-        />
-      )}
-      {!showInputActionForm && (
-        <InputTableForm
-          inputData={inputDataArray}
-          onDelete={handleDeleteItem}
-          onNext={navigateToActionForm2}
-          onAddAnotherField={handleAddAnotherField}
-          onEdit={handleEdit} 
-        />
-      )}
-    </>
-  )}
+{activeTab === 1 && (
+  <>
+    {showInputActionForm && editingIndex === null && (
+      <InputForm
+        inputData={inputDataArray}
+        onAddInputData={handleInputActionData}
+        onUpdateInputData={emptyFunction}
+        editingIndex={null}
+      />
+    )}
+
+    {showInputActionForm && editingIndex !== null && (
+      <InputForm
+        inputData={inputDataArray.slice(editingIndex, editingIndex + 1)}
+        onAddInputData={emptyFunction}
+        onUpdateInputData={(index, updatedData) => {
+          onUpdateInputData(editingIndex, updatedData);
+          setEditingIndex(null);
+        }}
+        editingIndex={0}
+      />
+    )}
+
+    {!showInputActionForm && editingIndex === null && (
+      <InputTableForm
+        inputData={inputDataArray}
+        onDelete={handleDeleteItem}
+        onNext={navigateToActionForm2}
+        onAddAnotherField={handleAddAnotherField}
+        onEdit={handleEdit}
+      />
+    )}
+  </>
+)}
+
+
         {activeTab === 2 && (
           <ActionForm2
             actionFormData={actionFormData || { name: '', key: '', description: '' }}

@@ -138,6 +138,7 @@ const [useStateUsing, setUseStateUsing] = useState(true);
 
   const handleAddAnotherField = () => {
     setShowInputTriggerForm(true);
+    setActiveTab(1);
   };
   const handleDeleteItem = (index: number) => {
     const updatedData = [...inputDataArray];
@@ -149,6 +150,10 @@ const [useStateUsing, setUseStateUsing] = useState(true);
     setShowInputTriggerForm(true); 
     setActiveTab(1);
     console.log(index);
+  };
+
+  const emptyFunction = () => {
+    // do nothing
   };
 
   return (
@@ -176,27 +181,42 @@ const [useStateUsing, setUseStateUsing] = useState(true);
             initialData={triggerFormData || undefined}
           />
         )}
-        {activeTab === 1 && (
-          <>
-            {showInputTriggerForm && (
-              <InputForm
-              inputData={inputDataArray}
-                onAddInputData={handleInputTriggerData}
-                onUpdateInputData={onUpdateInputData} 
-                editingIndex={editingIndex} 
-              />
-            )}
-            {!showInputTriggerForm && (
-            <InputTableForm
-            inputData={inputDataArray} 
-            onDelete={handleDeleteItem} 
-            onNext={navigateToTriggerForm2}
-            onAddAnotherField={handleAddAnotherField}
-            onEdit={handleEdit} 
-          />
-            )}
-          </>
-        )}
+{activeTab === 1 && (
+  <>
+    {showInputTriggerForm && editingIndex === null && (
+      <InputForm
+        inputData={inputDataArray}
+        onAddInputData={handleInputTriggerData}
+        onUpdateInputData={emptyFunction}
+        editingIndex={null}
+      />
+    )}
+
+    {showInputTriggerForm && editingIndex !== null && (
+      <InputForm
+        inputData={inputDataArray.slice(editingIndex, editingIndex + 1)}
+        onAddInputData={emptyFunction}
+        onUpdateInputData={(index, updatedData) => {
+          onUpdateInputData(editingIndex, updatedData);
+          setEditingIndex(null);
+        }}
+        editingIndex={0}
+      />
+    )}
+
+    {!showInputTriggerForm && editingIndex === null && (
+      <InputTableForm
+        inputData={inputDataArray}
+        onDelete={handleDeleteItem}
+        onNext={navigateToTriggerForm2}
+        onAddAnotherField={handleAddAnotherField}
+        onEdit={handleEdit}
+      />
+    )}
+  </>
+)}
+
+
         {activeTab === 2 && (
           <TriggerForm2
             triggerFormData={triggerFormData || { name: '', key: '', description: '' }}
