@@ -187,6 +187,7 @@ function InputForm({
                 onChange={(event) => handleInputChange(event, index)}
                 margin="dense"
                 size="small"
+                disabled = {editingIndex !== null}
               />
             </div>
             <div style={{ marginBottom: '15px' }}>

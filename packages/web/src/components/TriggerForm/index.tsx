@@ -84,6 +84,7 @@ function TriggerForm({ onNext, initialData }: TriggerFormProps){
             onChange={handleInputChange}
             margin="dense"
             size="small"
+            disabled={initialData?.key !== ''} 
           />
         </div>
         <div style={{ marginBottom: '15px' }}>

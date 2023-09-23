@@ -78,6 +78,7 @@ function ActionForm({ onNext, initialData }: ActionFormProps) {
             onChange={handleInputChange}
             margin="dense"
             size="small"
+            disabled={initialData?.key !== ''} 
           />
         </div>
         <div style={{ marginBottom: '15px' }}>
