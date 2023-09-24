@@ -1,4 +1,3 @@
-import * as URLS from 'config/urls';
 import config from 'config/app';
 
 interface IntegrationData {
@@ -28,7 +27,7 @@ interface IntegrationData {
       const response = await fetch(`${config.apiUrl}/integrations/create`, {
         method: 'POST',
         headers: {
-
+          "Content-Type": "application/json",
           'authorization': 'Bearer ' + token
         },
         credentials: 'include',

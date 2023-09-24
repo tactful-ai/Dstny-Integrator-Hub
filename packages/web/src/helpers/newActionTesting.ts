@@ -1,4 +1,3 @@
-import * as URLS from 'config/urls';
 import config from 'config/app';
 type ActionData = {
     name: string;
@@ -29,6 +28,7 @@ async function newActionTesting (ActionData: ActionData, mainKey:string )  {
     const response = await fetch(`${config.apiUrl}/integrations/actions/${mainKey}`, {
         method: 'POST',
         headers: {
+          "Content-Type": "application/json",
           'authorization': 'Bearer ' + token
         },
         body: JSON.stringify(formattedActionData),

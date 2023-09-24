@@ -1,7 +1,7 @@
 import { field } from "@automatisch/types"
 import config from "config/app";
 
-const endpointUrl = `${config.apiUrl}integrations/auth/apikey`
+const endpointUrl = `${config.apiUrl}/integrations/auth/apikey`
 
 type AuthIntegrationData = {
     fields: field[];
@@ -35,7 +35,7 @@ async function createIntegrationAuth({fields, endpoint, headers, appKey}:AuthInt
                 verifyEndpoint: endpoint
             }),
             headers: {
-
+                "Content-Type": "application/json",
                 'authorization': 'Bearer ' + token
             },
         });

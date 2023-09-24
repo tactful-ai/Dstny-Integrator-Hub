@@ -526,7 +526,7 @@ export type field = {
   description?:string | null;
   readOnly:boolean;
   required: boolean;
-  canCopy: boolean;
+  clickToCopy: boolean;
 }
 
 
