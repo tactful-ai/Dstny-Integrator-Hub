@@ -24,11 +24,14 @@ interface IntegrationData {
         formData.append('logo', integrationData.logo);
       }
   
-      const headers = new Headers();
-  
+      const token = localStorage.getItem('automatisch.token') as string;
       const response = await fetch(`${config.apiUrl}/integrations/create`, {
         method: 'POST',
-        headers: headers,
+        headers: {
+
+          'authorization': 'Bearer ' + token
+        },
+        credentials: 'include',
         body: formData as unknown as BodyInit,
       });
   
