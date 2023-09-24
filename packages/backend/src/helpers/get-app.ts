@@ -89,7 +89,7 @@ const addStaticSubsteps = (
   appData: IApp,
   step: IRawTrigger | IRawAction
 ) => {
-  const computedStep: ITrigger | IAction = omit(step, ['arguments']);
+  const computedStep: ITrigger | IAction = step
 
   computedStep.substeps = [];
 

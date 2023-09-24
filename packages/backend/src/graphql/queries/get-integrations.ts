@@ -1,4 +1,3 @@
-
 import AppConfig from '../../models/app-config';
 import Context from '../../types/express/context';
 
@@ -9,17 +8,17 @@ type Params = {
 const getIntegrations = async (_parent: unknown, params: Params, context: Context) => {
   context.currentUser.can('create', 'Connection');
 
-  const appConfig = await AppConfig
+  const appConfigs = await AppConfig
     .query()
     .withGraphFetched({
       appAuthClients: true,
       users: true
     })
-    .findOne({
-      user_id: params.userId
-    });
+    .where('user_id', params.userId) 
+    .returning('*'); 
 
-  return appConfig;
+    console.log(appConfigs)
+  return appConfigs; 
 };
 
 export default getIntegrations;
