@@ -25,11 +25,11 @@ async function newActionTesting (ActionData: ActionData, mainKey:string )  {
       run: ActionData.run ,
       args: ActionData.args,
     };
-    console.log(formattedActionData);
+    const token = localStorage.getItem('automatisch.token') as string;
     const response = await fetch(`${config.apiUrl}/integrations/actions/${mainKey}`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'authorization': 'Bearer ' + token
         },
         body: JSON.stringify(formattedActionData),
     });

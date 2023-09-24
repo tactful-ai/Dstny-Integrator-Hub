@@ -18,10 +18,13 @@ async function newTriggerTesting(triggerData: TriggerData, mainKey: string) {
       pollInterval: triggerData.pollInterval,
     };
 
+    const token = localStorage.getItem('automatisch.token') as string;
+
     const response = await fetch(`${config.apiUrl}/integrations/trigger/polling/${mainKey}`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+
+        'authorization': 'Bearer ' + token
       },
       body: JSON.stringify(formattedTriggerData),
       

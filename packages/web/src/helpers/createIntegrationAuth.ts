@@ -25,6 +25,8 @@ type AuthIntegrationData = {
 
 async function createIntegrationAuth({fields, endpoint, headers, appKey}:AuthIntegrationData) {
     try {
+
+        const token = localStorage.getItem('automatisch.token') as string;
         const res = await fetch(`${endpointUrl}/${appKey}`, {
             method: 'POST',
             body:JSON.stringify({
@@ -33,9 +35,9 @@ async function createIntegrationAuth({fields, endpoint, headers, appKey}:AuthInt
                 verifyEndpoint: endpoint
             }),
             headers: {
-        'accept': '/',
-        'Content-Type': 'application/json'
-    },
+
+                'authorization': 'Bearer ' + token
+            },
         });
 
         if(!res.ok) {
