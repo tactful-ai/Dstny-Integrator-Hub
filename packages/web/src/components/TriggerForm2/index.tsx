@@ -41,10 +41,28 @@ function TriggerForm2({ triggerFormData, inputTriggerData }: TriggerForm2Props) 
   });
 
   
-  const providedCode = `let page = 0;\nlet response;\n\nconst headers = {
-    'X-API-KEY': $.auth.data.apiKey as string,
-  };\n\n\ndo {\n  const requestPath = \`/customers?page=\${page}&limit=10&order=DESC\`;\n  response = await $.http.get(requestPath, { headers });\n\n  response.data.items.forEach((customer: IJSONObject) => {\n    const dataItem = {\n      raw: customer,\n      meta: {\n        internalId: customer.id.toString(),\n      },\n    };\n\n    $.pushTriggerItem(dataItem);\n  });\n\n  page += 1;\n} while (response.data.length >= 10);`;
-
+  const providedCode = `
+  let page = 0;
+  let response;
+  
+  const headers = {
+      // set your request headers
+    };
+  
+  
+  do {
+    const requestPath = '{{your request path}}';
+    response = await $.http.get(requestPath, { headers });
+  
+    // parse your response
+  
+      $.pushTriggerItem(dataItem);
+    });
+  
+    page += 1;
+  } while (response.data.length >= 10);
+  `;
+  
   const [testResult, setTestResult] = useState<string | null>(null);
 
   useEffect(() => {
@@ -127,7 +145,7 @@ function TriggerForm2({ triggerFormData, inputTriggerData }: TriggerForm2Props) 
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    navigate(URLS.NEW_INTEGRATION_LIST_ACTIONS_PAGE(appKey));
+    navigate(URLS.NEW_INTEGRATION_OVERVIEW_PAGE(appKey));
   };
 
   return (

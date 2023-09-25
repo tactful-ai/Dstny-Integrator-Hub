@@ -33,7 +33,7 @@ function OverviewForm() {
   }
 
   function handleClickActions() {
-    navigate(URLS.NEW_INTEGRATION_LIST_TRIGGERS_PAGE(appKey));
+    navigate(URLS.NEW_INTEGRATION_LIST_ACTIONS_PAGE(appKey));
   }
 
   return (
