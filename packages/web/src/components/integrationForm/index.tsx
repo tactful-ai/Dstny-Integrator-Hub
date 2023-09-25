@@ -2,14 +2,11 @@ import React, { useState } from 'react';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import * as URLS from 'config/urls';
-import config from 'config/app';
-import { useLocation, useNavigate } from 'react-router-dom';
-import FormData from 'form-data';
+import { useNavigate } from 'react-router-dom';
 import LoadingButton from '@mui/lab/LoadingButton';
 import CircularProgress from '@mui/material/CircularProgress'; 
 import newIntegration from 'helpers/newIntegration';
@@ -17,6 +14,7 @@ import newIntegration from 'helpers/newIntegration';
 
 function IntegrationForm() {
   const navigate = useNavigate();
+  const authorization_header = localStorage.getItem('automatisch.token') || '';
   const [integrationData, setIntegrationData] = useState({
     name: '',
     Key: '',
@@ -98,8 +96,8 @@ function IntegrationForm() {
     }
   
     try {
-      const result = await newIntegration(integrationData);
-      
+      const result = await newIntegration(integrationData, authorization_header);
+  
       if (result.success) {
         navigate(URLS.NEW_INTEGRATION_OVERVIEW_PAGE(result.key));
       } else {

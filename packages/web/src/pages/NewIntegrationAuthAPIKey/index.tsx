@@ -45,7 +45,7 @@ function NewIntegrationAuthAPIKey() {
         const response = await createIntegrationAuth({fields:data.fields,endpoint:data.endpoint, headers:submittedHeaders, appKey});
 
         if(response)
-            navigate(URLS.NEW_INTEGRATION_TRIGGER_PAGE(appKey));
+            navigate(URLS.NEW_INTEGRATION_CREATE_TRIGGERS_PAGE(appKey));
         
 
     }

@@ -9,7 +9,7 @@ interface IntegrationData {
     logo?: File | null;
   }
   
-  async function newIntegration(integrationData: IntegrationData) {
+  async function newIntegration(integrationData: IntegrationData, authorization_header: string) {
     try {
       const formData = new FormData();
 
@@ -23,13 +23,11 @@ interface IntegrationData {
         formData.append('logo', integrationData.logo);
       }
   
-      const token = localStorage.getItem('automatisch.token') as string;
       const response = await fetch(`${config.apiUrl}/integrations/create`, {
         method: 'POST',
         headers: {
-          'authorization': 'Bearer ' + token
+          'Authorization' : `Bearer ${authorization_header}`,
         },
-        credentials: 'include',
         body: formData as unknown as BodyInit,
       });
   

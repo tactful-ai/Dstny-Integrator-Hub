@@ -83,7 +83,7 @@ function OverviewForm() {
             <div style={buttonContainerStyle}>
               <Button
                 component={Link}
-                to={URLS.NEW_INTEGRATION_TRIGGER_PAGE(appKey)}
+                to={URLS.NEW_INTEGRATION_LIST_TRIGGERS_PAGE(appKey)}
                 variant="outlined"
                 color="primary"
                 size="small"
@@ -106,7 +106,7 @@ function OverviewForm() {
             <div style={buttonContainerStyle}>
               <Button
                 component={Link}
-                to={URLS.NEW_INTEGRATION_ACTION_PAGE(appKey)}
+                to={URLS.NEW_INTEGRATION_LIST_ACTIONS_PAGE(appKey)}
                 variant="outlined"
                 color="primary"
                 size="small"

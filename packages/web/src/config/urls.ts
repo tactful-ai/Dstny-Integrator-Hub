@@ -10,7 +10,7 @@ export const LOGIN = '/login';
 export const LOGIN_CALLBACK = `${LOGIN}/callback`;
 
 
-export const INPUTACTION_PAGE ='/inputaction';
+
 export const SSO_LOGIN = (issuer: string) => `${appConfig.apiUrl}/login/saml/${issuer}`;
 export const SIGNUP = '/sign-up';
 export const FORGOT_PASSWORD = '/forgot-password';
@@ -110,11 +110,11 @@ export const WEBHOOK_DOCS =
 export const NEW_INTEGRATION_OVERVIEW = '/integration/new/overview';
 export const NEW_INTEGRATION_AUTH_TYPE = '/integration/new/auth-type';
 export const NEW_INTEGRATION_AUTH_API_KEY = '/integration/new/auth/api-key';
-export const NEW_INTEGRATION_TRIGGER ='/integration/trigger';
-export const NEW_INTEGRATION_TRIGGER2 ='/integration/trigger2';
-export const NEW_INTEGRATION_ACTION ='/integration/action';
-export const NEW_INTEGRATION_ACTION2 ='/integration/action2';
 export const CREATE_INTEGRATION_PAGE = '/integration/create';
+export const NEW_INTEGRATION_CREATE_ACTIONS = `/integration/new/create-actions`;
+export const NEW_INTEGRATION_CREATE_TRIGGERS = `/integration/new/create-triggers`;
+export const NEW_INTEGRATION_LIST_TRIGGERS = `/integration/new/list-triggers`;
+export const NEW_INTEGRATION_LIST_ACTIONS = `/integration/new/list-actions`;
 export const CREATE_INTEGRATION_PAGE_CALLBACK = `${CREATE_INTEGRATION_PAGE}/callback`;
 
 export const NEW_INTEGRATION_OVERVIEW_PAGE = (appKey:string | undefined) => `${NEW_INTEGRATION_OVERVIEW}/${appKey}`;
@@ -122,13 +122,15 @@ export const NEW_INTEGRATION_AUTH_TYPE_PAGE = (appKey:string | undefined) => `${
 
 export const NEW_INTEGRATION_AUTH_API_KEY_PAGE = (appKey:string | undefined) => `${NEW_INTEGRATION_AUTH_API_KEY}/${appKey}`;
 
-export const NEW_INTEGRATION_TRIGGER_PAGE = (appKey:string | undefined) => `${NEW_INTEGRATION_TRIGGER}/${appKey}`;
+export const NEW_INTEGRATION_CREATE_TRIGGERS_PAGE = (appKey:string | undefined) => `${NEW_INTEGRATION_CREATE_TRIGGERS}/${appKey}`;
 
-export const NEW_INTEGRATION_TRIGGER_PAGE2 = (appKey:string | undefined) => `${NEW_INTEGRATION_TRIGGER2}/${appKey}`;
+export const NEW_INTEGRATION_LIST_TRIGGERS_PAGE = (appKey:string | undefined) => `${NEW_INTEGRATION_LIST_TRIGGERS}/${appKey}`;
 
-export const NEW_INTEGRATION_ACTION_PAGE = (appKey:string | undefined) => `${NEW_INTEGRATION_ACTION}/${appKey}`;
+export const NEW_INTEGRATION_LIST_ACTIONS_PAGE = (appKey:string | undefined) => `${NEW_INTEGRATION_LIST_ACTIONS}/${appKey}`;
 
-export const NEW_INTEGRATION_ACTION_PAGE2 = (appKey:string | undefined  ) => `${NEW_INTEGRATION_ACTION2}/${appKey}`;
+export const NEW_INTEGRATION_CREATE_ACTIONS_PAGE = (appKey:string | undefined) => `${NEW_INTEGRATION_CREATE_ACTIONS}/${appKey}`;
+
+
 
 
 // list all integrations

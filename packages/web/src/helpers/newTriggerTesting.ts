@@ -4,30 +4,41 @@ type TriggerData = {
   key: string;
   description: string;
   run: string;
+  type: string;
   pollInterval: number;
+  args: {
+    label: string;
+    key: string;
+    type: string;
+    required: boolean;
+    description: string;
+    variables: boolean;
+  }[];
 };
 
-async function newTriggerTesting(triggerData: TriggerData, mainKey: string | undefined) {
+async function newTriggerTesting(triggerData: TriggerData, mainKey: string | undefined, authorization_header: string) {
   try {
     const formattedTriggerData = {
       name: triggerData.name,
       key: triggerData.key,
       description: triggerData.description,
       run: triggerData.run,
+      type: triggerData.type ,
       pollInterval: triggerData.pollInterval,
+      args: triggerData.args,
     };
 
-    const token = localStorage.getItem('automatisch.token') as string;
 
     const response = await fetch(`${config.apiUrl}/integrations/trigger/polling/${mainKey}`, {
       method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        'authorization': 'Bearer ' + token
+        'Content-Type': 'application/json',
+        'Authorization' : `Bearer ${authorization_header}`
       },
       body: JSON.stringify(formattedTriggerData),
       
     });
+
 
 
     if (response.ok) {
