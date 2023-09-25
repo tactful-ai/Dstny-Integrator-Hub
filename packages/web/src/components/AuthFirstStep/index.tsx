@@ -16,7 +16,7 @@ function AuthFirstStep({register,  watch, control, getValues}:AuthStepsProps) {
 
     const handleClickOpen = () => {
         setOpen(true);
-        append({key: null, label: null, type: "string", description: "", readOnly: false, required: false, canCopy: false});
+        append({key: null, label: null, type: "string", description: "", readOnly: false, required: false, clickToCopy: false});
     };
 
     const handleClose = () => {

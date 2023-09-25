@@ -22,12 +22,12 @@ import NewIntegrationAuthAPIKey from 'pages/NewIntegrationAuthAPIKey';
 
 import IntegrationPage from 'pages/integrationPage';
 import OverviewPage from 'pages/overviewPage';
-import TriggerPage from 'pages/TriggerPage'
-import TriggerPage2 from 'pages/TriggerPage2'
-import ActionPage from 'pages/ActionPage'
-import ActionPage2 from 'pages/ActionPage2'
-import InputActionPage from 'pages/InputActionPage'
 import MyIntegrations from 'pages/MyIntegrations';
+import ActionTabs from 'pages/ActionTabs';
+import TriggerTabs from 'pages/TriggerTabs';
+import ListAllTriggersPage from 'pages/listAllTriggersPage';
+import ListAllActionsPage from 'pages/listAllActionsPage';
+
 export default (
   <Routes>
     <Route
@@ -48,7 +48,7 @@ export default (
       }
     />
     <Route
-      path={URLS.INTEGRATION_PAGE}  
+      path={URLS.CREATE_INTEGRATION_PAGE}
       element={
         <Layout>
           <IntegrationPage />
@@ -57,7 +57,7 @@ export default (
     />
 
     <Route
-      path={URLS.MY_INTEGRATIONS}  
+      path={URLS.MY_INTEGRATIONS}
       element={
         <Layout>
           <MyIntegrations />
@@ -66,47 +66,42 @@ export default (
     />
 
     <Route
-      path={URLS.TRIGGER_PAGE}  
+      path={`${URLS.NEW_INTEGRATION_CREATE_ACTIONS}/:appKey`}
       element={
         <Layout>
-          <TriggerPage />
+          <ActionTabs />
         </Layout>
       }
     />
-        <Route
-      path={URLS.TRIGGER_PAGE2}  
+    <Route
+      path={`${URLS.NEW_INTEGRATION_LIST_TRIGGERS}/:appKey`}
       element={
         <Layout>
-          <TriggerPage2 />
+          <ListAllTriggersPage />
         </Layout>
       }
     />
-        <Route
-      path={URLS.ACTION_PAGE}  
+    <Route
+      path={`${URLS.NEW_INTEGRATION_LIST_ACTIONS}/:appKey`}
       element={
         <Layout>
-          <ActionPage />
+          <ListAllActionsPage />
         </Layout>
       }
     />
-        <Route
-      path={URLS.ACTION_PAGE2}  
+
+    <Route
+      path={`${URLS.NEW_INTEGRATION_CREATE_TRIGGERS}/:appKey`}
       element={
         <Layout>
-          <ActionPage2 />
+          <TriggerTabs />
         </Layout>
       }
     />
-            <Route
-      path={URLS.INPUTACTION_PAGE}  
-      element={
-        <Layout>
-          <InputActionPage />
-        </Layout>
-      }
-    />
-   <Route
-      path={URLS.OVERVIEW_PAGE}
+
+
+    <Route
+      path={`${URLS.NEW_INTEGRATION_OVERVIEW}/:appKey`}
       element={
         <Layout>
           <OverviewPage />
@@ -121,7 +116,7 @@ export default (
         </Layout>
       }
     />
-    
+
 
     <Route
       path={URLS.FLOW_PATTERN}
@@ -132,9 +127,9 @@ export default (
       }
     />
 
-    <Route element={<Layout><NewIntegrationAuthType /></Layout>} path={URLS.NEW_INTEGRATION_AUTH_TYPE}/>
+    <Route element={<Layout><NewIntegrationAuthType /></Layout>} path={`${URLS.NEW_INTEGRATION_AUTH_TYPE}/:appKey`} />
 
-    <Route element={<Layout><NewIntegrationAuthAPIKey /></Layout>} path={URLS.NEW_INTEGRATION_AUTH_API_KEY}/>
+    <Route element={<Layout><NewIntegrationAuthAPIKey /></Layout>} path={`${URLS.NEW_INTEGRATION_AUTH_API_KEY}/:appKey`} />
 
 
 
@@ -223,6 +218,6 @@ export default (
       }
     />
 
-    
+
   </Routes>
 );

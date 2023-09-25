@@ -1,125 +1,80 @@
-import React from 'react';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import { Link } from 'react-router-dom';
+
+import { useLocation, useParams, Location, useNavigate } from 'react-router-dom';
 import * as URLS from 'config/urls';
 import Box from '@mui/material/Box';
+import PageTitle from 'components/PageTitle';
+import { Divider, Grid } from '@mui/material';
+import Container from 'components/Container';
+
+
+type RoutingState = {
+  overlaidLocation?: Location
+  newIntegration?: boolean
+} | null
+
+
+
+
 
 function OverviewForm() {
-  const stepContainerStyle = {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: '20px',
-    marginBottom: '20px',
-    borderBottom: '1px solid #ccc',
-    paddingBottom: '20px',
-    borderUp: '1px solid #ccc',
-    paddingUp: '20px',
-  };
 
-  const stepNumberStyle = {
-    fontSize: '24px',
-    fontWeight: 'bold',
-    marginRight: '15px',
-  };
 
-  const stepContentStyle = {
-    flex: '2',
-    padding: ' 20px',  
-  };
+  const { appKey } = useParams();
+  const location = useLocation();
+  const locationState = location.state as RoutingState;
+  const navigate = useNavigate();
 
-  const buttonContainerStyle = {
-    marginLeft: 'auto',
-  };
-  const paperStyle = {
-    width: '700px', 
-    padding: '20px',
-    alignItems: 'center', 
-  };
+  function handleClickAuth() {
+    navigate(URLS.NEW_INTEGRATION_AUTH_API_KEY_PAGE(appKey));
+  }
+
+  function handleClickTriggers() {
+    navigate(URLS.NEW_INTEGRATION_LIST_TRIGGERS_PAGE(appKey));
+  }
+
+  function handleClickActions() {
+    navigate(URLS.NEW_INTEGRATION_LIST_TRIGGERS_PAGE(appKey));
+  }
+
   return (
-    <div style ={{marginLeft: '-60px'}}>
-      <Box sx={paperStyle }>
-      <Paper>
-        <div style={{ maxWidth: '1300px', padding: '20px' }}>
-          <Typography variant="h4" >Implementation Overview</Typography>
 
-          <div style={stepContainerStyle}>
-            <Typography variant="subtitle1" style={stepNumberStyle}>
-              1 
-            </Typography>
-            <div style={stepContentStyle}>
-              <Typography variant="h5" fontWeight="500" >Authentication</Typography>
-              <Typography marginBottom="7px" color="#686868">
-                Tell us how to authenticate users with your API
-              </Typography>
-            </div>
-            <div style={buttonContainerStyle}>
-              <Button
-                component={Link}
-                to={URLS.NEW_INTEGRATION_AUTH_TYPE}
-                variant="outlined"
-                color="primary"
-                size="small"
-              >
-                Set up
-              </Button>
-            </div>
+
+    <Box sx={{ py: 3 }}>
+      <Container>
+        <Grid container sx={{ mb: [0, 3] }} columnSpacing={1.5} rowSpacing={3}>
+          <Grid
+            container
+            item
+            alignItems="center"
+            order={{ xs: 0, height: 80 }}
+          >
+            <PageTitle>Overview</PageTitle>
+          </Grid>
+        </Grid>
+        <Divider sx={{ mt: [2, 0], mb: 2 }} />
+
+        {locationState?.newIntegration && (<div onClick={handleClickAuth} className='overview-box' role='link'>
+          <PageTitle marginBottom="1rem" fontSize="1.3rem">Authentication</PageTitle>
+          <div className='overview-text'>
+            Tell us how to authenticate users with your API
           </div>
+        </div>)}
 
-          <div style={stepContainerStyle}>
-            <Typography variant="subtitle1" style={stepNumberStyle}>
-              2 
-            </Typography>
-            <div style={stepContentStyle}>
-              <Typography variant="h5" fontWeight="500" >Triggers</Typography>
-              <Typography marginBottom="7px" color="#686868">
-                Help users find new data when it's available in your app
-              </Typography>
-            </div>
-            <div style={buttonContainerStyle}>
-              <Button
-                component={Link}
-                to={URLS.TRIGGER_PAGE}
-                variant="outlined"
-                color="primary"
-                size="small"
-              >
-                Set up
-              </Button>
-            </div>
+        <div onClick={handleClickTriggers} className='overview-box' role='link'>
+          <PageTitle marginBottom="1rem" fontSize="1.3rem">Triggers</PageTitle>
+          <div className='overview-text'>
+            Help users find new data when it's available in your app
           </div>
-
-          <div style={stepContainerStyle}>
-            <Typography variant="subtitle1" style={stepNumberStyle}>
-              3 
-            </Typography>
-            <div style={stepContentStyle}>
-              <Typography variant="h5" fontWeight="500" >Actions</Typography>
-              <Typography marginBottom="7px" color="#686868">
-                Help users write data back to your integration
-              </Typography>
-            </div>
-            <div style={buttonContainerStyle}>
-              <Button
-                component={Link}
-                to={URLS.ACTION_PAGE}
-                variant="outlined"
-                color="primary"
-                size="small"
-              >
-                Set up
-              </Button>
-            </div>
-          </div>
-
         </div>
-      </Paper>
-    </Box>
-    </div> 
 
-    
+        <div onClick={handleClickActions} className='overview-box' role='link'>
+          <PageTitle marginBottom="1rem" fontSize="1.3rem">Actions</PageTitle>
+          <div className='overview-text'>
+            Help users write data back to your integration
+          </div>
+        </div>
+      </Container>
+    </Box>
   );
 }
 

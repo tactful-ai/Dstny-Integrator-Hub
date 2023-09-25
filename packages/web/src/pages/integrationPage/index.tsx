@@ -7,7 +7,7 @@ import IntegrationForm from 'components/integrationForm'; // Import the Integrat
 
 export default function IntegrationPage() {
 
-
+  
   return (
     <Box sx={{ display: 'flex', flex: 1, alignItems: 'center' }}>
       <Container maxWidth="sm">
