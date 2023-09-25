@@ -3,10 +3,6 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import * as URLS from 'config/urls';
-import { useNavigate, useParams } from 'react-router-dom';
-
-
 
 
 interface ActionData {
@@ -22,7 +18,6 @@ interface ActionFormProps {
 
 function ActionForm({ onNext, initialData }: ActionFormProps) {
   
-  const {appKey} = useParams(); 
   const [actions, setActions] = useState<ActionData>(
     initialData || {
       name: '',

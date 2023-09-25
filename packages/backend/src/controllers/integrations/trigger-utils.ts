@@ -3,22 +3,26 @@ import fs from 'fs-extra';
 
 export async function generateMainIndexFile(appKey: string) {
   try {
-    const triggerDirectories = await fs.readdir(
-      `./src/apps/${appKey}/triggers`,
-      { withFileTypes: true }
-    );
+    const triggerDirectories = await fs.readdir(`./src/apps/${appKey}/triggers`, {
+      withFileTypes: true,
+    });
 
-    const validTriggerDirectories = triggerDirectories
+    const importStatements = triggerDirectories
       .filter((dir) => dir.isDirectory())
-      .map((dir) => dir.name);
-
-    const importStatements = validTriggerDirectories
-      .map((dir) => `import ${dir} from './${dir}';`)
+      .map((dir) => {
+        // Convert directory name from kebab-case to camelCase
+        const camelCaseName = dir.name.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
+        return `import ${camelCaseName} from './${dir.name}';`;
+      })
       .join('\n');
 
-    const exportStatement = `export default [${validTriggerDirectories.join(
-      ', '
-    )}];`;
+    const exportStatement = `export default [${triggerDirectories
+      .filter((dir) => dir.isDirectory())
+      .map((dir) => {
+        // Convert directory name from kebab-case to camelCase for export
+        return dir.name.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
+      })
+      .join(', ')}];`;
 
     return `${importStatements}\n\n${exportStatement}`;
   } catch (error) {
@@ -26,6 +30,7 @@ export async function generateMainIndexFile(appKey: string) {
     return '';
   }
 }
+
 
 export function generateTriggerFile(triggerConfig: any): string {
 const triggerType = triggerConfig.type;

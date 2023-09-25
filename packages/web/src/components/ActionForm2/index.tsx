@@ -41,8 +41,19 @@ function ActionForm2({ actionFormData, inputActionData }: ActionForm2Props) {
     run: '',
   });
 
-  const providedCode =
-    "const requestPath = `/customers/${$.step.parameters.id}`;\n\nconst headers = {\n  'X-API-KEY': $.auth.data.authToken as string,\n};\n\nconst response = await $.http.delete(\n  requestPath,\n);\n\n$.setActionItem({ raw: response.data });";
+  const providedCode= `
+  const requestPath = '{{your request path}}';
+
+  const headers = {
+     // set your request headers
+  };
+  
+  // const response = await $.http.delete(
+  //  requestPath,
+  // );
+  
+  $.setActionItem({ raw: response.data });
+  ` ;
 
   const [testResult, setTestResult] = useState<string | null>(null);
 
