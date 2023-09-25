@@ -27,7 +27,6 @@ interface IntegrationData {
       const response = await fetch(`${config.apiUrl}/integrations/create`, {
         method: 'POST',
         headers: {
-          "Content-Type": "application/json",
           'authorization': 'Bearer ' + token
         },
         credentials: 'include',
@@ -36,15 +35,8 @@ interface IntegrationData {
   
       if (response.ok) {
         console.log('Integration data sent successfully!');
-        const mainKey = integrationData.Key;
-  
-        if (mainKey !== null && mainKey !== undefined) {
-          localStorage.setItem('appKey', mainKey);
-          return { success: true, message: 'Successful' };
-        } else {
-          console.error('mainKey is null or undefined');
-          return { success: false, message: 'mainKey is null or undefined' };
-        }
+        const data = await response.json();
+        return { success: true, message: 'Successful', key: data.key};
       } else {
         console.error('Failed to send integration data to the backend.');
         return { success: false, message: 'Failed to send integration data to the backend' };

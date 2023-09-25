@@ -8,13 +8,8 @@ export const EXECUTION = (executionId: string) =>
 
 export const LOGIN = '/login';
 export const LOGIN_CALLBACK = `${LOGIN}/callback`;
-export const OVERVIEW_PAGE = '/overview';
-export const INTEGRATION_PAGE = '/integration';
-export const INTEGRATION_PAGE_CALLBACK = `${INTEGRATION_PAGE}/callback`;
-export const TRIGGER_PAGE ='/trigger';
-export const TRIGGER_PAGE2 ='/trigger2';
-export const ACTION_PAGE ='/action';
-export const ACTION_PAGE2 ='/action2';
+
+
 export const INPUTACTION_PAGE ='/inputaction';
 export const SSO_LOGIN = (issuer: string) => `${appConfig.apiUrl}/login/saml/${issuer}`;
 export const SIGNUP = '/sign-up';
@@ -112,8 +107,29 @@ export const WEBHOOK_DOCS =
   'https://automatisch.io/docs/apps/webhooks/connection';
 
 // New integration
-export const NEW_INTEGRATION_AUTH_TYPE = '/new-integration/auth-type';
-export const NEW_INTEGRATION_AUTH_API_KEY = '/new-integration/auth/api-key';
+export const NEW_INTEGRATION_OVERVIEW = '/integration/new/overview';
+export const NEW_INTEGRATION_AUTH_TYPE = '/integration/new/auth-type';
+export const NEW_INTEGRATION_AUTH_API_KEY = '/integration/new/auth/api-key';
+export const NEW_INTEGRATION_TRIGGER ='/integration/trigger';
+export const NEW_INTEGRATION_TRIGGER2 ='/integration/trigger2';
+export const NEW_INTEGRATION_ACTION ='/integration/action';
+export const NEW_INTEGRATION_ACTION2 ='/integration/action2';
+export const CREATE_INTEGRATION_PAGE = '/integration/create';
+export const CREATE_INTEGRATION_PAGE_CALLBACK = `${CREATE_INTEGRATION_PAGE}/callback`;
+
+export const NEW_INTEGRATION_OVERVIEW_PAGE = (appKey:string | undefined) => `${NEW_INTEGRATION_OVERVIEW}/${appKey}`;
+export const NEW_INTEGRATION_AUTH_TYPE_PAGE = (appKey:string | undefined) => `${NEW_INTEGRATION_AUTH_TYPE}/${appKey}`;
+
+export const NEW_INTEGRATION_AUTH_API_KEY_PAGE = (appKey:string | undefined) => `${NEW_INTEGRATION_AUTH_API_KEY}/${appKey}`;
+
+export const NEW_INTEGRATION_TRIGGER_PAGE = (appKey:string | undefined) => `${NEW_INTEGRATION_TRIGGER}/${appKey}`;
+
+export const NEW_INTEGRATION_TRIGGER_PAGE2 = (appKey:string | undefined) => `${NEW_INTEGRATION_TRIGGER2}/${appKey}`;
+
+export const NEW_INTEGRATION_ACTION_PAGE = (appKey:string | undefined) => `${NEW_INTEGRATION_ACTION}/${appKey}`;
+
+export const NEW_INTEGRATION_ACTION_PAGE2 = (appKey:string | undefined  ) => `${NEW_INTEGRATION_ACTION2}/${appKey}`;
+
 
 // list all integrations
 export const MY_INTEGRATIONS = '/my-integrations';

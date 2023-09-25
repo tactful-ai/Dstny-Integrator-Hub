@@ -48,7 +48,7 @@ export default (
       }
     />
     <Route
-      path={URLS.INTEGRATION_PAGE}  
+      path={URLS.CREATE_INTEGRATION_PAGE}  
       element={
         <Layout>
           <IntegrationPage />
@@ -66,7 +66,7 @@ export default (
     />
 
     <Route
-      path={URLS.TRIGGER_PAGE}  
+      path={`${URLS.NEW_INTEGRATION_TRIGGER}/:appKey`}  
       element={
         <Layout>
           <TriggerPage />
@@ -74,15 +74,15 @@ export default (
       }
     />
         <Route
-      path={URLS.TRIGGER_PAGE2}  
-      element={
+        path={`${URLS.NEW_INTEGRATION_TRIGGER2}/:appKey`}  
+        element={
         <Layout>
           <TriggerPage2 />
         </Layout>
       }
     />
         <Route
-      path={URLS.ACTION_PAGE}  
+      path={`${URLS.NEW_INTEGRATION_ACTION}/:appKey`}  
       element={
         <Layout>
           <ActionPage />
@@ -90,14 +90,14 @@ export default (
       }
     />
         <Route
-      path={URLS.ACTION_PAGE2}  
+      path={`${URLS.NEW_INTEGRATION_ACTION2}/:appKey`}  
       element={
         <Layout>
           <ActionPage2 />
         </Layout>
       }
     />
-            <Route
+    <Route
       path={URLS.INPUTACTION_PAGE}  
       element={
         <Layout>
@@ -106,7 +106,7 @@ export default (
       }
     />
    <Route
-      path={URLS.OVERVIEW_PAGE}
+      path={`${URLS.NEW_INTEGRATION_OVERVIEW}/:appKey`}
       element={
         <Layout>
           <OverviewPage />
@@ -132,9 +132,9 @@ export default (
       }
     />
 
-    <Route element={<Layout><NewIntegrationAuthType /></Layout>} path={URLS.NEW_INTEGRATION_AUTH_TYPE}/>
+    <Route element={<Layout><NewIntegrationAuthType /></Layout>} path={`${URLS.NEW_INTEGRATION_AUTH_TYPE}/:appKey`}/>
 
-    <Route element={<Layout><NewIntegrationAuthAPIKey /></Layout>} path={URLS.NEW_INTEGRATION_AUTH_API_KEY}/>
+    <Route element={<Layout><NewIntegrationAuthAPIKey /></Layout>} path={`${URLS.NEW_INTEGRATION_AUTH_API_KEY}/:appKey`}/>
 
 
 

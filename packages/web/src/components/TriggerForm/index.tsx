@@ -3,13 +3,12 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import config from 'config/app';
 import * as URLS from 'config/urls';
-import { useLocation, useNavigate } from 'react-router-dom';
+import {  useNavigate, useParams } from 'react-router-dom';
 
 function TriggerForm() {
-  const location = useLocation(); 
   const navigate = useNavigate();
+  const {appKey} = useParams();
   const [triggerData, setTriggerData] = useState({
     name: '',
     Key: '',
@@ -34,7 +33,7 @@ function TriggerForm() {
       description: triggerData.Description,
     };
     
-    navigate(URLS.TRIGGER_PAGE2, { 
+    navigate(URLS.NEW_INTEGRATION_TRIGGER_PAGE2(appKey), { 
       state:  formattedTriggerData  });
   };
 

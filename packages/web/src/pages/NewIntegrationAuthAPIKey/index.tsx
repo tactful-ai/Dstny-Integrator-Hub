@@ -6,7 +6,7 @@ import Container from "components/Container"
 import PageTitle from "components/PageTitle"
 import createIntegrationAuth from "helpers/createIntegrationAuth"
 import { useForm } from "react-hook-form"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import * as URLS from 'config/urls';
 
 
@@ -32,6 +32,7 @@ function NewIntegrationAuthAPIKey() {
     });
 
     const navigate = useNavigate();
+    const {appKey} = useParams();
 
     const { register, control, handleSubmit, watch, getValues } = form;
 
@@ -41,12 +42,10 @@ function NewIntegrationAuthAPIKey() {
             submittedHeaders[header.key] = header.value;
         });
 
-        const appKey = localStorage.getItem('appKey') as string;
-        console.log(appKey)
         const response = await createIntegrationAuth({fields:data.fields,endpoint:data.endpoint, headers:submittedHeaders, appKey});
 
         if(response)
-            navigate(URLS.TRIGGER_PAGE);
+            navigate(URLS.NEW_INTEGRATION_TRIGGER_PAGE(appKey));
         
 
     }

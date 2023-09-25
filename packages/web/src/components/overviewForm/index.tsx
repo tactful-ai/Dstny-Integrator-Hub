@@ -2,7 +2,7 @@ import React from 'react';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import * as URLS from 'config/urls';
 import Box from '@mui/material/Box';
 
@@ -38,6 +38,8 @@ function OverviewForm() {
     padding: '20px',
     alignItems: 'center', 
   };
+
+  const {appKey} = useParams();
   return (
     <div style ={{marginLeft: '-60px'}}>
       <Box sx={paperStyle }>
@@ -58,7 +60,7 @@ function OverviewForm() {
             <div style={buttonContainerStyle}>
               <Button
                 component={Link}
-                to={URLS.NEW_INTEGRATION_AUTH_TYPE}
+                to={URLS.NEW_INTEGRATION_AUTH_API_KEY_PAGE(appKey)}
                 variant="outlined"
                 color="primary"
                 size="small"
@@ -81,7 +83,7 @@ function OverviewForm() {
             <div style={buttonContainerStyle}>
               <Button
                 component={Link}
-                to={URLS.TRIGGER_PAGE}
+                to={URLS.NEW_INTEGRATION_TRIGGER_PAGE(appKey)}
                 variant="outlined"
                 color="primary"
                 size="small"
@@ -104,7 +106,7 @@ function OverviewForm() {
             <div style={buttonContainerStyle}>
               <Button
                 component={Link}
-                to={URLS.ACTION_PAGE}
+                to={URLS.NEW_INTEGRATION_ACTION_PAGE(appKey)}
                 variant="outlined"
                 color="primary"
                 size="small"

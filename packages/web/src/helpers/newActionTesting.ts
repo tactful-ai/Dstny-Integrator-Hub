@@ -14,7 +14,7 @@ type ActionData = {
     }[];
   };
 
-async function newActionTesting (ActionData: ActionData, mainKey:string )  {
+async function newActionTesting (ActionData: ActionData, mainKey:string | undefined )  {
 
   try {
     const formattedActionData = {

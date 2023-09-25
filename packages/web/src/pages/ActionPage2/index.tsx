@@ -13,7 +13,7 @@ export default function ActionPage2() {
       <Container maxWidth="sm">
         <Stack direction="column" gap={2}>
           <ActionForm2 />
-         
+          
         </Stack>
       </Container>
     </Box>

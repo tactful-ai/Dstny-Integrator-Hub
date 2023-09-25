@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { useLocation , useNavigate } from 'react-router-dom';
+import { useLocation , useNavigate, useParams } from 'react-router-dom';
 import CustomAccordion from "components/CustomAccordion"; 
 import CodeEditor from '@uiw/react-textarea-code-editor'; 
 import * as URLS from 'config/urls';
@@ -22,6 +22,7 @@ function TriggerForm2() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const location = useLocation();
+  const {appKey} = useParams();
 
   
   const providedCode = `let page = 0;\nlet response;\n\nconst headers = {
@@ -37,7 +38,6 @@ function TriggerForm2() {
   });
 
     const [isCodeModified, setIsCodeModified] = useState(false);
-    const mainKey = localStorage.getItem('appKey') || ''; 
     const [testResult, setTestResult] = useState<string | null>(null);
   
     useEffect(() => { 
@@ -71,7 +71,7 @@ function TriggerForm2() {
     };
 
     try {
-      const result = await newTriggerTesting(formattedTriggerData, mainKey);
+      const result = await newTriggerTesting(formattedTriggerData, appKey);
 
   
       if (result.success) {
@@ -107,7 +107,7 @@ function TriggerForm2() {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    navigate(URLS.ACTION_PAGE);
+    navigate(URLS.NEW_INTEGRATION_ACTION_PAGE(appKey));
   };
   // const handleAdd = async (event: React.FormEvent) => {
   //   event.preventDefault();

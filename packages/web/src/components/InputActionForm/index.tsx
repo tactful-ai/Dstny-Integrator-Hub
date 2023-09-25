@@ -3,7 +3,7 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import * as URLS from 'config/urls';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -29,6 +29,7 @@ interface State {
 function InputActionForm() {
   const navigate = useNavigate();
   const location = useLocation();
+  const {appKey} = useParams();
 
   const [combinedFormData, setCombinedFormData] = useState({
     actionFormData: {
@@ -121,7 +122,7 @@ function InputActionForm() {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    navigate(URLS.ACTION_PAGE2, {
+    navigate(URLS.NEW_INTEGRATION_ACTION_PAGE2(appKey), {
       state: combinedFormData,
     });
     console.log(combinedFormData, combinedFormData.inputActionData);

@@ -7,7 +7,7 @@ type TriggerData = {
   pollInterval: number;
 };
 
-async function newTriggerTesting(triggerData: TriggerData, mainKey: string) {
+async function newTriggerTesting(triggerData: TriggerData, mainKey: string | undefined) {
   try {
     const formattedTriggerData = {
       name: triggerData.name,

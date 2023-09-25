@@ -99,9 +99,9 @@ function IntegrationForm() {
   
     try {
       const result = await newIntegration(integrationData);
-  
+      
       if (result.success) {
-        navigate(URLS.OVERVIEW_PAGE);
+        navigate(URLS.NEW_INTEGRATION_OVERVIEW_PAGE(result.key));
       } else {
         console.error(result.message);
       }

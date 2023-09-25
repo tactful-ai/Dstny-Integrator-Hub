@@ -4,10 +4,10 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import * as URLS from 'config/urls';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function ActionForm() {
-  const location = useLocation(); 
+  const {appKey} = useParams(); 
   const navigate = useNavigate();
   const [actions, setActions] = useState(
     {
@@ -29,6 +29,7 @@ function ActionForm() {
 
   const handleSubmit = async (event : React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
 
     const formattedActionData = {
       name: actions.name,

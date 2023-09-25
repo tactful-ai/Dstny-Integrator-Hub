@@ -110,7 +110,7 @@ function MyIntegrations() {
                   color="primary"
                   size="large"
                   component={Link}
-                  to={URLS.INTEGRATION_PAGE}
+                  to={URLS.CREATE_INTEGRATION_PAGE}
                   fullWidth
                   disabled={!allowed}
                   icon={<AddIcCallOutlined />}
@@ -135,7 +135,7 @@ function MyIntegrations() {
         {!loading && !hasApps && (
           <NoResultFound
             text={'No integrations yet'}
-            to={URLS.INTEGRATION_PAGE}
+            to={URLS.CREATE_INTEGRATION_PAGE}
           />
         )}
 

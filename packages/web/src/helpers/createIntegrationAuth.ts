@@ -7,7 +7,7 @@ type AuthIntegrationData = {
     fields: field[];
     endpoint: string;
     headers: Record<string, string>;
-    appKey: string;
+    appKey: string | undefined;
 }
 
 
