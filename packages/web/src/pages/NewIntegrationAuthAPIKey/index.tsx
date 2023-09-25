@@ -10,6 +10,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import * as URLS from 'config/urls';
 
 
+
 export type header = {
     key: string;
     value: string;
@@ -23,6 +24,8 @@ export type NewIntegrationAuthAPIKeyFormValues = {
 
 function NewIntegrationAuthAPIKey() {
 
+
+
     const form = useForm<NewIntegrationAuthAPIKeyFormValues>({
         defaultValues: {
             endpoint: '',
@@ -32,21 +35,22 @@ function NewIntegrationAuthAPIKey() {
     });
 
     const navigate = useNavigate();
-    const {appKey} = useParams();
+    const { appKey } = useParams();
 
     const { register, control, handleSubmit, watch, getValues } = form;
 
+
     async function onSubmit(data: NewIntegrationAuthAPIKeyFormValues) {
-        const submittedHeaders:Record<string, string> = {};
+        const submittedHeaders: Record<string, string> = {};
         data.headers.forEach((header) => {
             submittedHeaders[header.key] = header.value;
         });
 
-        const response = await createIntegrationAuth({fields:data.fields,endpoint:data.endpoint, headers:submittedHeaders, appKey});
+        const response = await createIntegrationAuth({ fields: data.fields, endpoint: data.endpoint, headers: submittedHeaders, appKey });
 
-        if(response)
+        if (response)
             navigate(URLS.NEW_INTEGRATION_CREATE_TRIGGERS_PAGE(appKey));
-        
+
 
     }
 
@@ -79,7 +83,7 @@ function NewIntegrationAuthAPIKey() {
 
                     <AuthSecondStep control={control} getValues={getValues} register={register} watch={watch} />
 
-                    <Grid container item flexDirection="row-reverse">                    
+                    <Grid container item flexDirection="row-reverse">
                         <Button type="submit" variant="contained" >Submit</Button>
                     </Grid>
                 </form>

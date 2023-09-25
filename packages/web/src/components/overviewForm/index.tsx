@@ -1,13 +1,16 @@
-import React from 'react';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams, Location } from 'react-router-dom';
 import * as URLS from 'config/urls';
 import Box from '@mui/material/Box';
 
-function OverviewForm() {
-  const stepContainerStyle = {
+type RoutingState = {
+  overlaidLocation?: Location
+  newIntegration?: boolean
+} | null
+
+const stepContainerStyle = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -17,37 +20,47 @@ function OverviewForm() {
     paddingBottom: '20px',
     borderUp: '1px solid #ccc',
     paddingUp: '20px',
-  };
+};
 
-  const stepNumberStyle = {
-    fontSize: '24px',
-    fontWeight: 'bold',
-    marginRight: '15px',
-  };
+const stepNumberStyle = {
+  fontSize: '24px',
+  fontWeight: 'bold',
+  marginRight: '15px',
+};
 
-  const stepContentStyle = {
-    flex: '2',
-    padding: ' 20px',  
-  };
+const stepContentStyle = {
+  flex: '2',
+  padding: ' 20px',  
+};
 
-  const buttonContainerStyle = {
-    marginLeft: 'auto',
-  };
-  const paperStyle = {
-    width: '700px', 
-    padding: '20px',
-    alignItems: 'center', 
-  };
+const buttonContainerStyle = {
+  marginLeft: 'auto',
+};
+
+const paperStyle = {
+  width: '700px', 
+  padding: '20px',
+  alignItems: 'center', 
+};
+
+
+
+function OverviewForm() {
+
 
   const {appKey} = useParams();
+  const location = useLocation();
+  const locationState = location.state as RoutingState;
+
+    
   return (
     <div style ={{marginLeft: '-60px'}}>
-      <Box sx={paperStyle }>
+      <Box sx={paperStyle}>
       <Paper>
         <div style={{ maxWidth: '1300px', padding: '20px' }}>
           <Typography variant="h4" >Implementation Overview</Typography>
 
-          <div style={stepContainerStyle}>
+          {locationState?.newIntegration && (<div style={stepContainerStyle}>
             <Typography variant="subtitle1" style={stepNumberStyle}>
               1 
             </Typography>
@@ -68,7 +81,7 @@ function OverviewForm() {
                 Set up
               </Button>
             </div>
-          </div>
+          </div>)}
 
           <div style={stepContainerStyle}>
             <Typography variant="subtitle1" style={stepNumberStyle}>

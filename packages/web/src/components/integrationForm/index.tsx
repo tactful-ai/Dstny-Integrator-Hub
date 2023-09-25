@@ -99,7 +99,7 @@ function IntegrationForm() {
       const result = await newIntegration(integrationData, authorization_header);
   
       if (result.success) {
-        navigate(URLS.NEW_INTEGRATION_OVERVIEW_PAGE(result.key));
+        navigate(URLS.NEW_INTEGRATION_OVERVIEW_PAGE(result.key), {state: {newIntegration: true}});
       } else {
         console.error(result.message);
       }

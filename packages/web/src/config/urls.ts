@@ -107,14 +107,14 @@ export const WEBHOOK_DOCS =
   'https://automatisch.io/docs/apps/webhooks/connection';
 
 // New integration
-export const NEW_INTEGRATION_OVERVIEW = '/integration/new/overview';
-export const NEW_INTEGRATION_AUTH_TYPE = '/integration/new/auth-type';
-export const NEW_INTEGRATION_AUTH_API_KEY = '/integration/new/auth/api-key';
+export const NEW_INTEGRATION_OVERVIEW = '/integration/overview';
+export const NEW_INTEGRATION_AUTH_TYPE = '/integration/auth-type';
+export const NEW_INTEGRATION_AUTH_API_KEY = '/integration/auth/api-key';
 export const CREATE_INTEGRATION_PAGE = '/integration/create';
-export const NEW_INTEGRATION_CREATE_ACTIONS = `/integration/new/create-actions`;
-export const NEW_INTEGRATION_CREATE_TRIGGERS = `/integration/new/create-triggers`;
-export const NEW_INTEGRATION_LIST_TRIGGERS = `/integration/new/list-triggers`;
-export const NEW_INTEGRATION_LIST_ACTIONS = `/integration/new/list-actions`;
+export const NEW_INTEGRATION_CREATE_ACTIONS = `/integration/create-actions`;
+export const NEW_INTEGRATION_CREATE_TRIGGERS = `/integration/create-triggers`;
+export const NEW_INTEGRATION_LIST_TRIGGERS = `/integration/list-triggers`;
+export const NEW_INTEGRATION_LIST_ACTIONS = `/integration/list-actions`;
 export const CREATE_INTEGRATION_PAGE_CALLBACK = `${CREATE_INTEGRATION_PAGE}/callback`;
 
 export const NEW_INTEGRATION_OVERVIEW_PAGE = (appKey:string | undefined) => `${NEW_INTEGRATION_OVERVIEW}/${appKey}`;
