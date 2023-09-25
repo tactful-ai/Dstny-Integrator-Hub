@@ -39,15 +39,28 @@ function TriggerForm2({ triggerFormData, inputTriggerData }: TriggerForm2Props) 
 
   const [triggerType, setTriggerType] = useState('polling');
   const [testResult, setTestResult] = useState<string | null>(null);
+    // Define your provided code here
+    const providedCode = `let page = 0;\nlet response;\n\nconst headers = {
+      'X-API-KEY': $.auth.data.apiKey as string,
+    };\n\n\ndo {\n  const requestPath = \`/customers?page=\${page}&limit=10&order=DESC\`;\n  response = await $.http.get(requestPath, { headers });\n\n  response.data.items.forEach((customer: IJSONObject) => {\n    const dataItem = {\n      raw: customer,\n      meta: {\n        internalId: customer.id.toString(),\n      },\n    };\n\n    $.pushTriggerItem(dataItem);\n  });\n\n  page += 1;\n} while (response.data.length >= 10);`;
 
+    // Define your provided testRun code here
+    const providedtestRun = 'const { data: form } = await $.http.get(`/forms/${$.step.parameters.formId}`);\n\nconst { data: responses } = await $.http.get(`/forms/${$.step.parameters.formId}/responses`);\n\nconst lastResponse = responses.items[0];\n\nif (!lastResponse) {\n  return;\n}\n\nconst computedWebhookEvent = {\n  event_type: `form_response`,\n  form_response: {\n    form_id: form.id,\n    token: lastResponse.token,\n    landed_at: lastResponse.landed_at,\n    submitted_at: lastResponse.submitted_at,\n    definition: {\n      id: $.step.parameters.formId,\n      title: form.title,\n      fields: form?.fields,\n    },\n    answers: lastResponse.answers,\n  },\n};\n\nconst dataItem = {\n  raw: computedWebhookEvent,\n  meta: {\n    internalId: computedWebhookEvent.form_response.token,\n  },\n};\n\n$.pushTriggerItem(dataItem);';
+  
+    // Define your provided registerHook code here
+    const providedregisterHook = 'const subscriptionPayload = {\n  enabled: true,\n  url: $.webhookUrl,\n};\n\nawait $.http.put(`/forms/${$.step.parameters.formId}/webhooks/${$.flow.id}`, subscriptionPayload);';
+  
+    // Define your provided unregisterHook code here
+    const providedunregisterHook = 'await $.http.delete(`/forms/${$.step.parameters.formId}/webhooks/${$.flow.id}`);';
+    
   const [triggerData, setTriggerData] = useState({
     name: triggerFormData.name,
     key: triggerFormData.key,
     description: triggerFormData.description,
-    run: '',
-    testRun: '',
-    registerHook: '',
-    unregisterHook: '',
+    run: providedCode,
+    testRun: providedtestRun,
+    registerHook: providedregisterHook,
+    unregisterHook: providedunregisterHook,
   });
 
   const handleTriggerTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,23 +78,7 @@ function TriggerForm2({ triggerFormData, inputTriggerData }: TriggerForm2Props) 
       [name]: value,
     }));
   };
-    // Define your provided code here
-    const providedCode = `let page = 0;\nlet response;\n\nconst headers = {
-      'X-API-KEY': $.auth.data.apiKey as string,
-    };\n\n\ndo {\n  const requestPath = \`/customers?page=\${page}&limit=10&order=DESC\`;\n  response = await $.http.get(requestPath, { headers });\n\n  response.data.items.forEach((customer: IJSONObject) => {\n    const dataItem = {\n      raw: customer,\n      meta: {\n        internalId: customer.id.toString(),\n      },\n    };\n\n    $.pushTriggerItem(dataItem);\n  });\n\n  page += 1;\n} while (response.data.length >= 10);`;
 
-    // Define your provided testRun code here
-    const providedtestRun = 'const { data: form } = await $.http.get(`/forms/${$.step.parameters.formId}`);\n\nconst { data: responses } = await $.http.get(`/forms/${$.step.parameters.formId}/responses`);\n\nconst lastResponse = responses.items[0];\n\nif (!lastResponse) {\n  return;\n}\n\nconst computedWebhookEvent = {\n  event_type: '
-    f
-    orm_
-    response
-    ',\n  form_response: {\n    form_id: form.id,\n    token: lastResponse.token,\n    landed_at: lastResponse.landed_at,\n    submitted_at: lastResponse.submitted_at,\n    definition: {\n      id: $.step.parameters.formId,\n      title: form.title,\n      fields: form?.fields,\n    },\n    answers: lastResponse.answers,\n  },\n};\n\nconst dataItem = {\n  raw: computedWebhookEvent,\n  meta: {\n    internalId: computedWebhookEvent.form_response.token,\n  },\n};\n\n$.pushTriggerItem(dataItem);';
-  
-    // Define your provided registerHook code here
-    const providedregisterHook = 'const subscriptionPayload = {\n  enabled: true,\n  url: $.webhookUrl,\n};\n\nawait $.http.put(`/forms/${$.step.parameters.formId}/webhooks/${$.flow.id}`, subscriptionPayload);';
-  
-    // Define your provided unregisterHook code here
-    const providedunregisterHook = 'await $.http.delete(`/forms/${$.step.parameters.formId}/webhooks/${$.flow.id}`);';
   
     const handleContinue = (type: string) => {
       setIsContinuePressed(true);
@@ -119,6 +116,7 @@ function TriggerForm2({ triggerFormData, inputTriggerData }: TriggerForm2Props) 
         testRun: triggerData.testRun,
         registerHook: triggerData.registerHook,
         unregisterHook: triggerData.unregisterHook,
+        run : triggerData.run,
         args: inputTriggerData || [],
       };
       const result = await newTriggerTesting(
@@ -227,7 +225,7 @@ function TriggerForm2({ triggerFormData, inputTriggerData }: TriggerForm2Props) 
                 >
                   Continue
                 </Button>
-                \n \n
+             <br/>
                 <label htmlFor="run">Register Hook Code:</label>
                 <CodeEditor
                   name="run"
@@ -252,7 +250,7 @@ function TriggerForm2({ triggerFormData, inputTriggerData }: TriggerForm2Props) 
                 >
                   Continue
                 </Button>
-                \n \n
+                <br/>
                 <label htmlFor="run">Unregister Hook Code:</label>
                 <CodeEditor
                   name="run"
