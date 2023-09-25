@@ -42,25 +42,17 @@ function ActionForm2({ actionFormData, inputActionData }: ActionForm2Props) {
   });
 
   const providedCode= `
-  let page = 0;
-  let response;
-  
+  const requestPath = '{{your request path}}';
+
   const headers = {
-      // set your request headers
-    };
+     // set your request headers
+  };
   
+  // const response = await $.http.delete(
+  //  requestPath,
+  // );
   
-  do {
-    const requestPath = '{{your request path}}';
-    response = await $.http.get(requestPath, { headers });
-  
-    // parse your response
-  
-      $.pushTriggerItem(dataItem);
-    });
-  
-    page += 1;
-  } while (response.data.length >= 10);
+  $.setActionItem({ raw: response.data });
   ` ;
 
   const [testResult, setTestResult] = useState<string | null>(null);
