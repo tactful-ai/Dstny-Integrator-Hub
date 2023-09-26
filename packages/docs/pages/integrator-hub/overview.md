@@ -62,16 +62,29 @@ Use proper English, complete sentences, and punctuation. Do not include links or
 
 ## Api Base Url
 
+:::info
+This is the url of the API of your integration.
+:::
+
 
 ## App Base Url
 
+:::info
+This is the url of the app itself.
+:::
 
 ## support connections
 
+:::info
+To determine if the integration needs authentication or not.
+:::
 
 ## Overview Page
 
-> After creating the new integration, you will be directed to the overview page.
-> In the overview page you can configure the authentication, triggers and actions of your new integration.
+:::info
+After creating the new integration, you will be directed to the overview page.
+In the overview page you can configure the authentication, triggers and actions of your new integration.
+:::
+
 ![overview](./images/overview.png)
 
