@@ -25,13 +25,13 @@ interface ActionForm2Props {
     key: string;
     description: string;
   };
-  inputActionData?: InputActionData[]; 
+  inputActionData?: InputActionData[];
 }
 
 function ActionForm2({ actionFormData, inputActionData }: ActionForm2Props) {
   const location = useLocation();
   const navigate = useNavigate();
-  const {appKey} = useParams(); 
+  const { appKey } = useParams();
   const authorization_header = localStorage.getItem('automatisch.token') || '';
 
   const [ActionData, setActionData] = useState({
@@ -41,7 +41,7 @@ function ActionForm2({ actionFormData, inputActionData }: ActionForm2Props) {
     run: '',
   });
 
-  const providedCode= `
+  const providedCode = `
   const requestPath = '{{your request path}}';
 
   const headers = {
@@ -59,11 +59,11 @@ function ActionForm2({ actionFormData, inputActionData }: ActionForm2Props) {
 
   useEffect(() => {
     const locationState = location.state as ActionForm2Props;
-  
+
     if (locationState && locationState.actionFormData) {
       const { name, key, description } = locationState.actionFormData;
-      console.log(name,key,description);
-  
+      console.log(name, key, description);
+
       setActionData((prevData) => ({
         ...prevData,
         name: name || '',
@@ -72,7 +72,7 @@ function ActionForm2({ actionFormData, inputActionData }: ActionForm2Props) {
       }));
     }
   }, [location]);
-  
+
 
   const [isCodeModified, setIsCodeModified] = useState(false);
   let isTestSuccessful = false;
@@ -97,7 +97,7 @@ function ActionForm2({ actionFormData, inputActionData }: ActionForm2Props) {
       key: ActionData.key,
       description: ActionData.description,
       run: isContinuePressed ? ActionData.run : providedCode,
-      args: inputActionData || [], 
+      args: inputActionData || [],
     };
 
     try {
@@ -132,11 +132,11 @@ function ActionForm2({ actionFormData, inputActionData }: ActionForm2Props) {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    navigate(URLS.FLOWS);
+    navigate(URLS.NEW_INTEGRATION_OVERVIEW_PAGE(appKey));
   };
 
   return (
-    <Paper sx={{ p: 3, width: '100%' , padding:'24px' }}>
+    <Paper sx={{ p: 3, width: '100%', padding: '24px' }}>
       <form onSubmit={handleSubmit}>
         <div style={{ marginBottom: '15px' }}>
           <Typography variant="h6" sx={{ mb: 2, mt: 4 }}>
