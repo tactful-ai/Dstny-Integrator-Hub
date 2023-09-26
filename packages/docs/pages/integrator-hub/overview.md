@@ -31,14 +31,47 @@ To create you own integration you should fill the following fields and pass thro
 
 ## Name
 
-```
-    Enter the name of your integration.
-```
+:::info
+Please input your app's actual name exactly as it appears in your branding and website, preserving the same capitalization and spacing. Please refrain from including trademark or copyright symbols, as well as any extra descriptions, adjectives, or taglines.
+:::
 
 ## Key
 
-```
-    Now, this key is not useful, but it was used
-```
+:::info
+This key is used to identify the integration
+:::
 
+## Logo
+
+:::info
+Upload your app’s logo. Make sure your logo is a svg.
+Integrator-hub will use your logo full-size in the apps Directory to promote the integration, and will automatically re-size it to use inside the editor and in other parts of the app.
+:::
+
+## Description
+
+:::info
+Include a description in up to 140 characters of your app’s core features and use-case,
+for example “Trello is team collaboration tool to organize tasks on a kanban board and keep projects on track.”
+Do not include overstated language, such as that your app is most popular or best.
+Additionally, do not mention Zapier. Focus instead on why someone would use your app.
+
+Use proper English, complete sentences, and punctuation. Do not include links or formatting.
+:::
+
+
+## Api Base Url
+
+
+## App Base Url
+
+
+## support connections
+
+
+## Overview Page
+
+> After creating the new integration, you will be directed to the overview page.
+> In the overview page you can configure the authentication, triggers and actions of your new integration.
+![overview](./images/overview.png)
 
