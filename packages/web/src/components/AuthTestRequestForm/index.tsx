@@ -54,7 +54,7 @@ function AuthTestRequesForm({ control, register, errors }: AuthStepsProps) {
                 </Grid>
             </div>
 
-            <Button variant="contained" type="submit">Save & Continue</Button>
+            <Button variant="contained" type="button">Save & Continue</Button>
         </>
     )
 }

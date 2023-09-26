@@ -1,5 +1,5 @@
 import { field } from "@automatisch/types"
-import { Box, Button, Divider, FormHelperText, Grid } from "@mui/material"
+import { Box, Button, CircularProgress, Divider, FormHelperText, Grid } from "@mui/material"
 import AuthFirstStep from "components/AuthFirstStep"
 import AuthSecondStep from "components/AuthSecondStep"
 import Container from "components/Container"
@@ -8,6 +8,8 @@ import createIntegrationAuth from "helpers/createIntegrationAuth"
 import { useForm } from "react-hook-form"
 import { useNavigate, useParams } from "react-router-dom"
 import * as URLS from 'config/urls';
+import { LoadingButton } from "@mui/lab"
+import { useState } from "react"
 
 
 
@@ -24,8 +26,6 @@ export type NewIntegrationAuthAPIKeyFormValues = {
 
 function NewIntegrationAuthAPIKey() {
 
-
-
     const form = useForm<NewIntegrationAuthAPIKeyFormValues>({
         defaultValues: {
             endpoint: '',
@@ -35,6 +35,7 @@ function NewIntegrationAuthAPIKey() {
     });
 
     const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
     const { appKey } = useParams();
 
     const { register, control, handleSubmit, watch, getValues, formState } = form;
@@ -46,11 +47,13 @@ function NewIntegrationAuthAPIKey() {
             submittedHeaders[header.key] = header.value;
         });
 
+        setIsLoading(true);
         const response = await createIntegrationAuth({ fields: data.fields, endpoint: data.endpoint, headers: submittedHeaders, appKey });
 
-        if (response)
+        if (response) {
+            setIsLoading(false);
             navigate(URLS.NEW_INTEGRATION_CREATE_TRIGGERS_PAGE(appKey));
-
+        }
 
     }
 
@@ -84,7 +87,14 @@ function NewIntegrationAuthAPIKey() {
                     <AuthSecondStep control={control} getValues={getValues} register={register} watch={watch} errors={errors} />
 
                     <Grid container item flexDirection="row-reverse">
-                        <Button type="submit" variant="contained" >Submit</Button>
+                        <LoadingButton
+                            type="submit"
+                            variant="contained"
+                            loading={isLoading}
+                            loadingIndicator={<CircularProgress size={24} />}
+                        >
+                            Submit
+                        </LoadingButton>
                     </Grid>
                 </form>
             </Container>
