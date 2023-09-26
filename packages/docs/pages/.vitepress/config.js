@@ -448,8 +448,7 @@ export default defineConfig({
           collapsible: true,
           items: [
             {text: 'What is the Integrator Hub?', link: '/integrator-hub/introduction'},
-            {text: 'How to use the Integrator Hub?', link: '/integrator-hub/how-to-use-the-integrator-hub'},
-            {text: 'How to create an integration?', link: '/integrator-hub/how-to-create-an-integration'},
+            {text: 'Overview Page', link: '/integrator-hub/overview'},
             {text: 'Authentication', link: '/integrator-hub/authentication'},
             {text: 'Triggers', link: '/integrator-hub/triggers'},
             {text: 'Actions', link: '/integrator-hub/actions'},

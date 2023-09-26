@@ -6,7 +6,7 @@ The build integrations section is best understood when read from beginning to en
 
 1. [Overview page](/integrator-hub/overview)
 2. [Auth](/integrator-hub/authentication)
-3. [Triggers](/build-integrations/triggers)
-4. [Actions](/build-integrations/actions)
+3. [Triggers](/integrator-hub/triggers)
+4. [Actions](/integrator-hub/actions)
 
 :::
