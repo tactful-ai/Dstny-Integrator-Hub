@@ -1,5 +1,5 @@
 import { field } from "@automatisch/types"
-import { Box, Button, CircularProgress, Divider, FormHelperText, Grid } from "@mui/material"
+import { Box,  CircularProgress, Divider, FormHelperText, Grid } from "@mui/material"
 import AuthFirstStep from "components/AuthFirstStep"
 import AuthSecondStep from "components/AuthSecondStep"
 import Container from "components/Container"
