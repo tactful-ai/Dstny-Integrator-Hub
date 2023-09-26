@@ -17,7 +17,7 @@ function IntegrationForm() {
   const authorization_header = localStorage.getItem('automatisch.token') || '';
   const [integrationData, setIntegrationData] = useState({
     name: '',
-    Key: 'unusedKey',
+    Key: '',
     logo: null as File | null, 
     BaseUrl: '',
     apiBaseUrl: '',
@@ -126,7 +126,7 @@ function IntegrationForm() {
             size ="small"
           />
         </div>
-        {/* <div style={{ marginBottom: '15px' }}>
+        <div style={{ marginBottom: '15px' }}>
           <label htmlFor="Key">Key:</label>
           <TextField
             name="Key"
@@ -138,7 +138,7 @@ function IntegrationForm() {
             margin="dense"
             size ="small"
           />
-        </div> */}
+        </div>
         <div style={{ marginBottom: '15px' }}>
           <label htmlFor="logo">Logo (has to be a SVG file):</label>
           <div style={{ marginTop: '8px' , marginBottom: '8px'}}>
