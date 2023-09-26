@@ -5,7 +5,7 @@ import { useFieldArray } from "react-hook-form";
 
 
 
-function AuthTestRequesForm({control, register}: AuthStepsProps) {
+function AuthTestRequesForm({ control, register, errors }: AuthStepsProps) {
 
     const { fields, append, remove } = useFieldArray({ name: 'headers', control });
 
@@ -13,13 +13,16 @@ function AuthTestRequesForm({control, register}: AuthStepsProps) {
         <>
             <div className='wrapping-box'>
                 <Grid rowGap={2} container direction="column">
-                    <Grid item container direction="row" columnGap={0.5} rowGap={2}>
-                        <Grid xs={1}>
-                            <TextField disabled name="method" type="text" value="GET" />
+                    <Grid item container>
+                        <Grid item container direction="row" columnGap={0.5} rowGap={2}>
+                            <Grid xs={1}>
+                                <TextField disabled name="method" type="text" value="GET" />
+                            </Grid>
+                            <Grid flexGrow={1}>
+                                <TextField fullWidth type="text" label="endpoint" placeholder="ex:https://www.example.com" {...register('endpoint', { required: 'endpoint is required' })} />
+                            </Grid>
                         </Grid>
-                        <Grid flexGrow={1}>
-                            <TextField fullWidth type="text" label="endpoint" placeholder="ex:https://www.example.com" {...register('endpoint', { required: 'endpoint is required' })} />
-                        </Grid>
+                        {errors['endpoint'] && <p className="error-message"> {errors['endpoint'].message}</p>}
                     </Grid>
                     <Grid> <Typography variant="h5">Headers</Typography> </Grid>
 
@@ -27,10 +30,16 @@ function AuthTestRequesForm({control, register}: AuthStepsProps) {
                         <Grid key={header.id} item container direction="row" gap={1}>
                             <Grid flexGrow={1}>
                                 <TextField fullWidth type="text" label="Key" {...register(`headers.${index}.key` as const, { required: 'Header key is required' })} />
+
+                                {errors.headers && errors.headers[index] &&
+                                    <p className='error-message'>{errors.headers[index].key.message}</p>}
                             </Grid>
 
                             <Grid flexGrow={1}>
                                 <TextField fullWidth label="Value" type="text"  {...register(`headers.${index}.value` as const, { required: 'Header value is required' })} />
+
+                                {errors.headers && errors.headers[index] &&
+                                    <p className='error-message'>{errors.headers[index].value.message}</p>}
                             </Grid>
 
                             <Grid xs={0.75}>

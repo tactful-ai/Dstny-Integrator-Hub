@@ -7,29 +7,30 @@ import type { AuthAPIKeyFormValues, AuthStepsProps } from '@automatisch/types'
 import { useFieldArray } from 'react-hook-form'
 
 
-function AuthFirstStep({register,  watch, control, getValues}:AuthStepsProps) {
+function AuthFirstStep({ register, watch, control, getValues, errors }: AuthStepsProps) {
 
-    const {fields, remove, append} = useFieldArray<AuthAPIKeyFormValues>({name: 'fields', control});
+    const { remove, append } = useFieldArray<AuthAPIKeyFormValues>({ name: 'fields', control });
 
 
     const [open, setOpen] = useState(false);
 
+
     const handleClickOpen = () => {
         setOpen(true);
-        append({key: null, label: null, type: "string", description: "", readOnly: false, required: false, clickToCopy: false});
+        append({ key: null, label: null, type: "string", description: "", readOnly: false, required: false, clickToCopy: false });
     };
 
     const handleClose = () => {
         setOpen(false);
     };
 
-    function removeField(index:number) {
+    function removeField(index: number) {
         remove(index);
     }
 
     return (
         <>
-            <AuthNewField formUtilities={{register, watch, control, getValues}} handleClose={handleClose} removeField={removeField} openModal={open}  />
+            <AuthNewField formUtilities={{ register, watch, control, getValues, errors }} handleClose={handleClose} removeField={removeField} openModal={open} />
             <CustomAccordion tag={<div className='tag-number'>Step 1</div>} heading="Configure your fields">
                 <div className='wrapping-box'>
                     <Typography sx={{ fontSize: '1rem', display: 'inline-block' }} >Authentication Fields <Typography sx={{ fontSize: '10px', color: 'red', fontWeight: '600', display: 'inline-block' }}>{'(required)'}</Typography></Typography>

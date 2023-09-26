@@ -43,3 +43,9 @@
     font-size: 14px;
     font-weight: 500;
 }
+
+.error-message {
+  color: #ff0000; /* Red text color for errors */
+  font-size: 14px; /* Adjust the font size as needed */
+  margin-top: 5px; /* Add spacing between the input and error message */
+}

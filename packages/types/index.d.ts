@@ -502,10 +502,11 @@ export type AuthStepsProps = {
     control: Control<NewIntegrationAuthAPIKeyFormValues, any>;
     watch?: UseFormWatch<NewIntegrationAuthAPIKeyFormValues>;
     getValues?:UseFormGetValues<NewIntegrationAuthAPIKeyFormValues>;
+    errors: FieldErrors<NewIntegrationAuthAPIKeyFormValues>
 }
 
 export type AuthNewFormProps = {
-    formUtilities:AuthFirstStepProps;
+    formUtilities:AuthStepsProps;
     removeField: (index:number) => void;
     handleClose: () => void;
 
@@ -515,7 +516,7 @@ export type NewAuthFieldProps = {
     openModal: boolean;
     removeField: (index:number) => void;
     handleClose: () => void;
-    formUtilities:AuthFirstStepProps;
+    formUtilities:AuthStepsProps;
 
 }
 
@@ -532,7 +533,7 @@ export type field = {
 
 
 export type AuthNewFormProps = {
-    fieldsState:AuthFirstStepProps;
+    fieldsState:AuthStepsProps;
     handleClose:() => void;
 }
 

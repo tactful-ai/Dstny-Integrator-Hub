@@ -37,8 +37,8 @@ function NewIntegrationAuthAPIKey() {
     const navigate = useNavigate();
     const { appKey } = useParams();
 
-    const { register, control, handleSubmit, watch, getValues } = form;
-
+    const { register, control, handleSubmit, watch, getValues, formState } = form;
+    const { errors } = formState;
 
     async function onSubmit(data: NewIntegrationAuthAPIKeyFormValues) {
         const submittedHeaders: Record<string, string> = {};
@@ -79,9 +79,9 @@ function NewIntegrationAuthAPIKey() {
                         </FormHelperText>
                     </div>
 
-                    <AuthFirstStep watch={watch} getValues={getValues} control={control} register={register} />
+                    <AuthFirstStep watch={watch} getValues={getValues} control={control} register={register} errors={errors} />
 
-                    <AuthSecondStep control={control} getValues={getValues} register={register} watch={watch} />
+                    <AuthSecondStep control={control} getValues={getValues} register={register} watch={watch} errors={errors} />
 
                     <Grid container item flexDirection="row-reverse">
                         <Button type="submit" variant="contained" >Submit</Button>
