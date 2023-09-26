@@ -3,26 +3,26 @@ import { IJSONObject } from '@automatisch/types';
 import defineTrigger from '../../../../helpers/define-trigger';
 
 export default defineTrigger({
-  name: 'd',
-  key: 'd',
+  name: 'webhook',
+  key: 'webhook_testing',
   type: 'webhook',
-  description: 'd',
+  description: 'webhook trigger testing',
   arguments: 
 [
   {
-    "label": "f",
-    "key": "f",
+    "label": "q",
+    "key": "q",
     "type": "dropdown",
     "required": true,
-    "description": "f",
-    "variables": true
+    "description": "q",
+    "variables": false
   },
   {
-    "label": "g",
-    "key": "g",
-    "type": "string",
-    "required": false,
-    "description": "g",
+    "label": "d",
+    "key": "d",
+    "type": "dropdown",
+    "required": true,
+    "description": "d",
     "variables": false
   }
 ],
