@@ -1,4 +1,3 @@
-import * as URLS from 'config/urls';
 import config from 'config/app';
 
 interface IntegrationData {
@@ -10,7 +9,7 @@ interface IntegrationData {
     logo?: File | null;
   }
   
-  async function newIntegration(integrationData: IntegrationData) {
+  async function newIntegration(integrationData: IntegrationData, authorization_header: string) {
     try {
       const formData = new FormData();
 
@@ -24,25 +23,18 @@ interface IntegrationData {
         formData.append('logo', integrationData.logo);
       }
   
-      const headers = new Headers();
-  
       const response = await fetch(`${config.apiUrl}/integrations/create`, {
         method: 'POST',
-        headers: headers,
+        headers: {
+          'Authorization' : `Bearer ${authorization_header}`,
+        },
         body: formData as unknown as BodyInit,
       });
   
       if (response.ok) {
         console.log('Integration data sent successfully!');
-        const mainKey = integrationData.Key;
-  
-        if (mainKey !== null && mainKey !== undefined) {
-          localStorage.setItem('appKey', mainKey);
-          return { success: true, message: 'Successful' };
-        } else {
-          console.error('mainKey is null or undefined');
-          return { success: false, message: 'mainKey is null or undefined' };
-        }
+        const data = await response.json();
+        return { success: true, message: 'Successful', key: data.key};
       } else {
         console.error('Failed to send integration data to the backend.');
         return { success: false, message: 'Failed to send integration data to the backend' };

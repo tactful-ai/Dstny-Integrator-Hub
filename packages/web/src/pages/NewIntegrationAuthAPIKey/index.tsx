@@ -6,8 +6,9 @@ import Container from "components/Container"
 import PageTitle from "components/PageTitle"
 import createIntegrationAuth from "helpers/createIntegrationAuth"
 import { useForm } from "react-hook-form"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import * as URLS from 'config/urls';
+
 
 
 export type header = {
@@ -23,6 +24,8 @@ export type NewIntegrationAuthAPIKeyFormValues = {
 
 function NewIntegrationAuthAPIKey() {
 
+
+
     const form = useForm<NewIntegrationAuthAPIKeyFormValues>({
         defaultValues: {
             endpoint: '',
@@ -32,22 +35,22 @@ function NewIntegrationAuthAPIKey() {
     });
 
     const navigate = useNavigate();
+    const { appKey } = useParams();
 
     const { register, control, handleSubmit, watch, getValues } = form;
 
+
     async function onSubmit(data: NewIntegrationAuthAPIKeyFormValues) {
-        const submittedHeaders:Record<string, string> = {};
+        const submittedHeaders: Record<string, string> = {};
         data.headers.forEach((header) => {
             submittedHeaders[header.key] = header.value;
         });
 
-        const appKey = localStorage.getItem('appKey') as string;
-        console.log(appKey)
-        const response = await createIntegrationAuth({fields:data.fields,endpoint:data.endpoint, headers:submittedHeaders, appKey});
+        const response = await createIntegrationAuth({ fields: data.fields, endpoint: data.endpoint, headers: submittedHeaders, appKey });
 
-        if(response)
-            navigate(URLS.TRIGGER_PAGE);
-        
+        if (response)
+            navigate(URLS.NEW_INTEGRATION_CREATE_TRIGGERS_PAGE(appKey));
+
 
     }
 
@@ -80,7 +83,7 @@ function NewIntegrationAuthAPIKey() {
 
                     <AuthSecondStep control={control} getValues={getValues} register={register} watch={watch} />
 
-                    <Grid container item flexDirection="row-reverse">                    
+                    <Grid container item flexDirection="row-reverse">
                         <Button type="submit" variant="contained" >Submit</Button>
                     </Grid>
                 </form>

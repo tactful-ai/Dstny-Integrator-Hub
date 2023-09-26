@@ -6,6 +6,7 @@ export const GET_INTEGRATIONS = gql`
       id
       key
       name
+      iconUrl
     }
   }
 
