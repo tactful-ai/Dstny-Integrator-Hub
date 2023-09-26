@@ -132,7 +132,7 @@ function ActionForm2({ actionFormData, inputActionData }: ActionForm2Props) {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    navigate(URLS.FLOWS);
+    navigate(URLS.NEW_INTEGRATION_OVERVIEW_PAGE(appKey));
   };
 
   return (
