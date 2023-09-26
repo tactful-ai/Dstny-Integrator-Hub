@@ -52,7 +52,7 @@ function NewIntegrationAuthAPIKey() {
 
         if (response) {
             setIsLoading(false);
-            navigate(URLS.NEW_INTEGRATION_CREATE_TRIGGERS_PAGE(appKey));
+            navigate(URLS.NEW_INTEGRATION_OVERVIEW_PAGE(appKey));
         }
 
     }
