@@ -10,3 +10,35 @@ The build integrations section is best understood when read from beginning to en
 4. [Actions](/integrator-hub/actions)
 
 :::
+
+:::info
+
+Below, is the integrations page. To create an integration, click on Add integration button
+and you will start building you own integration.
+
+
+
+![List integrations](./images/integrations_page.png)
+
+:::
+
+:::info
+To create you own integration you should fill the following fields and pass through the rest steps.
+
+![Create integration](./images/create_integration.png)
+:::
+
+
+## Name
+
+```
+    Enter the name of your integration.
+```
+
+## Key
+
+```
+    Now, this key is not useful, but it was used
+```
+
+
