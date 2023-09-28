@@ -455,6 +455,24 @@ export default defineConfig({
           ]
         },
         {
+          text: 'Technology Stack',
+          collapsible: true,
+          items: [
+            { text: 'API', link: '/technical/api' },
+            { text: 'Database', link: '/technical/database-schema' },
+            { text: 'Code Generator', link: '/technical/code-generator' },
+            { text: 'Authentication', link: '/technical/authentication' },
+            { text: 'Authorization', link: '/technical/authorization' },
+          ]
+        },
+        {
+          text: 'What Next?',
+          collapsible: true,
+          items: [
+            { text: 'Roadmap', link: '/what-next/roadmap' },
+          ],
+        },
+        {
           text: 'Other',
           collapsible: true,
           items: [

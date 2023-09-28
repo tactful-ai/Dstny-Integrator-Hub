@@ -40,6 +40,42 @@ you can set any request headers required for the authentication, for example for
 Access the authentication fields in the integration code using our context object, `$.auth.data.fieldName`. For example, if you created an authentication field called `api_Key`, you can access it in the integration code using `$.auth.data.api_Key`.
 
 
+## $.auth.data
+
+```typescript
+$.auth.data; // { key: 'value' }
+```
+
+It's used to retrieve the authentication data that we set with fields in the authentication step. The data will be retrieved from the database. We use the data property with the key name when we need to get one specific value from the data object.
+
+## $.http
+
+It's an HTTP client to be used for making HTTP requests. It's a wrapper around the [axios](https://axios-http.com) library. We use this property when we need to make HTTP requests to the third-party service. The `apiBaseUrl` field we set up in the app will be used as the base URL for the HTTP requests. For example, to search the cat images, we can use the following code:
+
+for example: 
+
+```typescript
+await $.http.get('/customers', {
+  headers: {
+    'x-api-key': $.auth.data.apiKey,
+  },
+});
+```
+
+Based on your system you can use `$.http.get`, `$.http.post`, `$.http.put`, `$.http.delete` to make the corresponding HTTP request. Then you can parse your response and return the result.
+
+for example: 
+
+```typescript
+response.data.items.forEach((customer :IJSONObject) => {
+    const dataItem = {
+      raw: customer,
+      meta: {
+        internalId: customer.id.toString(),
+      },
+    };
+```
+
 
 ### Adding A Connection
 

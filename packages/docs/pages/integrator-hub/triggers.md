@@ -24,7 +24,7 @@ $.auth.data; // { key: 'value' }
 
 It's used to retrieve the authentication data that we set with fields in the authentication step. The data will be retrieved from the database. We use the data property with the key name when we need to get one specific value from the data object.
 
-### $.http
+## $.http
 
 It's an HTTP client to be used for making HTTP requests. It's a wrapper around the [axios](https://axios-http.com) library. We use this property when we need to make HTTP requests to the third-party service. The `apiBaseUrl` field we set up in the app will be used as the base URL for the HTTP requests. For example, to search the cat images, we can use the following code:
 
@@ -53,7 +53,7 @@ response.data.items.forEach((customer :IJSONObject) => {
 ```
 
 
-### $.pushTriggerItem
+## $.pushTriggerItem
 
 ```typescript
 $.pushTriggerItem({
