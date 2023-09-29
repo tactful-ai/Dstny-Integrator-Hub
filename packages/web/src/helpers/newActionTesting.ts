@@ -1,4 +1,3 @@
-import * as URLS from 'config/urls';
 import config from 'config/app';
 type ActionData = {
     name: string;
@@ -15,7 +14,7 @@ type ActionData = {
     }[];
   };
 
-async function newActionTesting (ActionData: ActionData, mainKey:string )  {
+async function newActionTesting (ActionData: ActionData, mainKey:string | undefined, authorization_header: string )  {
 
   try {
     const formattedActionData = {
@@ -25,11 +24,12 @@ async function newActionTesting (ActionData: ActionData, mainKey:string )  {
       run: ActionData.run ,
       args: ActionData.args,
     };
-    console.log(formattedActionData);
+
     const response = await fetch(`${config.apiUrl}/integrations/actions/${mainKey}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization' : `Bearer ${authorization_header}`,
         },
         body: JSON.stringify(formattedActionData),
     });

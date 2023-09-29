@@ -311,8 +311,14 @@ export interface IRawAction extends IBaseAction {
   arguments?: IField[];
 }
 
-export interface IAction extends IBaseAction {
+export interface IAction extends IBaseAction, IRawAction {
   substeps?: ISubstep[];
+}
+
+export interface IBaseDynamicData {
+  name: string;
+  key: string;
+  run?($: IGlobalVariable): Promise<void>;
 }
 
 export interface IAuthentication {
@@ -520,7 +526,7 @@ export type field = {
   description?:string | null;
   readOnly:boolean;
   required: boolean;
-  canCopy: boolean;
+  clickToCopy: boolean;
 }
 
 

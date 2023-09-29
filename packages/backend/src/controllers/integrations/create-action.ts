@@ -34,17 +34,20 @@ async function generateMainIndexFile(appKey: string) {
       withFileTypes: true,
     });
 
-    const validActionDirectories = actionDirectories
+    const importStatements = actionDirectories
       .filter((dir) => dir.isDirectory())
-      .map((dir) => dir.name);
-
-    const importStatements = validActionDirectories
-      .map((dir) => `import ${dir} from './${dir}';`)
+      .map((dir) => {
+        const camelCaseName = dir.name.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
+        return `import ${camelCaseName} from './${dir.name}';`;
+      })
       .join('\n');
 
-    const exportStatement = `export default [${validActionDirectories.join(
-      ', '
-    )}];`;
+    const exportStatement = `export default [${actionDirectories
+      .filter((dir) => dir.isDirectory())
+      .map((dir) => {
+        return dir.name.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
+      })
+      .join(', ')}];`;
 
     return `${importStatements}\n\n${exportStatement}`;
   } catch (error) {
@@ -82,7 +85,7 @@ export default async (request: IRequest, res: Response) => {
       'utf-8'
     );
 
-    await addAppDirectory(request.body.key);
+    await addAppDirectory(appKey);
 
     res.sendStatus(200);
   } catch (error) {

@@ -69,7 +69,7 @@ function AuthNewForm({  handleClose, removeField,  formUtilities }: AuthNewFormP
 
                         <FormControlLabel
                             sx={{ my: '0.5rem' }}
-                            control={<Checkbox {...formUtilities.register(`fields.${lastIndex}.canCopy`)} />}
+                            control={<Checkbox {...formUtilities.register(`fields.${lastIndex}.clickToCopy`)} />}
                             label="Allow to copy"
                         />
 

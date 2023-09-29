@@ -1,51 +1,64 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import config from 'config/app';
-import * as URLS from 'config/urls';
-import { useLocation, useNavigate } from 'react-router-dom';
 
-function TriggerForm() {
-  const location = useLocation(); 
-  const navigate = useNavigate();
-  const [triggerData, setTriggerData] = useState({
-    name: '',
-    Key: '',
-    Description: '',
-  });
+interface TriggerData {
+  name: string;
+  key: string;
+  description: string;
+}
+
+interface TriggerFormProps {
+  onNext: (data: TriggerData) => void;
+    initialData?: TriggerData;
+}
+
+function TriggerForm({ onNext, initialData }: TriggerFormProps){
+
+
+  const [triggers, setTriggers] = useState<TriggerData>(
+    initialData || {
+      name: '',
+      key: '',
+      description: '',
+    }
+  );
+
+  useEffect(() => {
+    if (initialData) {
+      setTriggers(initialData);
+    }
+  }, [initialData]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
 
-    setTriggerData((prevData) => ({
+    setTriggers((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   };
 
-  const handleSubmit = async (event: React.FormEvent) => {
+
+  const handleSubmit = async (event : React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const formattedTriggerData = {
-      name: triggerData.name,
-      key: triggerData.Key,
-      description: triggerData.Description,
+      name: triggers.name,
+      key: triggers.key,
+      description: triggers.description,
     };
-    
-    navigate(URLS.TRIGGER_PAGE2, { 
-      state:  formattedTriggerData  });
+    onNext(formattedTriggerData);
   };
 
-  const paperStyle = {
-    width: '500px',
-    padding: '20px',
-  };
 
-  return (
-    <Paper sx={paperStyle}>
-      <Typography variant="h6" sx={{ mb: 2 }}>Triggers</Typography>
+ return (
+    <Paper sx={{ p: 3 }}>
+      <Typography variant="h6" sx={{ mb: 2 }}>
+        Triggers
+      </Typography>
       <form onSubmit={handleSubmit}>
         <div style={{ marginBottom: '15px' }}>
           <label htmlFor="name">Name:</label>
@@ -53,39 +66,38 @@ function TriggerForm() {
             name="name"
             fullWidth
             required
-            value={triggerData.name}
+            value={triggers.name}
             onChange={handleInputChange}
             margin="dense"
-            size ="small"
+            size="small"
           />
         </div>
         <div style={{ marginBottom: '15px' }}>
-          <label htmlFor="Key">Key:</label>
+          <label htmlFor="key">Key:</label>
           <TextField
-            name="Key"
+            name="key"
             fullWidth
-            multiline
             required
-            value={triggerData.Key}
+            value={triggers.key}
             onChange={handleInputChange}
             margin="dense"
-            size ="small"
+            size="small"
+            disabled={initialData?.key !== ''} 
           />
         </div>
         <div style={{ marginBottom: '15px' }}>
-          <label htmlFor="Key">Description:</label>
+          <label htmlFor="description">Description:</label>
           <TextField
-            name="Description"
+            name="description"
             fullWidth
-            multiline
             required
-            value={triggerData.Description}
+            value={triggers.description}
             onChange={handleInputChange}
             margin="dense"
-            size ="small"
+            size="small"
           />
         </div>
-        <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }} >
+        <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }}>
           Continue
         </Button>
       </form>

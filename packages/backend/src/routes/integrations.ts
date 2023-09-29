@@ -6,8 +6,9 @@ import appConfig from '../config/app';
 import createApp from '../controllers/integrations/create-app';
 import createAuth from '../controllers/integrations/create-auth';
 import uniqueApp from '../controllers/integrations/unique-app';
-import createTrigger from '../controllers/integrations/create-polling-trigger';
+import createTrigger from '../controllers/integrations/create-trigger';
 import createAction from '../controllers/integrations/create-action';
+// import createWebhookTrigger from '../controllers/integrations/create-webhook-trigger'
 const router = Router();
 
 router.use(
@@ -247,6 +248,71 @@ router.post('/auth/apikey/:appkey', createAuth);
  *
  */
 router.post('/trigger/polling/:appkey', createTrigger);
+
+/**
+ * @openapi
+ * info:
+ *   title: Create Webhook Trigger API
+ *   version: 1.0.0
+ *   description: Endpoint to create a webhook trigger for an app.
+ * paths:
+ *   /integrations/trigger/webhook/{appkey}:
+ *     post:
+ *       summary: Create a webhook trigger for an app
+ *       description: Create a webhook trigger for an app using the provided configuration.
+ *       parameters:
+ *         - in: path
+ *           name: appkey
+ *           schema:
+ *             type: string
+ *           required: true
+ *           description: The key of the app for which the webhook trigger is created.
+ *       requestBody:
+ *         required: true
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 name:
+ *                   type: string
+ *                   description: The name of the webhook trigger. (Required)
+ *                 key:
+ *                   type: string
+ *                   description: The key of the webhook trigger. (Required)
+ *                 description:
+ *                   type: string
+ *                   description: Description of the webhook trigger. (Optional)
+ *                 testRun:
+ *                   type: string
+ *                   description: JavaScript code defining the test run logic. (Required)
+ *                 registerHook:
+ *                   type: string
+ *                   description: JavaScript code defining the register hook logic. (Required)
+ *                 unregisterHook:
+ *                   type: string
+ *                   description: JavaScript code defining the unregister hook logic. (Required)
+ *
+ *       responses:
+ *         '200':
+ *           description: Webhook trigger created successfully.
+ *         '400':
+ *           description: Bad request. Invalid input data.
+ *         '500':
+ *           description: Internal server error.
+ *
+ * components:
+ *   schemas:
+ *     ErrorResponse:
+ *       type: object
+ *       properties:
+ *         message:
+ *           type: string
+ *         code:
+ *           type: integer
+ *
+ */
+router.post('/trigger/webhook/:appkey', createTrigger);
 
 /**
  * @openapi

@@ -113,6 +113,22 @@ type Trigger {
   pollInterval: Int
   type: String
   substeps: [Substep]
+  arguments : [Arguments]
+}
+
+type Arguments {
+  key: String
+  label: String
+  type: String
+  required: Boolean
+  readOnly: Boolean
+  value: String
+  placeholder: String
+  description: String
+  docUrl: String
+  clickToCopy: Boolean
+  options: [SubstepArgumentOption]
+  variables: Boolean
 }
 
 type Action {
@@ -120,6 +136,7 @@ type Action {
   key: String
   description: String
   substeps: [Substep]
+  arguments: [Arguments]
 }
 
 type Substep {
@@ -188,6 +205,11 @@ type AppConfig {
   supportsConnections: Boolean
 }
 
+type DynamicData {
+  name: String
+  key: String
+}
+
 type App {
   name: String
   key: String
@@ -202,6 +224,7 @@ type App {
   triggers: [Trigger]
   actions: [Action]
   connections: [Connection]
+  dynamicData: [DynamicData]
 }
 
 type AppAuth {

@@ -15,32 +15,33 @@ export default async (request: Request, response: Response) => {
     `Handling incoming app creation request at ${request.originalUrl}.`
   );
   
+  const appC = await saveAppToDatabase(request.body as AppConfig);
+
+  const appk = appC.id;
+  // console.log(appk)
+
+  request.body.key = appk;
+  // console.log(request.body.key)
+  // console.log(request.body)
   generateAppConfigFile(request.body as IApp);
-  await handleLogo(request, `./src/apps/${request.body.key}/assets`)
+  await handleLogo(request, `./src/apps/${appk}/assets`)
 
-  await addAppDirectory(request.body.key);
-  App.updateApps(request.body.key);
+  await addAppDirectory(appk);
+  App.updateApps(appk);
 
-  await saveAppToDatabase(request.body as AppConfig);
 
   response.status(200).send({
     success: true,
     message: 'App created successfully.',
+    key: appk
   });
 };
 
 async function saveAppToDatabase(input: AppConfig): Promise<AppConfig> {
-  const key = input.key;
-
-  const app = await App.findOneByKey(key);
-
-  if (!app) throw new Error('The app cannot be found!');
-
-
   if (typeof input.supportsConnections === 'string'){
     input.supportsConnections = input.supportsConnections === 'true';
   }
-  console.log(input)
+  // console.log(input)
   const appConfig = await AppConfig.query().insert(input);
 
   return appConfig;

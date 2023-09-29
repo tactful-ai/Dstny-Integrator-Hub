@@ -1,13 +1,16 @@
 import { field } from "@automatisch/types"
-import { Box, Button, Divider, FormHelperText, Grid } from "@mui/material"
+import { Box,  CircularProgress, Divider, FormHelperText, Grid } from "@mui/material"
 import AuthFirstStep from "components/AuthFirstStep"
 import AuthSecondStep from "components/AuthSecondStep"
 import Container from "components/Container"
 import PageTitle from "components/PageTitle"
 import createIntegrationAuth from "helpers/createIntegrationAuth"
 import { useForm } from "react-hook-form"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import * as URLS from 'config/urls';
+import { useState } from "react"
+import { LoadingButton } from "@mui/lab"
+
 
 
 export type header = {
@@ -23,6 +26,8 @@ export type NewIntegrationAuthAPIKeyFormValues = {
 
 function NewIntegrationAuthAPIKey() {
 
+
+
     const form = useForm<NewIntegrationAuthAPIKeyFormValues>({
         defaultValues: {
             endpoint: '',
@@ -32,23 +37,27 @@ function NewIntegrationAuthAPIKey() {
     });
 
     const navigate = useNavigate();
+    const { appKey } = useParams();
+    const [loading, setLoading] = useState(false);
 
     const { register, control, handleSubmit, watch, getValues } = form;
 
+
     async function onSubmit(data: NewIntegrationAuthAPIKeyFormValues) {
-        const submittedHeaders:Record<string, string> = {};
+        const submittedHeaders: Record<string, string> = {};
         data.headers.forEach((header) => {
             submittedHeaders[header.key] = header.value;
         });
 
-        const appKey = localStorage.getItem('appKey') as string;
-        console.log(appKey)
-        const response = await createIntegrationAuth({fields:data.fields,endpoint:data.endpoint, headers:submittedHeaders, appKey});
+        setLoading(true);
+        const response = await createIntegrationAuth({ fields: data.fields, endpoint: data.endpoint, headers: submittedHeaders, appKey });
 
-        if(response)
-            navigate(URLS.TRIGGER_PAGE);
-        
+        if (response) {
+            setLoading(false);
+            navigate(URLS.NEW_INTEGRATION_OVERVIEW_PAGE(appKey));
+        }
 
+        setLoading(false);
     }
 
     return (
@@ -80,8 +89,13 @@ function NewIntegrationAuthAPIKey() {
 
                     <AuthSecondStep control={control} getValues={getValues} register={register} watch={watch} />
 
-                    <Grid container item flexDirection="row-reverse">                    
-                        <Button type="submit" variant="contained" >Submit</Button>
+                    <Grid container item flexDirection="row-reverse">
+                        <LoadingButton loadingIndicator={<CircularProgress size={24} />}
+                            loading={loading}
+                            type="submit"
+                            variant="contained">
+                            Submit
+                        </LoadingButton>
                     </Grid>
                 </form>
             </Container>

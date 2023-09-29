@@ -18,16 +18,13 @@ const authenticate = async (request: Request, response: Response, next: NextFunc
     const tokenPart = token.split(' ')[1];
 
     try {
-        console.log(appConfig.appSecretKey)
         const { userId } = jwt.verify(tokenPart, appConfig.appSecretKey) as {
             userId: string;
         };
         request.body.userId = userId;
-        console.log(userId)
 
         next();
     } catch (error) {
-        console.log(error);
         return response.status(401).json({ message: 'Unauthorized' });
     }
 };
