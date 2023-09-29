@@ -1,4 +1,4 @@
 import createTicket from './createTicket';
-import createToz from './createToz';
+import webhook_testing from './webhook_testing';
 
-export default [createTicket, createToz];
+export default [createTicket, webhook_testing];
