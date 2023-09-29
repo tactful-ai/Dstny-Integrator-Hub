@@ -23,7 +23,10 @@ const schemaWithResolvers = addResolversToSchema({
 
 const graphQLInstance = graphqlHTTP({
   schema: applyMiddleware(schemaWithResolvers, authentication),
-  graphiql: appConfig.isDev,
+  // graphiql: appConfig.isDev,
+  graphiql: {
+    headerEditorEnabled: true
+  },
   customFormatErrorFn: (error) => {
     logger.error(error.path + ' : ' + error.message + '\n' + error.stack);
 

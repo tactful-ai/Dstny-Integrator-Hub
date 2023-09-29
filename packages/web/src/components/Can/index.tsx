@@ -18,5 +18,5 @@ type CanProps = {
 export default function Can(props: CanProps) {
   const currentUserAbility = useCurrentUserAbility();
 
-  return (<OriginalCan ability={currentUserAbility} {...props} />);
+  return (<div> <OriginalCan ability={currentUserAbility} {...props} /> </div>);
 };

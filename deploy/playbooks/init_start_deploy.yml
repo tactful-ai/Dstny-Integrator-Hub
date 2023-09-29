@@ -1,0 +1,53 @@
+---
+- name: Install Docker and Docker Compose, Clone Repo, and Run Docker Compose
+  hosts: main_node
+  become: true
+  gather_facts: true
+  tasks:
+    - name: Download the compatibility script (Debian)
+      get_url:
+        url: "https://releases.rancher.com/install-docker/{{ docker_version }}.sh"
+        dest: "/tmp/compatibility_script.sh"
+        mode: "0755"
+
+    - name: Execute the compatibility script (Debian)
+      command: "/tmp/compatibility_script.sh"
+      register: compatibility_script_output
+      async: 600
+
+    - name: Add user to the docker group (Debian)
+      user:
+        name: "{{ ansible_user }}"
+        groups: docker
+        append: true
+        state: present
+
+    - name: Install Docker and Docker Compose
+      apt:
+        name:
+          - docker-compose
+        state: present
+
+    - name: Clone Git repository
+      git:
+        repo: "{{ git_repo }}"
+        dest: "{{ repo_dir}}"
+        clone: yes
+
+    - name: Copy fronent .env file from local to the cloned repo
+      copy:
+        src: "{{ frontend_env_file_location }}"
+        dest: "{{ repo_dir }}/packages/web/.env"
+
+    - name: Copy backend .env file from local to the cloned repo
+      copy:
+        src: "{{ backend_env_file_location }}"
+        dest: "{{ repo_dir }}/packages/backend/.env" 
+
+
+    - name: deploy Docker Compose stack
+      docker_compose:
+        project_src: "{{ repo_dir }}"
+        files:
+        - docker-compose.yml
+        pull : yes

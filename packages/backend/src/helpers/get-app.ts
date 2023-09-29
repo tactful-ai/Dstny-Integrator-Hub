@@ -12,19 +12,30 @@ import addAuthenticationSteps from './add-authentication-steps';
 import addReconnectionSteps from './add-reconnection-steps';
 
 type TApps = Record<string, Promise<{ default: IApp }>>;
-const apps = fs
-  .readdirSync(path.resolve(__dirname, `../apps/`), { withFileTypes: true })
-  .reduce((apps, dirent) => {
-    if (!dirent.isDirectory()) return apps;
 
-    apps[dirent.name] = import(path.resolve(__dirname, '../apps', dirent.name));
+const updateApps = () => {
+  const updatedApps: TApps = fs
+    .readdirSync(path.resolve(__dirname, `../apps/`), { withFileTypes: true })
+    .reduce((apps, dirent) => {
+      if (!dirent.isDirectory()) return apps;
 
-    return apps;
-  }, {} as TApps);
+      apps[dirent.name] = import(
+        path.resolve(__dirname, '../apps', dirent.name)
+      );
 
-async function getAppDefaultExport(appKey: string) {
+      return apps;
+    }, {} as TApps);
+
+  return updatedApps;
+};
+
+const apps: TApps = updateApps();
+
+export async function getAppDefaultExport(appKey: string) {
   if (!Object.prototype.hasOwnProperty.call(apps, appKey)) {
-    throw new Error(`An application with the "${appKey}" key couldn't be found.`);
+    throw new Error(
+      `An application with the "${appKey}" key couldn't be found.`
+    );
   }
 
   return (await apps[appKey]).default;
@@ -34,7 +45,7 @@ function stripFunctions<C>(data: C): C {
   return JSON.parse(JSON.stringify(data));
 }
 
-const getApp = async (appKey: string, stripFuncs = true) => {
+export async function getApp(appKey: string, stripFuncs = true) {
   let appData: IApp = cloneDeep(await getAppDefaultExport(appKey));
 
   if (appData.auth) {
@@ -55,7 +66,11 @@ const getApp = async (appKey: string, stripFuncs = true) => {
   }
 
   return appData;
-};
+}
+
+export async function addAppDirectory(appKey: string) {
+  apps[appKey] = import(path.resolve(__dirname, '../apps', appKey));
+}
 
 const chooseConnectionStep = {
   key: 'chooseConnection',
@@ -74,7 +89,7 @@ const addStaticSubsteps = (
   appData: IApp,
   step: IRawTrigger | IRawAction
 ) => {
-  const computedStep: ITrigger | IAction = omit(step, ['arguments']);
+  const computedStep: ITrigger | IAction = step
 
   computedStep.substeps = [];
 

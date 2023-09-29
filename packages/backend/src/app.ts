@@ -18,6 +18,7 @@ import {
 import injectBullBoardHandler from './helpers/inject-bull-board-handler';
 import router from './routes';
 import configurePassport from './helpers/passport';
+import swaggerDocs from './helpers/swagger';
 
 createBullBoardHandler(serverAdapter);
 
@@ -54,6 +55,7 @@ app.use(cors(corsOptions));
 
 configurePassport(app);
 
+swaggerDocs(app, appConfig.port);
 app.use('/', router);
 
 webUIHandler(app);

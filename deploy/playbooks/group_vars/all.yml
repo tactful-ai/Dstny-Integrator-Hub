@@ -1,0 +1,6 @@
+docker_version: '23.0.6'
+
+git_repo: 'https://github.com/tactful-ai/Dstny-Integrator-Hub' # repositry link
+repo_dir: '/home/ubuntu/dstny' # repositry name
+frontend_env_file_location: '/home/moaz/documents/dstny/dstny-group/Dstny-Integrator-Hub/packages/web/.env' # .env file location
+backend_env_file_location: '/home/moaz/documents/dstny/dstny-group/Dstny-Integrator-Hub/packages/backend/.env' # .env file location
