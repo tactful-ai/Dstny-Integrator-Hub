@@ -444,6 +444,35 @@ export default defineConfig({
           ],
         },
         {
+          text: 'Integrator Hub',
+          collapsible: true,
+          items: [
+            {text: 'What is the Integrator Hub?', link: '/integrator-hub/introduction'},
+            {text: 'Overview Page', link: '/integrator-hub/overview'},
+            {text: 'Authentication', link: '/integrator-hub/authentication'},
+            {text: 'Triggers', link: '/integrator-hub/triggers'},
+            {text: 'Actions', link: '/integrator-hub/actions'},
+          ]
+        },
+        {
+          text: 'Technology Stack',
+          collapsible: true,
+          items: [
+            { text: 'API', link: '/technical/api' },
+            { text: 'Database', link: '/technical/database-schema' },
+            { text: 'Code Generator', link: '/technical/code-generator' },
+            { text: 'Authentication', link: '/technical/authentication' },
+            { text: 'Authorization', link: '/technical/authorization' },
+          ]
+        },
+        {
+          text: 'What Next?',
+          collapsible: true,
+          items: [
+            { text: 'Roadmap', link: '/what-next/roadmap' },
+          ],
+        },
+        {
           text: 'Other',
           collapsible: true,
           items: [

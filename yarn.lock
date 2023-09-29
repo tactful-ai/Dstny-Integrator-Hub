@@ -2953,6 +2953,15 @@
     react-is "^18.2.0"
     react-transition-group "^4.4.5"
 
+"@mui/private-theming@^5.14.10":
+  version "5.14.10"
+  resolved "https://registry.yarnpkg.com/@mui/private-theming/-/private-theming-5.14.10.tgz#42b176b27435931aff40d50833413d10150ac007"
+  integrity sha512-f67xOj3H06wWDT9xBg7hVL/HSKNF+HG1Kx0Pm23skkbEqD2Ef2Lif64e5nPdmWVv+7cISCYtSuE2aeuzrZe78w==
+  dependencies:
+    "@babel/runtime" "^7.22.15"
+    "@mui/utils" "^5.14.10"
+    prop-types "^15.8.1"
+
 "@mui/private-theming@^5.14.6":
   version "5.14.6"
   resolved "https://registry.npmjs.org/@mui/private-theming/-/private-theming-5.14.6.tgz"
@@ -2962,6 +2971,16 @@
     "@mui/utils" "^5.14.6"
     prop-types "^15.8.1"
 
+  
+"@mui/styled-engine@^5.14.10":
+  version "5.14.10"
+  resolved "https://registry.yarnpkg.com/@mui/styled-engine/-/styled-engine-5.14.10.tgz#2ec443031e48425cd6fda63be498cfa262c1d3a0"
+  integrity sha512-EJckxmQHrsBvDbFu1trJkvjNw/1R7jfNarnqPSnL+jEQawCkQIqVELWLrlOa611TFtxSJGkdUfCFXeJC203HVg==
+  dependencies:
+    "@babel/runtime" "^7.22.15"
+    "@emotion/cache" "^11.11.0"
+    csstype "^3.1.2"
+ 
 "@mui/private-theming@^5.14.9":
   version "5.14.9"
   resolved "https://registry.yarnpkg.com/@mui/private-theming/-/private-theming-5.14.9.tgz#085041c44cc28c25f3431a293339922ec3d9b5f8"
@@ -2969,6 +2988,7 @@
   dependencies:
     "@babel/runtime" "^7.22.15"
     "@mui/utils" "^5.14.9"
+ 
     prop-types "^15.8.1"
 
 "@mui/styled-engine@^5.14.6":
@@ -3007,6 +3027,7 @@
     prop-types "^15.8.1"
 
 "@mui/system@^5.14.8":
+ 
   version "5.14.9"
   resolved "https://registry.yarnpkg.com/@mui/system/-/system-5.14.9.tgz#90a20473a85622ddabf5a2409de1980fad98f38d"
   integrity sha512-Z00Wj590QXk5+SIxmxayBo7SWrao+y433LKGChneJxO4QcT/caSCeEWtyeoLs1Q8ys0zOzl2kkKee6n8TaKzhQ==
@@ -3036,6 +3057,7 @@
     prop-types "^15.8.1"
     react-is "^18.2.0"
 
+ 
 "@mui/utils@^5.14.8", "@mui/utils@^5.14.9":
   version "5.14.9"
   resolved "https://registry.yarnpkg.com/@mui/utils/-/utils-5.14.9.tgz#eeefef88dbee687ac90e8972c63f0d41f19348a3"
